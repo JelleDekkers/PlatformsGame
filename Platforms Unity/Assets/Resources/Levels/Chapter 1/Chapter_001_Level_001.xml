@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="25/12/17 19:33:30">
+  <tiles>
+    <TileData objectType="Tile" x="1" z="-2" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="1" z="-1" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="0" z="-1" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="0" z="0" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="0" z="1" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="0" z="2" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="1" z="2" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="2" z="1" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="3" z="0" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="1" z="0" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="2" z="0" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="1" z="1" moveUpAtStart="true" />
+    <TileData xsi:type="PressureTileData" objectType="PressureTile" x="0" z="-2" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="2" z="-1" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="2" z="-2" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="3" z="-2" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="3" z="-1" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="2" z="-3" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="1" z="-3" moveUpAtStart="true" />
+    <TileData objectType="Tile" x="0" z="-3" moveUpAtStart="true" />
+    <TileData xsi:type="GoalTileData" objectType="Goal" x="-1" z="1" moveUpAtStart="true" />
+  </tiles>
+  <blocks>
+    <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="-1" Roty="180" />
+    <BlockData xsi:type="LaserSourceBlockData" objectType="LaserSource" x="0" z="2" Roty="180" isActiveOnStart="false" />
+    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="3" z="0" Roty="180" />
+  </blocks>
+  <portals>
+    <PortalData isActiveOnStart="true">
+      <edgeCoordinates edgeOneX="0" edgeOneZ="-1" edgeTwoX="-1" edgeTwoZ="-1" />
+      <connectedPortalCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="2" />
+    </PortalData>
+    <PortalData isActiveOnStart="true">
+      <edgeCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="2" />
+      <connectedPortalCoordinates edgeOneX="0" edgeOneZ="-1" edgeTwoX="-1" edgeTwoZ="-1" />
+    </PortalData>
+  </portals>
+</level>

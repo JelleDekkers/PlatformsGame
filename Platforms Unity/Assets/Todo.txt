@@ -1,0 +1,63 @@
+levels save/load:
+correct saven/save as in correcte folder en text file opvragen
+dictionary van alle files?
+scriptableWizard errorString als bestand al bestaat (makkelijk als met dictionary)
+
+object modified of iets dergelijks zodat saven niet vergeten wordt bij load of create new, misschien venstertje?
+logica loskoppelen van level builder en level manager. in verband met kern opdracht 
+
+tile coloring in sceneview dropdown knop
+
+general settings voor intro state done en useTransitions
+
+profiler bekijken
+
+slideTiles waar moveableblocks doorglijden tot aan normale tile of bij neighbour block
+normale movement, elke keer wanneer movement klaar is en nog steeds staande op slideblock, weer moven
+
+portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal active is en niet null is
+
+events/functies via attributes en reflection
+
+achievements:
+move 5 tiles - Baby Steps
+move 25 tiles - How many more
+complete first level - One down..
+fall down for the first time - Try Again
+teleport for the first time - Insert cake joke here
+
+betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
+
+camera roteren?
+uit/in-zoomen?
+collectables, diamantje/piramides?
+
+depth mask per portal anders? in verband met hide bij new copy door oude portal, kijken naar dichtsbijzijnde camera
+
+models voor bepaalde objecten
+shaders/textures voor portal en laser
+
+levelNr ui in world
+
+xml optimalizeren - automatisch
+
+kleurenblind kleuren checken
+
+IL2CPP builden android
+
+ideëen:
+platforms die vallen nadat je er op hebt gestaan
+tile die cubes genereert? of gewoon dropt vanaf lucht
+laser directors die je kunt verplaatsen
+conveyer belt platform? te doen via events, als een blok de weg blokkeert, dan subscriben aan onmoved en nogmaals proberen te moven
+piston?
+tiles die je kunt bewegen naar een punt, deze kunnen dan bijv een piston op zich hebben
+
+naam ideëen:
+TileSnapper
+TileHopper
+kubus
+segmentum
+Robus
+Kubitron/Cubitron
+Kubold

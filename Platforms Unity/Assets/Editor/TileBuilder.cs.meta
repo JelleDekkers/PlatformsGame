@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8d02e2157d78e7f49a3209476abeaa47
+timeCreated: 1513192187
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - tile: {fileID: 114751104518864112, guid: cda1908949d82744f8c31efadb4ffbb3, type: 2}
+  - goalTile: {fileID: 114661028593598758, guid: 17c2891b8bb262d4bb48b5a32b81fab9,
+      type: 2}
+  - pressureTile: {fileID: 114075713353311496, guid: eab9d852d75ced74abdcb8bcadb6e0a5,
+      type: 2}
+  - triggerTile: {fileID: 114160656304512570, guid: e6db0af1aa83f1c43a87694d878ca708,
+      type: 2}
+  - slideTile: {fileID: 114643939151472488, guid: fdfc0bb15f6d1da4fab34042763cadc3,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
