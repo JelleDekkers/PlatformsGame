@@ -1,3 +1,11 @@
+achievements:
+tracken
+cheater
+alles in eigen nette scripts
+interface voor multiplatform dev
+
+portal bug bij mobile input, misschien niet elke keer in player new Input()?
+
 levels save/load:
 correct saven/save as in correcte folder en text file opvragen
 dictionary van alle files?
@@ -18,13 +26,6 @@ normale movement, elke keer wanneer movement klaar is en nog steeds staande op s
 portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal active is en niet null is
 
 events/functies via attributes en reflection
-
-achievements:
-move 5 tiles - Baby Steps
-move 25 tiles - How many more
-complete first level - One down..
-fall down for the first time - Try Again
-teleport for the first time - Insert cake joke here
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
 

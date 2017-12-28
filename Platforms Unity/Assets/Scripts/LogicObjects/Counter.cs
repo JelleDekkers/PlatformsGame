@@ -1,31 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using UnityEngine.Events;
+﻿//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.Events;
 
-public class Counter : LogicObject {
+//public class Counter : LogicObject {
 
-    [SerializeField]
-    private int targetValue = 1;
+//    [SerializeField]
+//    private int targetValue = 1;
 
-    public int currentValue;
+//    public int currentValue;
 
-    protected override string IconTextireName { get { return "Counter_Icon"; } }
+//    protected override string IconTextireName { get { return "Counter_Icon"; } }
 
-    public UnityAction OnTargetReached;
+//    public UnityAction OnTargetReached;
 
-    public void Increment() {
-        currentValue++;
+//    public void Increment() {
+//        currentValue++;
 
-        if (currentValue == targetValue)
-            OnTargetReached.Invoke();
-    }
+//        if (currentValue == targetValue)
+//            OnTargetReached.Invoke();
+//    }
 
-    public void Decrement() {
-        currentValue--;
+//    public void Decrement() {
+//        currentValue--;
 
-        if (currentValue == targetValue)
-            OnTargetReached.Invoke();
-    }
-}
+//        if (currentValue == targetValue)
+//            OnTargetReached.Invoke();
+//    }
+//}

@@ -155,6 +155,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
+#if UNITY_EDITOR
     private void DisplayWorldCoordinates() {
         GUIStyle style = new GUIStyle();
         style.normal.textColor = Color.gray;
@@ -170,6 +171,7 @@ public class LevelManager : MonoBehaviour {
         if (displayWorldCoordinates)
             DisplayWorldCoordinates();
     }
+#endif
 }
 
 
@@ -225,5 +227,4 @@ public class LevelManager : MonoBehaviour {
         if (displayWorldCoordinates)
             DisplayWorldCoordinates();
     }
-}
 */
