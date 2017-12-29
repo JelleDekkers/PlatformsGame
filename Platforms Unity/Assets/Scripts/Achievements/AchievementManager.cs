@@ -2,50 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AchievementManager : MonoBehaviour {
+namespace Achievements {
 
-    public static AchievementManager Instance { get; private set; }
-    public static int Counter { get; private set; }
+    public static class AchievementManager {
 
-    private void Start() {
-        Instance = this;
-    }
+        private static IAchievementSystem achievementSystemInstance;
+        public static IAchievementSystem AchievementSystemInstance {
+            get {
+                if (achievementSystemInstance == null)
+                    achievementSystemInstance = GetPlatformDependentAchivementSystem();
+                return achievementSystemInstance;
+            }
+        }
 
-    public void AddPoint() {
-        Counter++;
-    }
+        public static IAchievementSystem GetPlatformDependentAchivementSystem() {
+#if UNITY_ANDROID || UNITY_IOS
+            return new AndroidAchievementSystem();
+#else
+            return new CustomAchievementsSystem);
+#endif
+        }
 
-    public void IncrementCounter() {
-        AndroidPlayService.IncrementAchievement(GPGSIds.achievement_baby_steps, 1);
-        Counter++;
-    }
-
-    public void FinishFirstLevel() {
-        AndroidPlayService.UnlockAchievement(GPGSIds.achievement_complete_first_level);
-    }
-
-    public void ResetCounter() {
-        Debug.Log("final score: " + Counter);
-        Counter = 0;
-    }
-
-    public void ShowAchievements() {
-        AndroidPlayService.ShowAchievementsUI();
-    }
-
-    private void OnGUI() {
-        GUI.Label(new Rect(10, 100, 1000, 20), "Counter: " + Counter);
-
-        if (GUI.Button(new Rect(10, 130, 200, 20), "Counter++"))
-            IncrementCounter();
-
-        if (GUI.Button(new Rect(10, 150, 200, 20), "Finish level"))
-            FinishFirstLevel();
-
-        if (GUI.Button(new Rect(10, 170, 200, 20), "reset"))
-            ResetCounter();
-
-        if (GUI.Button(new Rect(10, 190, 200, 20), "showAchievments"))
-            ShowAchievements();
     }
 }

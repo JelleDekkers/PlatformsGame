@@ -1,9 +1,3 @@
-achievements:
-tracken
-cheater
-alles in eigen nette scripts
-interface voor multiplatform dev
-
 portal bug bij mobile input, misschien niet elke keer in player new Input()?
 
 levels save/load:
