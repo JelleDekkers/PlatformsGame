@@ -30,7 +30,7 @@ public class PortalEditor : DraggableEditorObject<Portal> {
         obj.transform.eulerAngles = Wall.GetCorrespondingRotation(snappedToWhileDragging);
         SceneView.RepaintAll();
 
-        if (Event.current.button == 0 && Event.current.type == EventType.mouseUp)
+        if (Event.current.button == 0 && Event.current.type == EventType.MouseUp)
             OnMouseClick();
     }
 

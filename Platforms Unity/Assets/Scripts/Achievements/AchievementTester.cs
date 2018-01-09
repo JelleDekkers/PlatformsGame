@@ -10,8 +10,6 @@ public class AchievementTester : MonoBehaviour {
     public void IncrementCounter() {
         AchievementManager.AchievementSystemInstance.IncrementAchievement(GPGSIds.achievement_baby_steps, 1);
         Counter++;
-
-        Counter++;
     }
 
     public void FinishFirstLevel() {

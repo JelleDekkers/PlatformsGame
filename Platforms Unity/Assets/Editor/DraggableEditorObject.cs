@@ -30,10 +30,10 @@ public class DraggableEditorObject<T> : Editor where T : MonoBehaviour {
 
         ExplanationGUI();
 
-        if (Event.current.keyCode == KeyCode.Space && Event.current.type == EventType.keyDown)
+        if (Event.current.keyCode == KeyCode.Space && Event.current.type == EventType.KeyDown)
             ToggleSnapMode();
 
-        if (Event.current.keyCode == KeyCode.Escape && Event.current.type == EventType.keyDown && dragging)
+        if (Event.current.keyCode == KeyCode.Escape && Event.current.type == EventType.KeyDown && dragging)
             CancelDrag();
 
         if (dragging)

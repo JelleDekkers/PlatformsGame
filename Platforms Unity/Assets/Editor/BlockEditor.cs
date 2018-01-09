@@ -56,7 +56,7 @@ public class BlockEditor : DraggableEditorObject<Block>, IDuplicatable {
             canBePlaced = false;
         }
 
-        if (Event.current.button == 0 && Event.current.type == EventType.mouseUp)
+        if (Event.current.button == 0 && Event.current.type == EventType.MouseUp)
             OnMouseClick();
     }
 

@@ -5,16 +5,14 @@ using UnityEngine.UI;
 public class MovementButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 
     [SerializeField]
-    private float horizontalValueToAdd;
-    [SerializeField]
-    private float verticalValueToAdd;
+    private IntVector2 moveDirectionValue;
 
     public void OnPointerDown(PointerEventData eventData) {
-        InputMobile.Instance.AddInputValue(-horizontalValueToAdd, -verticalValueToAdd);
+        InputMobile.Instance.AddInputValue(-moveDirectionValue.x, -moveDirectionValue.z);
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        InputMobile.Instance.AddInputValue(horizontalValueToAdd, verticalValueToAdd);
+        InputMobile.Instance.AddInputValue(moveDirectionValue.x, moveDirectionValue.z);
     }
 
 }

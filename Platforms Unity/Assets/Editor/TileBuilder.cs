@@ -66,9 +66,9 @@ public class TileBuilder : Editor {
         if (placingTiles)
             PlaceTilesMode();
 
-        if (Event.current.type == EventType.mouseDown)
+        if (Event.current.type == EventType.MouseDown)
             draggingMouse = true;
-        else if (Event.current.type == EventType.mouseUp)
+        else if (Event.current.type == EventType.MouseUp)
             draggingMouse = false;
     }
 
