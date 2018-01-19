@@ -14,13 +14,14 @@ public class Player : BlockMoveable {
         }
     }
 
-    private IInputSystem input;
+    private static IInputSystem input;
     private int horizontalInput, verticalInput;
 
     protected override void Awake() {
         base.Awake();
         instance = this;
-        input = InputSystem.GetPlatformDependentInputSystem();
+        if(input == null)
+            input = InputSystem.GetPlatformDependentInputSystem(); 
         OnFall += GameEvents.OnGameOver;
     }
 
@@ -37,6 +38,11 @@ public class Player : BlockMoveable {
 
         if (CanMove(horizontalInput, verticalInput))
             TryMoveInDirection(new IntVector2(horizontalInput, verticalInput));
+    }
+
+    private void OnGUI() {
+        GUI.Label(new Rect(10, 10, 1000, 20), "horizontal: " + horizontalInput);
+        GUI.Label(new Rect(10, 30, 1000, 20), "vertical: " + verticalInput);
     }
 
     private bool CanMove(int horizontalInput, int verticalInput) {

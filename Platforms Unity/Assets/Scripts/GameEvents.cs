@@ -15,7 +15,7 @@ public static class GameEvents {
     /// <summary>
     /// Called when the intro for all objects are done
     /// </summary>
-    public static Action OnIntroDone;
+    public static Action OnIntroComplete;
 
     /// <summary>
     /// Called when a lose condition has been met
@@ -30,7 +30,7 @@ public static class GameEvents {
     public static void ClearEvents() {
         OnLevelLoaded = null;
         OnLevelStart = null;
-        OnIntroDone = null;
+        OnIntroComplete = null;
         OnGameOver = null;
         OnLevelFinished = null;
     }

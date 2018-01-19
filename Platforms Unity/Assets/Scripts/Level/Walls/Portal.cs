@@ -29,7 +29,7 @@ public class Portal : Wall, ILaserDiverter, IActivatable {
     private void Awake() {
         if (TileSettings.UseStartingTransitions)
             GameEvents.OnLevelStart += IntroTransition;
-        GameEvents.OnIntroDone += OnIntroComplete;
+        GameEvents.OnIntroComplete += OnIntroComplete;
     
         IsActive = isActiveOnStart;
         boxCollider = GetComponent<BoxCollider>();

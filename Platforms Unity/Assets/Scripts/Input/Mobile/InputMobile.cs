@@ -25,7 +25,6 @@ public class InputMobile : IInputSystem {
     }
 
     public void AddInputValue(float x, float y) {
-        Debug.Log("adding " + x + " " + y);
         horizontalInput += x;
         horizontalInput = Mathf.Clamp(horizontalInput, -1, 1);
         verticalInput += y;

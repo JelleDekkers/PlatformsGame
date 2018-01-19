@@ -15,7 +15,7 @@ public static class InputSystem {
         #if UNITY_ANDROID || UNITY_IOS
         return new InputMobile();
         #else
-                return new InputPC();
+            return new InputPC();
         #endif
     }
 }

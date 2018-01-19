@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class Block : MonoBehaviour {
 
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0.5f, 0.5f);
+    public static readonly Vector3 SIZE = new Vector3(1f, 1f, 1f);
 
     public Tile tileStandingOn;
 
@@ -14,7 +15,7 @@ public class Block : MonoBehaviour {
     protected virtual void Awake() {
         if(TileSettings.UseStartingTransitions)
             GameEvents.OnLevelStart += IntroTransition;
-        GameEvents.OnIntroDone += OnIntroComplete;
+        GameEvents.OnIntroComplete += OnIntroComplete;
     }
 
     protected virtual void IntroTransition() {
@@ -69,13 +70,14 @@ public class Block : MonoBehaviour {
     protected virtual void OnTileStandingOnMoveUpEnd() { }
 
     protected virtual void OnTileStandingOnMoveDownStart() {
-        transform.SetParent(tileStandingOn.TileMesh);
+        if(tileStandingOn != null)
+            transform.SetParent(tileStandingOn.TileMesh);
     }
 
     protected virtual void OnTileStandingOnMoveDownEnd() { }
 
     protected virtual void OnDestroy() {
-        GameEvents.OnIntroDone -= OnIntroComplete;
+        GameEvents.OnIntroComplete -= OnIntroComplete;
     }
     #endregion
 }

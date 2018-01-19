@@ -76,8 +76,8 @@ public class DraggableEditorObject<T> : Editor where T : MonoBehaviour {
         Handles.BeginGUI();
         guiStyle = new GUIStyle();
         guiStyle.normal.textColor = Color.white;
-        GUI.Label(new Rect(10, 30, 1000, 20), "Left click to place ", guiStyle);
-        GUI.Label(new Rect(10, 45, 1000, 20), "Press Space to toggle snap mode", guiStyle);
+        GUI.Label(new Rect(10, 80, 1000, 20), "Left click to place ", guiStyle);
+        GUI.Label(new Rect(10, 105, 1000, 20), "Press Space to toggle snap mode", guiStyle);
         //GUI.Label(new Rect(10, 60, 1000, 20), "Left Click + Shift to Duplicate", guiStyle);
         Handles.EndGUI();
     }

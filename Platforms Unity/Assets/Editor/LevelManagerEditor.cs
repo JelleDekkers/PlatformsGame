@@ -18,20 +18,21 @@ public class LevelManagerEditor : Editor {
         if (levelPrevFrame != levelManager.levelAsset)
             OnLevelAssetChanged();
 
-        if (GUILayout.Button("Create New"))
-            LevelCreator.CreateWizard();
+        //if (GUILayout.Button("Create New"))
+        //    LevelCreator.CreateWizard();
 
-        if (levelManager.levelAsset != null) {
-            GUI.enabled = levelManager.LevelRequirementsHaveBeenMet();
-            string tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile";
+        GUI.enabled = levelManager.LevelRequirementsHaveBeenMet();
+        string tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile";
+        if (LevelManager.Instance.levelAsset != null) {
             if (GUILayout.Button(new GUIContent("Save", tooltip))) {
-                //levelManager.SaveCurrentLevel();
+                levelManager.SaveLevel(LevelManager.CurrentLevel);
             }
-            if (GUILayout.Button(new GUIContent("Save As", tooltip))) {
-
-            }
-            GUI.enabled = true;
         }
+        if (GUILayout.Button(new GUIContent("Save As", tooltip))) {
+            LevelCreator.CreateWizard();
+        }
+        GUI.enabled = true;
+        
 
         levelPrevFrame = levelManager.levelAsset;
     }

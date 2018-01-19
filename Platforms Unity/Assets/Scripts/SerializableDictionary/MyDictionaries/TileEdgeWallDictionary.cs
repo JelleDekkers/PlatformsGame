@@ -5,6 +5,10 @@ using UnityEngine;
 [Serializable]
 public class TileEdgeWallDictionary : SerializableDictionary<TileEdge, Wall> {
 
+    public Wall GetWall(TileEdge edge) {
+        return GetWall(edge.TileOne, edge.TileTwo);
+    }
+
     public Wall GetWall(IntVector2 one, IntVector2 two) {
         Wall wall = null;
         TryGetValue(new TileEdge(one, two), out wall);
@@ -42,7 +46,7 @@ public class TileEdgeWallDictionary : SerializableDictionary<TileEdge, Wall> {
         if (!Remove(edge))
            Remove(new TileEdge(edge.TileTwo, edge.TileOne));
 
-        CheckForMissingValues();
+        //CheckForMissingValues();
     }
 
     public void RemoveWall(IntVector2 one, IntVector2 two) {

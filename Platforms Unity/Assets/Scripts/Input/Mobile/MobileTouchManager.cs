@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
 
-class MobileTouchManager : MonoBehaviour {
+public class MobileTouchManager : MonoBehaviour {
 
 }

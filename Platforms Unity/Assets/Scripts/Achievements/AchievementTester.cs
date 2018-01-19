@@ -8,15 +8,18 @@ public class AchievementTester : MonoBehaviour {
     public static int Counter { get; private set; }
 
     public void IncrementCounter() {
+        Debug.Log("Incrementing counter");
         AchievementManager.AchievementSystemInstance.IncrementAchievement(GPGSIds.achievement_baby_steps, 1);
         Counter++;
     }
 
     public void FinishFirstLevel() {
+        Debug.Log("Finished first level");
         AchievementManager.AchievementSystemInstance.UnlockAchievement(GPGSIds.achievement_complete_first_level);
     }
 
     public void ShowAchievements() {
+        Debug.Log("SHow achivements UI");
         AchievementManager.AchievementSystemInstance.ShowAchievementsUI();
     }
 

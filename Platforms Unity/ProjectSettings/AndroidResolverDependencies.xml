@@ -6,6 +6,7 @@
     <package>com.google.games:gpgs-plugin-support:0+</package>
   </packages>
   <files>
+    <file>Assets/Plugins/Android/gpgs-plugin-support-0.9.42</file>
     <file>Assets/Plugins/Android/play-services-auth-10.2.6.aar</file>
     <file>Assets/Plugins/Android/play-services-auth-base-10.2.6.aar</file>
     <file>Assets/Plugins/Android/play-services-base-10.2.6.aar</file>

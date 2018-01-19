@@ -17,30 +17,17 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    [SerializeField]
+    [SerializeField, HideInInspector]
     private Level currentLevel;
     public static Level CurrentLevel {
         get { return Instance.currentLevel; }
         private set { Instance.currentLevel = value; }
     }
 
-    [Header("Debug Options")]
-    [SerializeField]
-    private bool displayWorldCoordinates;
-
     public TextAsset levelAsset;
 
     private const string FILE_EXTENSION = ".xml";
     private const string FOLDER_PATH = "Assets/Resources/Levels/";
-
-    public void CreateNewLevel(string fileName, int chapterIndex, int levelIndex) {
-        if (currentLevel != null)
-            ClearLevel();
-
-        currentLevel = new Level();
-        //SaveLevel(currentLevel, fileName);
-        levelAsset = LevelsHandler.AddNewLevel(currentLevel, fileName, chapterIndex, levelIndex);
-    }
 
     public void SaveLevel(Level level) {
         string dataPath = FOLDER_PATH + levelAsset.name + FILE_EXTENSION;
@@ -58,7 +45,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void LoadLevel(TextAsset asset) {
-        string dataPath = FOLDER_PATH + "Chapter 1/" + asset.name + FILE_EXTENSION;
+        string dataPath = FOLDER_PATH + asset.name + FILE_EXTENSION;
         Debug.Log("Trying to load " + dataPath);
         if (File.Exists(dataPath)) {
             var serializer = new XmlSerializer(typeof(LevelData));
@@ -81,6 +68,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void ClearLevel() {
+
         foreach (var i in currentLevel.Tiles) {
             if (i.Value != null) {
                 if (i.Value.occupant != null)
@@ -100,21 +88,27 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void BuildLevel(LevelData level) {
-        // tiles:
+        BuildTiles(level);
+        BuildBlocks(level);
+        BuildPortals(level);
+    }
+
+    private void BuildTiles(LevelData level) {
         for (int i = 0; i < level.tiles.Length; i++) {
             TileData data = level.tiles[i];
             Type type = Type.GetType(data.objectType);
 
             IntVector2 coordinates = new IntVector2(data.x, data.z);
-            Tile t = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type), coordinates.ToVector3(), Quaternion.identity, transform);
-            t.name = "Tile " + coordinates; 
-            Vector3 location = new Vector3(data.x + Tile.SIZE.x * 0.5f, 0, data.z + Tile.SIZE.z * 0.5f);
+            Vector3 location = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
+            Tile t = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type), location, Quaternion.identity, transform);
+            t.name = "Tile " + coordinates;
             t.transform.position = location;
             currentLevel.Tiles.Add(new IntVector2(data.x, data.z), t);
             t.OnDeserialize(data);
         }
+    }
 
-        // blocks:
+    private void BuildBlocks(LevelData level) {
         for (int i = 0; i < level.blocks.Length; i++) {
             BlockData data = level.blocks[i];
             Type type = Type.GetType(data.objectType);
@@ -127,8 +121,9 @@ public class LevelManager : MonoBehaviour {
             tile.SetOccupant(b);
             b.SetTileStandingOn(tile);
         }
+    }
 
-        // portals:
+    private void BuildPortals(LevelData level) {
         for (int i = 0; i < level.portals.Length; i++) {
             PortalData data = level.portals[i];
             TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.edgeOneX, data.edgeCoordinates.edgeOneZ),
@@ -168,63 +163,7 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        if (displayWorldCoordinates)
-            DisplayWorldCoordinates();
+        //DisplayWorldCoordinates();
     }
 #endif
 }
-
-
-/*    private void DrawGridOutline() {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireCube(Level.Instance.transform.position + (Level.Instance.Size / 2).ToVector3(0), Level.Instance.Size.ToVector3(0));
-    }
-
-    private void DrawGridLines() {
-        Gizmos.color = Color.grey;
-        Vector3 startPos = transform.position + GridWorldPositionOffset.ToVector3(0);
-        for (int z = 0; z < Level.Instance.Size.z + 1; z++)
-            Gizmos.DrawLine(new Vector3(startPos.x, startPos.y, startPos.z + z),
-                            new Vector3(startPos.x + Size.x * Tile.SIZE.x, startPos.y, startPos.z + z));
-
-        for (int x = 0; x < Level.Instance.Size.x + 1; x++)
-            Gizmos.DrawLine(new Vector3(startPos.x + x, startPos.y, startPos.z),
-                            new Vector3(startPos.x + x, startPos.y, startPos.z + Size.z * Tile.SIZE.z));
-    }
-
-    private void DisplayGridCoordinates() {
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = Color.gray;
-        Vector3 startPos = transform.position + GridWorldPositionOffset.ToVector3(0);
-        for (int x = 0; x < Size.x; x++) {
-            for (int z = 0; z < Size.z; z++) {
-                string coordinate = "(" + (x + GridWorldPositionOffset.x) + ", " + (z + GridWorldPositionOffset.z) + ")";
-                UnityEditor.Handles.Label(new Vector3(startPos.x + (x * Tile.SIZE.x) + (Tile.SIZE.x / 2),
-                                                      startPos.y,
-                                                      startPos.z + (z * Tile.SIZE.z) + (Tile.SIZE.z / 2)), coordinate, style);
-            }
-        }
-    }
-
-    private void DisplayWorldCoordinates() {
-        GUIStyle style = new GUIStyle();
-        style.normal.textColor = Color.gray;
-        for (int x = -100; x <= 100; x+=10) {
-            for (int z = -100; z <= 100; z+=10) {
-                style.normal.textColor = (x == 0 && z == 0) ? Color.white : Color.gray;
-                UnityEditor.Handles.Label(new Vector3(x, 0, z), "(" + x + ", " + z + ")", style);
-            }
-        }
-    }
-
-    private void OnDrawGizmos() {
-        if (drawGridOutline)
-            DrawGridOutline();
-        if (drawGridLines)
-            DrawGridLines();
-        if (displayGridCoordinates)
-            DisplayGridCoordinates();
-        if (displayWorldCoordinates)
-            DisplayWorldCoordinates();
-    }
-*/

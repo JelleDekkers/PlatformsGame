@@ -1,7 +1,7 @@
 lastUpgrade=00942
 proj.pluginVersion=0.9.42
 proj.AppId=1072058409505
-proj.classDir=Assets
+proj.classDir=Assets%2fGooglePlayGames
 proj.ConstantsClassName=GPGSIds
 and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--%0d%0aGoogle+Play+game+services+IDs.%0d%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0d%0a--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--+app_id+--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e1072058409505%3c%2fstring%3e%0d%0a++%3c%21--+achievement+Baby+Steps+--%3e%0d%0a++%3cstring+name%3d%22achievement_baby_steps%22+translatable%3d%22false%22%3eCgkIocSk3ZkfEAIQAA%3c%2fstring%3e%0d%0a++%3c%21--+achievement+Almost+there+--%3e%0d%0a++%3cstring+name%3d%22achievement_almost_there%22+translatable%3d%22false%22%3eCgkIocSk3ZkfEAIQAQ%3c%2fstring%3e%0d%0a++%3c%21--+achievement+Complete+First+Level+--%3e%0d%0a++%3cstring+name%3d%22achievement_complete_first_level%22+translatable%3d%22false%22%3eCgkIocSk3ZkfEAIQAg%3c%2fstring%3e%0d%0a++%3c%21--+achievement+Try+Again+--%3e%0d%0a++%3cstring+name%3d%22achievement_try_again%22+translatable%3d%22false%22%3eCgkIocSk3ZkfEAIQAw%3c%2fstring%3e%0d%0a++%3c%21--+achievement+Insert+Cake+Joke+Here+--%3e%0d%0a++%3cstring+name%3d%22achievement_insert_cake_joke_here%22+translatable%3d%22false%22%3eCgkIocSk3ZkfEAIQBA%3c%2fstring%3e%0d%0a%3c%2fresources%3e%0d%0a
 and.ClientId=

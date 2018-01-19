@@ -4,15 +4,19 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public void Start() {
+#if !UNITY_EDITOR
+        Achievements.AchievementManager.Setup();
+#endif
         if(GameEvents.OnLevelStart != null)
             GameEvents.OnLevelStart.Invoke();
-        GameEvents.OnIntroDone += () => Debug.Log("intro done");
+        GameEvents.OnIntroComplete += () => Debug.Log("intro done");
         GameEvents.OnGameOver += () => Debug.Log("Game over");
+        GameEvents.OnGameOver += () => StartCoroutine(GameOverCounter());
 
         if (TileSettings.UseStartingTransitions)
             StartCoroutine(IntroCounter());
         else
-            GameEvents.OnIntroDone.Invoke();
+            GameEvents.OnIntroComplete.Invoke();
     }
 
     private IEnumerator IntroCounter() {
@@ -23,11 +27,27 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
 
-        GameEvents.OnIntroDone.Invoke();
+        GameEvents.OnIntroComplete.Invoke();
+    }
+
+    private IEnumerator GameOverCounter() {
+        float time = 0;
+        float duration = 1f; // general settings
+        while (time < duration) {
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        ResetLevel();
     }
 
     private void ResetLevel() {
-        //onGameOver
+        LevelManager.Instance.LoadLevel(LevelManager.Instance.levelAsset);
+
+        if (TileSettings.UseStartingTransitions)
+            StartCoroutine(IntroCounter());
+        else
+            GameEvents.OnIntroComplete.Invoke();
     }
 
     private void OnDestroy() {

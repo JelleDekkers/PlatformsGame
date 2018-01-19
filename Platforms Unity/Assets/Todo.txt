@@ -1,12 +1,14 @@
 levels save/load:
-correct saven/save as in correcte folder en text file opvragen
-dictionary van alle files?
-scriptableWizard errorString als bestand al bestaat (makkelijk als met dictionary)
+customproperty voor scriptableWizard, onnodige gui elementen weg/editor window
+
+tile coloring in sceneview dropdown knop, gebruiksvriendelijkheid
 
 object modified of iets dergelijks zodat saven niet vergeten wordt bij load of create new, misschien venstertje?
-logica loskoppelen van level builder en level manager. in verband met kern opdracht 
+isDIrty?
 
-tile coloring in sceneview dropdown knop
+dictionary van alle files?
+scriptableWizard errorString als bestand al bestaat
+correct saven/save as in correcte folder en text file opvragen
 
 
 general settings voor intro state done en useTransitions
@@ -43,6 +45,7 @@ ideëen:
 platforms die vallen nadat je er op hebt gestaan
 tile die cubes genereert? of gewoon dropt vanaf lucht
 laser directors die je kunt verplaatsen
+tiles die bij vallen een tile vormt waar je op kan lopen, zo kun je een brug maken
 conveyer belt platform? te doen via events, als een blok de weg blokkeert, dan subscriben aan onmoved en nogmaals proberen te moven
 piston?
 tiles die je kunt bewegen naar een punt, deze kunnen dan bijv een piston op zich hebben

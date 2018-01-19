@@ -10,16 +10,22 @@ namespace Achievements {
         public static IAchievementSystem AchievementSystemInstance {
             get {
                 if (achievementSystemInstance == null)
-                    achievementSystemInstance = GetPlatformDependentAchivementSystem();
+                    achievementSystemInstance = GetPlatformDependentAchievementSystem();
                 return achievementSystemInstance;
             }
         }
 
-        public static IAchievementSystem GetPlatformDependentAchivementSystem() {
+        public static void Setup() {
+            Debug.Log("Achievement manager setup()");
+            achievementSystemInstance = GetPlatformDependentAchievementSystem();
+        }
+
+        public static IAchievementSystem GetPlatformDependentAchievementSystem() {
+            Debug.Log("GetPlatformDependentAchievementSystem()");
 #if UNITY_ANDROID || UNITY_IOS
             return new AndroidAchievementSystem();
 #else
-            return new CustomAchievementsSystem);
+            return new CustomAchievementsSystem();
 #endif
         }
 

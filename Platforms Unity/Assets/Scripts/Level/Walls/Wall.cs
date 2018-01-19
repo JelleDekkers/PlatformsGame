@@ -21,4 +21,8 @@ public class Wall : MonoBehaviour {
         else
             return new Vector3(0, 180, 0);
     }
+
+    public static Vector3 GetCorrespondingRotation(IntVector2 coordinatesOne, IntVector2 coordinatesTWo) {
+        return GetCorrespondingRotation(new TileEdge(coordinatesOne, coordinatesTWo));
+    }
 }

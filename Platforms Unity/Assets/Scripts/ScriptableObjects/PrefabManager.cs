@@ -6,7 +6,10 @@ using UnityEngine;
 public class PrefabManager : ScriptableObjectSingleton<PrefabManager> {
 
     [SerializeField] private Tile[] tiles; 
+    public static Tile[] Tiles { get { return Instance.tiles; } }
+
     [SerializeField] private Block[] blocks;
+    public static Block[] Blocks { get { return Instance.blocks; } }
 
     private DataLink<Tile> tilesDataLink;
     public static DataLink<Tile> TilesDataLink {
