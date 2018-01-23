@@ -17,7 +17,8 @@ namespace Achievements {
 
         public static void Setup() {
             Debug.Log("Achievement manager setup()");
-            achievementSystemInstance = GetPlatformDependentAchievementSystem();
+            if(achievementSystemInstance == null)
+                achievementSystemInstance = GetPlatformDependentAchievementSystem();
         }
 
         public static IAchievementSystem GetPlatformDependentAchievementSystem() {

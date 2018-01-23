@@ -7,6 +7,10 @@ public class AchievementTester : MonoBehaviour {
     
     public static int Counter { get; private set; }
 
+    private void tart() {
+        AchievementManager.Setup();
+    }
+
     public void IncrementCounter() {
         Debug.Log("Incrementing counter");
         AchievementManager.AchievementSystemInstance.IncrementAchievement(GPGSIds.achievement_baby_steps, 1);
