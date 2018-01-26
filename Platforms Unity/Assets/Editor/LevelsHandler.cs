@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Serializing;
 using System.Xml.Serialization;
 using System.IO;
+using Malee;
 
 [CreateAssetMenu(fileName = "LevelsHandler", menuName = "Tools/Levels Handler", order = 3)]
 public class LevelsHandler : ScriptableObjectSingleton<LevelsHandler> {
@@ -27,7 +28,30 @@ public class LevelsHandler : ScriptableObjectSingleton<LevelsHandler> {
         return asset;
     }
 
-    public static bool GetLevelByIndex(out TextAsset asset, int index) {
-        throw new NotImplementedException();
+    #region chapters
+    [Reorderable]
+    public Chapters chapters;
+
+    [System.Serializable]
+    public class Chapter {
+
+        public Color backgroundColor;
+
+        [Reorderable(singleLine = true)]
+        public LevelDrawer levels;
     }
+
+    [System.Serializable]
+    public class LevelCustomDrawer {
+
+        //public bool myBool;
+        public TextAsset level;
+    }
+
+    [System.Serializable]
+    public class LevelDrawer : ReorderableArray<LevelCustomDrawer> { }
+
+    [System.Serializable]
+    public class Chapters : ReorderableArray<Chapter> { }
+    #endregion
 }

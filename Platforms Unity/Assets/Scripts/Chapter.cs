@@ -1,13 +1,15 @@
-﻿//using UnityEngine;
-//using System;
-//using SubjectNerd.Utilities;
+﻿using UnityEngine;
+using System;
+using Malee;
 
-//[Serializable]
-//public class Chapter {
+[Serializable]
+public class Chapter {
 
-//    public Color color;
-//    [Reorderable]
-//    public TextAsset[] levels;
+    public Color color;
+    [Reorderable]
+    public TextAsset[] levels;
 
-//    public int LevelCount { get { return levels.Length; } }
-//}
+    public int LevelCount { get { return levels.Length; } }
+}
+
+

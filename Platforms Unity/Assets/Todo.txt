@@ -1,19 +1,10 @@
 levels save/load:
-customproperty voor scriptableWizard, onnodige gui elementen weg/editor window
-
-tile coloring in sceneview dropdown knop, gebruiksvriendelijkheid
-
 object modified of iets dergelijks zodat saven niet vergeten wordt bij load of create new, misschien venstertje?
 isDIrty?
 
-dictionary van alle files?
-scriptableWizard errorString als bestand al bestaat
-correct saven/save as in correcte folder en text file opvragen
-
-
 general settings voor intro state done en useTransitions
 
-profiler bekijken
+restart bij gameover
 
 slideTiles waar moveableblocks doorglijden tot aan normale tile of bij neighbour block
 normale movement, elke keer wanneer movement klaar is en nog steeds staande op slideblock, weer moven
@@ -36,6 +27,9 @@ shaders/textures voor portal en laser
 levelNr ui in world
 
 xml optimalizeren - automatisch
+
+knopje om te checken of een file niet in de chater lijst zit
+en voor duplicate check
 
 kleurenblind kleuren checken
 
