@@ -24,7 +24,7 @@ public class BlockMoveable : Block {
     }
 
     private bool CanMoveInDirection(IntVector2 direction) {
-        // combineren met player.canmove
+        // player.canmove moet hiervan gebruik maken
         return true;
     }
 
@@ -96,16 +96,17 @@ public class BlockMoveable : Block {
         Destroy(gameObject);
     }
 
-    protected virtual IEnumerator FallCoroutine(IntVector2 direction, float duration) {
+    protected virtual IEnumerator FallCoroutine(IntVector2 direction, float movementDurationBeforeFall) {
         isMoving = true;
+        Tile tileWasStandingOn = tileStandingOn;
         tileStandingOn.Exit(this);
         tileStandingOn = null;
 
         float time = 0f;
         Vector3 startPos = transform.position;
         Vector3 endPos = transform.position + direction.ToVector3();
-        while (time < duration / 2) {
-            transform.position = Vector3.Lerp(startPos, endPos, time / duration);
+        while (time < movementDurationBeforeFall * 0.5f) {
+            transform.position = Vector3.Lerp(startPos, endPos, time / movementDurationBeforeFall);
             time += Time.deltaTime;
             yield return null;
         }
@@ -113,7 +114,9 @@ public class BlockMoveable : Block {
         if(OnFall != null)
             OnFall.Invoke();
         Rigidbody rBody = gameObject.GetComponent<Rigidbody>();
+        StartCoroutine(tileWasStandingOn.EnableColliderTemporarily());
         rBody.isKinematic = false;
+        rBody.AddForce(direction.ToVector3() * 100, ForceMode.Acceleration);
     }
 
     #region Events
@@ -141,8 +144,10 @@ public class BlockMoveable : Block {
 
     private void OnMoveEnd(Vector3 endPos, IntVector2 direction) {
         isMoving = false;
-        if (tileStandingOn.GetType() == typeof(SlideTile) && CanMoveInDirection(direction))
+        if (tileStandingOn.GetType() == typeof(SlideTile) && CanMoveInDirection(direction)) {
+            Debug.Log("landed on slide Tile, moving again");
             MoveInDirection(direction, BlockSettings.MoveDuration);
+        }
     }
 
     protected override void OnTileStandingOnMoveDownStart() {

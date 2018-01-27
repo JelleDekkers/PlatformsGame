@@ -1,17 +1,15 @@
 levels save/load:
-object modified of iets dergelijks zodat saven niet vergeten wordt bij load of create new, misschien venstertje?
-isDIrty?
+
+slideTiles waar moveableblocks doorglijden tot aan normale tile of bij neighbour block
+netjes met player class integreren
 
 general settings voor intro state done en useTransitions
 
 restart bij gameover
 
-slideTiles waar moveableblocks doorglijden tot aan normale tile of bij neighbour block
-normale movement, elke keer wanneer movement klaar is en nog steeds staande op slideblock, weer moven
-
 portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal active is en niet null is
 
-events/functies via attributes en reflection
+events/functies via attributes en reflection via attributes
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
 

@@ -40,11 +40,6 @@ public class Player : BlockMoveable {
             TryMoveInDirection(new IntVector2(horizontalInput, verticalInput));
     }
 
-    private void OnGUI() {
-        GUI.Label(new Rect(10, 10, 1000, 20), "horizontal: " + horizontalInput);
-        GUI.Label(new Rect(10, 30, 1000, 20), "vertical: " + verticalInput);
-    }
-
     private bool CanMove(int horizontalInput, int verticalInput) {
         return !isMoving && tileStandingOn != null && (horizontalInput != 0 || verticalInput != 0);
     }
@@ -130,7 +125,7 @@ public class Player : BlockMoveable {
         Destroy(gameObject);
     }
 
-    protected override IEnumerator FallCoroutine(IntVector2 direction, float duration) {
+    protected override IEnumerator FallCoroutine(IntVector2 direction, float movementDurationBeforeFall) {
         isMoving = true;
         if(tileStandingOn != null)
             tileStandingOn.Exit(null);

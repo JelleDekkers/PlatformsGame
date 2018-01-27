@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections;
 using Random = UnityEngine.Random;
 using Serializing;
 
@@ -45,6 +46,17 @@ public class Tile : MonoBehaviour {
         } else {
             TileMesh.gameObject.SetActive(false);
         }
+    }
+
+    public IEnumerator EnableColliderTemporarily() {
+        BoxCollider col = TileMesh.gameObject.AddComponent<BoxCollider>();
+        float duration = 0.1f;
+        float timer = 0;
+        while (timer < duration) {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(col);
     }
 
     public void SetCoordinates(IntVector2 coordinates) {

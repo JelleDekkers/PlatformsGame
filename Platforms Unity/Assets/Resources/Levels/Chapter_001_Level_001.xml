@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="25/12/17 19:33:30">
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="27/1/18 19:49:45">
   <tiles>
     <TileData objectType="Tile" x="1" z="-2" moveUpAtStart="true" />
     <TileData objectType="Tile" x="1" z="-1" moveUpAtStart="true" />
@@ -22,11 +22,21 @@
     <TileData objectType="Tile" x="1" z="-3" moveUpAtStart="true" />
     <TileData objectType="Tile" x="0" z="-3" moveUpAtStart="true" />
     <TileData xsi:type="GoalTileData" objectType="Goal" x="-1" z="1" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="0" z="-4" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="1" z="-4" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="2" z="-4" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="2" z="-5" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="1" z="-5" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="0" z="-5" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="0" z="-6" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="1" z="-6" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" objectType="SlideTile" x="2" z="-6" moveUpAtStart="true" />
   </tiles>
   <blocks>
     <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="-1" Roty="180" />
     <BlockData xsi:type="LaserSourceBlockData" objectType="LaserSource" x="0" z="2" Roty="180" isActiveOnStart="false" />
     <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="3" z="0" Roty="180" />
+    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="1" z="-3" Roty="90" />
   </blocks>
   <portals>
     <PortalData isActiveOnStart="true">

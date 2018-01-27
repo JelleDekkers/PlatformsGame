@@ -18,9 +18,6 @@ public class LevelManagerEditor : Editor {
         if (levelPrevFrame != levelManager.levelAsset)
             OnLevelAssetChanged();
 
-        //if (GUILayout.Button("Create New"))
-        //    LevelCreator.CreateWizard();
-
         GUI.enabled = levelManager.LevelRequirementsHaveBeenMet();
         string tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile";
         if (LevelManager.Instance.levelAsset != null) {
@@ -33,7 +30,6 @@ public class LevelManagerEditor : Editor {
         }
         GUI.enabled = true;
         
-
         levelPrevFrame = levelManager.levelAsset;
     }
 
