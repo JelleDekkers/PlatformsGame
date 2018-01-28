@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -23,8 +24,25 @@ public class BlockMoveable : Block {
         base.IntroTransition();
     }
 
-    private bool CanMoveInDirection(IntVector2 direction) {
-        // player.canmove moet hiervan gebruik maken
+    public virtual bool CanMoveInDirection(IntVector2 direction, out MovementInfo movementInfo) {
+        IntVector2 neighbourCoordinates = tileStandingOn.coordinates + direction;
+        movementInfo = new MovementInfo(this, direction, direction, null);
+
+        if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
+            Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
+            neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
+        }
+
+        Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
+
+        if (neighbourTile != null && neighbourTile.IsUp) {
+            if (neighbourTile.occupant == null) {
+                return true;
+            } else {
+                movementInfo.neighbourBlock = neighbourTile.occupant;
+                return true;
+            }
+        }
         return true;
     }
 
@@ -38,9 +56,9 @@ public class BlockMoveable : Block {
             return;
         }
 
-        if (newTile != null && newTile.IsUp)
+        if (newTile != null && newTile.IsUp) 
             StartCoroutine(MoveCoroutine(newTile, direction, duration));
-        else
+        else 
             Fall(direction, duration);
     }
 
@@ -144,9 +162,23 @@ public class BlockMoveable : Block {
 
     private void OnMoveEnd(Vector3 endPos, IntVector2 direction) {
         isMoving = false;
-        if (tileStandingOn.GetType() == typeof(SlideTile) && CanMoveInDirection(direction)) {
+
+        if (tileStandingOn != null && tileStandingOn.GetType() == typeof(SlideTile))
+            OnMoveEndedOnSlideTile(direction);    
+    }
+
+    private void OnMoveEndedOnSlideTile(IntVector2 directionSlidTo) {
+        MovementInfo info;
+        if (CanMoveInDirection(directionSlidTo, out info)) {
             Debug.Log("landed on slide Tile, moving again");
-            MoveInDirection(direction, BlockSettings.MoveDuration);
+            if (info.neighbourBlock == null) {
+                MoveInDirection(info.newDirection, BlockSettings.MoveDuration);
+                // in case I do want sliding blocks to push moveable blocks one tile further:
+            //} else if (info.neighbourBlock.GetType() == typeof(BlockMoveable)) {
+            //    BlockMoveable newNeighbourBlock = info.neighbourBlock as BlockMoveable;
+            //    if (newNeighbourBlock.CanMoveInDirection(info.newDirection, out info))
+            //        newNeighbourBlock.MoveInDirection(info.newDirection, BlockSettings.MoveDuration);
+            }
         }
     }
 

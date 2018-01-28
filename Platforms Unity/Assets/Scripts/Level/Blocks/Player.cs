@@ -44,43 +44,36 @@ public class Player : BlockMoveable {
         return !isMoving && tileStandingOn != null && (horizontalInput != 0 || verticalInput != 0);
     }
 
-    public void TryMoveInDirection(IntVector2 direction) {
+    private void TryMoveInDirection(IntVector2 direction) {
         List<MovementInfo> connections;
-        if (CanMoveInDirection(direction, out connections)) {
-            connections.Add(new MovementInfo(this, direction));
-            for (int i = connections.Count - 1; i >= 0; i--)
-                connections[i].block.MoveInDirection(connections[i].direction, BlockSettings.MoveDuration);
-        }
-    }
-
-    private bool CanMoveInDirection(IntVector2 direction, out List<MovementInfo> connectedBlocks) {
-        connectedBlocks = new List<MovementInfo>();
         int maxNeighboursPossible = LevelManager.CurrentLevel.Tiles.Count;
-        IntVector2 neighbourCoordinates = tileStandingOn.coordinates;
 
-        for (int i = 1; i < maxNeighboursPossible; i++) {
-            neighbourCoordinates += direction;
-            
-            if(LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
-                Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
-                neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out direction);
-            }
+        MovementInfo info;
+        // check self:
+        if (CanMoveInDirection(direction, out info))
+            connections = new List<MovementInfo>() { info };
+        else
+            return;
 
-            Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
-
-            if (neighbourTile == null || !neighbourTile.IsUp)
+        // get list of neighbouring connected blocks
+        for (int i = 0; i < maxNeighboursPossible; i++) {
+            if (info.neighbourBlock == null)
                 break;
-            if (neighbourTile.occupant == null)
-                break;
+            else if (info.neighbourBlock.GetType() != typeof(BlockMoveable))
+                return;
             else {
-                BlockMoveable moveableNeighbour = neighbourTile.occupant.GetComponent<BlockMoveable>();
-                if (moveableNeighbour == null)
-                    return false;
+                BlockMoveable neighbourBlock = info.neighbourBlock as BlockMoveable;
+                if (neighbourBlock.CanMoveInDirection(info.newDirection, out info))
+                    connections.Add(info);
                 else
-                    connectedBlocks.Add(new MovementInfo(moveableNeighbour, direction));
+                    break;
             }
         }
-        return true;
+
+        // move all connected blocks:
+        for(int i = 0; i < connections.Count; i++) {
+            connections[i].block.MoveInDirection(connections[i].direction, BlockSettings.MoveDuration);
+        }
     }
 
     protected override IEnumerator MoveCoroutine(Tile newTile, IntVector2 direction, float duration) {

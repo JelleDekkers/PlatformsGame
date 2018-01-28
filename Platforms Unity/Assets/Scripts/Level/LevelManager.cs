@@ -26,6 +26,9 @@ public class LevelManager : MonoBehaviour {
 
     public TextAsset levelAsset;
 
+    [SerializeField]
+    private bool displayWorldCoordinatesForDebugging;
+
     private const string FILE_EXTENSION = ".xml";
     private const string FOLDER_PATH = "Assets/Resources/Levels/";
 
@@ -163,7 +166,8 @@ public class LevelManager : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        //DisplayWorldCoordinates();
+        if(displayWorldCoordinatesForDebugging)
+            DisplayWorldCoordinates();
     }
 #endif
 }

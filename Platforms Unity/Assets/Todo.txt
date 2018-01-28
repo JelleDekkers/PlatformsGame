@@ -1,17 +1,18 @@
-levels save/load:
-
-slideTiles waar moveableblocks doorglijden tot aan normale tile of bij neighbour block
-netjes met player class integreren
+bug met blocks plaatsen waarbij tiles niet de block krijgen als occupant
 
 general settings voor intro state done en useTransitions
+blockmoveable fallcutoff var
 
 restart bij gameover
 
 portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal active is en niet null is
+block moven testen bij disabled portal
 
 events/functies via attributes en reflection via attributes
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
+
+level fade
 
 camera roteren?
 uit/in-zoomen?
@@ -26,7 +27,7 @@ levelNr ui in world
 
 xml optimalizeren - automatisch
 
-knopje om te checken of een file niet in de chater lijst zit
+knopje om te checken of een file niet in de chapter lijst zit
 en voor duplicate check
 
 kleurenblind kleuren checken

@@ -119,11 +119,11 @@ public class Portal : Wall, ILaserDiverter, IActivatable {
     }
 
     public IntVector2 GetPortalExitCoordinates(IntVector2 entry, out IntVector2 direction) {
-        if (Edge.TileOne == entry) {
-            direction = connectedPortal.Edge.TileTwo - connectedPortal.Edge.TileOne;
+        if (entry == Edge.TileOne) {
+            direction = new IntVector2(connectedPortal.Edge.TileTwo.x - connectedPortal.Edge.TileOne.x, connectedPortal.Edge.TileTwo.z - connectedPortal.Edge.TileOne.z);// connectedPortal.Edge.TileOne.ToAbsolute() - connectedPortal.Edge.TileTwo.ToAbsolute();
             return connectedPortal.Edge.TileTwo;
         } else {
-            direction = connectedPortal.Edge.TileOne - connectedPortal.Edge.TileTwo;
+            direction = new IntVector2(connectedPortal.Edge.TileOne.x - connectedPortal.Edge.TileTwo.x, connectedPortal.Edge.TileOne.z - connectedPortal.Edge.TileTwo.z);// connectedPortal.Edge.TileTwo.ToAbsolute() - connectedPortal.Edge.TileOne.ToAbsolute();
             return connectedPortal.Edge.TileOne;
         }
     }
