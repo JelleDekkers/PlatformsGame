@@ -32,7 +32,7 @@ public class LevelManager : MonoBehaviour {
     private const string FILE_EXTENSION = ".xml";
     private const string FOLDER_PATH = "Assets/Resources/Levels/";
 
-    public void SaveLevel(Level level) {
+    public void SaveLevelToFile(Level level) {
         string dataPath = FOLDER_PATH + levelAsset.name + FILE_EXTENSION;
         Debug.Log("Trying to save " + dataPath);
         LevelData data = new LevelData(level);
@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour {
         return Player.Instance != null && Goal.Instance != null;
     }
 
-    public void LoadLevel(TextAsset asset) {
+    public void LoadLevelFromFile(TextAsset asset) {
         string dataPath = FOLDER_PATH + asset.name + FILE_EXTENSION;
         Debug.Log("Trying to load " + dataPath);
         if (File.Exists(dataPath)) {
@@ -57,10 +57,10 @@ public class LevelManager : MonoBehaviour {
             stream.Close();
 
             if(currentLevel != null)
-                ClearLevel();
+                ClearLevelFromScene();
 
             currentLevel = new Level();
-            BuildLevel(data);
+            BuildLevelInScene(data);
             Debug.Log("Succesfully loaded " + dataPath);
 
             if (GameEvents.OnLevelLoaded != null)
@@ -70,8 +70,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    public void ClearLevel() {
-
+    public void ClearLevelFromScene() {
         foreach (var i in currentLevel.Tiles) {
             if (i.Value != null) {
                 if (i.Value.occupant != null)
@@ -90,24 +89,29 @@ public class LevelManager : MonoBehaviour {
         Debug.Log("Cleared level");
     }
 
-    private void BuildLevel(LevelData level) {
-        BuildTiles(level);
+    private void BuildLevelInScene(LevelData level) {
+        Dictionary<Tile, TileData> tilesWithEvents = new Dictionary<Tile, TileData>();
+        BuildTiles(level, ref tilesWithEvents);
         BuildBlocks(level);
         BuildPortals(level);
+        AssignEvents(ref tilesWithEvents);
     }
 
-    private void BuildTiles(LevelData level) {
+    private void BuildTiles(LevelData level, ref Dictionary<Tile, TileData> tilesWithEvents) {
         for (int i = 0; i < level.tiles.Length; i++) {
             TileData data = level.tiles[i];
-            Type type = Type.GetType(data.objectType);
+            Type type = Type.GetType(data.type);
 
             IntVector2 coordinates = new IntVector2(data.x, data.z);
             Vector3 location = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
             Tile t = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type), location, Quaternion.identity, transform);
-            t.name = "Tile " + coordinates;
+            t.name = "Tile " + coordinates + " (" + type.ToString() + ")";
             t.transform.position = location;
             currentLevel.Tiles.Add(new IntVector2(data.x, data.z), t);
             t.OnDeserialize(data);
+
+            if (t.GetType() == typeof(PressureTile))
+                tilesWithEvents.Add(t, data);
         }
     }
 
@@ -151,6 +155,11 @@ public class LevelManager : MonoBehaviour {
                 p.SetConnectedPortal(connectedPortal);
             }
         }
+    }
+
+    public void AssignEvents(ref Dictionary<Tile, TileData> tilesWithEvents) {
+        foreach (KeyValuePair<Tile, TileData> pair in tilesWithEvents)
+            pair.Key.OnDeserializeEvents(pair.Value);
     }
 
 #if UNITY_EDITOR

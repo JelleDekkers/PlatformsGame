@@ -17,8 +17,8 @@ public class Portal : Wall, ILaserDiverter, IActivatable {
     public Portal ConnectedPortal { get { return connectedPortal; } }
 
     [SerializeField] private GameObject depthMaskFront, depthMaskBack;
-    private GameObject PortalFront { get { return depthMaskFront.transform.parent.gameObject; } }
-    private GameObject PortalBack { get { return depthMaskBack.transform.parent.gameObject; } }
+    private GameObject portalFront;
+    private GameObject portalBack;
     public BoxCollider RayBlockerFront { get; private set; }
     public BoxCollider RayBlockerBack { get; private set; }
 
@@ -33,8 +33,10 @@ public class Portal : Wall, ILaserDiverter, IActivatable {
     
         IsActive = isActiveOnStart;
         boxCollider = GetComponent<BoxCollider>();
-        RayBlockerFront = PortalBack.GetComponent<BoxCollider>();
-        RayBlockerBack = PortalFront.GetComponent<BoxCollider>();
+        portalFront = depthMaskFront.transform.parent.gameObject;
+        portalBack = depthMaskBack.transform.parent.gameObject;
+        RayBlockerFront = portalBack.GetComponent<BoxCollider>();
+        RayBlockerBack = portalFront.GetComponent<BoxCollider>();
     }
 
     private void IntroTransition() {
@@ -175,15 +177,15 @@ public class Portal : Wall, ILaserDiverter, IActivatable {
 
     public void Activate() {
         IsActive = true;
-        PortalFront.SetActive(true);
-        PortalBack.SetActive(true);
+        portalFront.SetActive(true);
+        portalBack.SetActive(true);
         boxCollider.enabled = true;
     }
 
     public void Deactivate() {
         IsActive = false;
-        PortalFront.SetActive(false);
-        PortalBack.SetActive(false);
+        portalFront.SetActive(false);
+        portalBack.SetActive(false);
         boxCollider.enabled = false;
     }
 }

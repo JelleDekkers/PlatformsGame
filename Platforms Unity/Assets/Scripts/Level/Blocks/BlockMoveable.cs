@@ -170,7 +170,6 @@ public class BlockMoveable : Block {
     private void OnMoveEndedOnSlideTile(IntVector2 directionSlidTo) {
         MovementInfo info;
         if (CanMoveInDirection(directionSlidTo, out info)) {
-            Debug.Log("landed on slide Tile, moving again");
             if (info.neighbourBlock == null) {
                 MoveInDirection(info.newDirection, BlockSettings.MoveDuration);
                 // in case I do want sliding blocks to push moveable blocks one tile further:

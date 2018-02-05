@@ -22,21 +22,28 @@ public class LevelManagerEditor : Editor {
         string tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile";
         if (LevelManager.Instance.levelAsset != null) {
             if (GUILayout.Button(new GUIContent("Save", tooltip))) {
-                levelManager.SaveLevel(LevelManager.CurrentLevel);
+                levelManager.SaveLevelToFile(LevelManager.CurrentLevel);
             }
         }
-        if (GUILayout.Button(new GUIContent("Save As", tooltip))) {
+        if (GUILayout.Button(new GUIContent("Save As", tooltip))) 
             LevelCreator.CreateWizard();
-        }
+        if (GUILayout.Button(new GUIContent("Reload")))
+            Reload();
+
         GUI.enabled = true;
-        
+
         levelPrevFrame = levelManager.levelAsset;
     }
 
     private void OnLevelAssetChanged() {
-        levelManager.ClearLevel();
+        levelManager.ClearLevelFromScene();
         if(levelManager.levelAsset != null) 
-            levelManager.LoadLevel(levelManager.levelAsset);
+            levelManager.LoadLevelFromFile(levelManager.levelAsset);
+    }
+
+    private void Reload() {
+        levelManager.ClearLevelFromScene();
+        levelManager.LoadLevelFromFile(levelManager.levelAsset);
     }
 }
 

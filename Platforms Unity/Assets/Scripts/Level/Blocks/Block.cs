@@ -10,6 +10,8 @@ public class Block : MonoBehaviour {
 
     public Tile tileStandingOn;
 
+    public IntVector2 Coordinates { get { return tileStandingOn.coordinates; } }
+
     private Renderer rend;
 
     protected virtual void Awake() {

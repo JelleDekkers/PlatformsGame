@@ -15,7 +15,6 @@ public class Tile : MonoBehaviour {
     public bool IsUp { get; private set; }
     public Transform TileMesh { get { return transform.GetChild(0); } }
 
-    public Action OnEnter, OnExit;
     public Action OnMoveDownStart, OnMoveDownEnd;
     public Action OnMoveUpStart, OnMoveUpEnd;
 
@@ -28,10 +27,12 @@ public class Tile : MonoBehaviour {
 
     private Coroutine currentCoroutine;
 
-    public void OnDeserialize(TileData data) {
+    public virtual void OnDeserialize(TileData data) {
         coordinates = new IntVector2(data.x, data.z);
         moveUpAtStart = data.moveUpAtStart;
     }
+
+    public virtual void OnDeserializeEvents(TileData data) { }
 
     private void Awake() {
         GameEvents.OnGameOver += OnGameOver;
@@ -64,14 +65,10 @@ public class Tile : MonoBehaviour {
     }
 
     public virtual void Enter(Block block) {
-        if(OnEnter != null)
-            OnEnter.Invoke();
         occupant = block;
     }
 
     public virtual void Exit(Block block) {
-        if(OnExit != null)
-            OnExit.Invoke();
         if(occupant == block)
             occupant = null;
     }
@@ -100,7 +97,7 @@ public class Tile : MonoBehaviour {
             OnMoveDownEnd.Invoke();
     }
 
-    private void MoveUp(float duration, float delay) {
+    public void MoveUp(float duration, float delay) {
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
 
@@ -129,6 +126,15 @@ public class Tile : MonoBehaviour {
             MoveDown(TileSettings.MoveDownStandardDuration, 0);
         else
             MoveUp(TileSettings.MoveUpStandardDuration, 0);
+    }
+
+    public void Test() {
+        Debug.Log("Test");
+    }
+
+
+    public void Hello() {
+        Debug.Log("Hello");
     }
 
     public void SetOccupant(Block occupant) {

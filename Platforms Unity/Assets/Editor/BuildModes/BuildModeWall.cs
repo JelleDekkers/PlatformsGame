@@ -82,7 +82,6 @@ public class BuildModeWall : BuildMode {
     public override void DrawHelperGizmos(bool isValidPosition, Vector3 position, Vector3 size) {
         IntVector2 coordinatesOne = LevelBuilder.ConvertPositionToGridCoordinate(position);
         IntVector2 coordinatesTwo = GetNearestNeighbourCoordinates(coordinatesOne);
-        TileEdge edge = new TileEdge(coordinatesOne, coordinatesTwo);
 
         position = coordinatesTwo.ToVector3() - coordinatesOne.ToVector3();
         //Vector3 wireFrameSize = new Vector3(0.3f, 1.4f, 1f);

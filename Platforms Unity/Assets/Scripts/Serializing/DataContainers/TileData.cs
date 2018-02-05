@@ -23,14 +23,14 @@ namespace Serializing {
             return DataLinks[objectType];
         }
 
-        [XmlAttribute] public string objectType;
+        [XmlAttribute] public string type;
         [XmlAttribute] public int x;
         [XmlAttribute] public int z;
         [XmlAttribute] public bool moveUpAtStart;
 
         protected TileData() { }
         public TileData(Tile t) {
-            objectType = t.GetType().FullName;
+            type = t.GetType().FullName;
             x = t.coordinates.x;
             z = t.coordinates.z;
             moveUpAtStart = t.MoveUpAtStart;
@@ -38,8 +38,14 @@ namespace Serializing {
     }
 
     public class PressureTileData : TileData {
+        [XmlArray] public UnityEventData[] onEnterEventData;
+        [XmlArray] public UnityEventData[] onExitEventData;
+
         protected PressureTileData() : base() { }
-        public PressureTileData(PressureTile t) : base(t) { }
+        public PressureTileData(PressureTile t) : base(t) {
+            onEnterEventData = UnityEventData.GetEventData(t.OnEnterEvent);
+            onExitEventData = UnityEventData.GetEventData(t.OnExitEvent);
+        }
     }
 
     public class TriggerTileData : TileData {
