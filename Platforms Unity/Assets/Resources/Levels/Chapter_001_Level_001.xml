@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="05/2/18 11:41:56">
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="05/2/18 19:29:04">
   <tiles>
     <TileData type="Tile" x="1" z="-2" moveUpAtStart="true" />
     <TileData type="Tile" x="1" z="-1" moveUpAtStart="true" />
@@ -14,13 +14,8 @@
     <TileData type="Tile" x="2" z="0" moveUpAtStart="true" />
     <TileData type="Tile" x="1" z="1" moveUpAtStart="true" />
     <TileData xsi:type="PressureTileData" type="PressureTile" x="0" z="-2" moveUpAtStart="true">
-      <onEnterEventData>
-        <UnityEventData typeName="Tile" typeArgs="2 -9" methodName="Test" />
-        <UnityEventData typeName="Tile" typeArgs="1 -9" methodName="Hello" />
-      </onEnterEventData>
-      <onExitEventData>
-        <UnityEventData typeName="Tile" typeArgs="2 -9" methodName="Hello" />
-      </onExitEventData>
+      <onEnterEventData />
+      <onExitEventData />
     </TileData>
     <TileData type="Tile" x="2" z="-1" moveUpAtStart="true" />
     <TileData type="Tile" x="2" z="-2" moveUpAtStart="true" />

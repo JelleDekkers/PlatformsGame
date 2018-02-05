@@ -17,46 +17,33 @@ public class PressureTile : Tile {
 
     public override void OnDeserializeEvents(TileData tileData) {
         PressureTileData data = tileData as PressureTileData;
+        DeserializeEventListeners(OnEnterEvent, data.onEnterEventData);
+        DeserializeEventListeners(OnExitEvent, data.onExitEventData);
+    }
 
-        // onEnter:
-        for (int i = 0; i < data.onEnterEventData.Length; i++) {
+    private void DeserializeEventListeners(UnityEvent e, UnityEventData[] data) {
+        for (int i = 0; i < data.Length; i++) {
             MethodInfo method = null;
             UnityAction action = null;
 
-            if (data.onEnterEventData[i].typeName == typeof(Tile).FullName) {
-                UnityEventData d = data.onEnterEventData[i];
-                IntVector2 coordinates = new IntVector2(int.Parse(d.typeArgs[0]), int.Parse(d.typeArgs[1]));
-                Tile target = LevelManager.CurrentLevel.Tiles.GetTile(coordinates);
-                method = target.GetType().GetMethod(d.methodName);
-                action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, method);
-#if UNITY_EDITOR
-                UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(OnEnterEvent, action);
-#else
-                OnEnterEvent.AddListener(action);
-#endif
+            if (!UnityEventData.DataLinks.ContainsKey(data[i].typeName)) {
+                Debug.LogWarning(data[i].typeName + " is not found in UnityEventData.DataLinks");
+                return;
             }
-        }
 
-        // onExit
-        for (int i = 0; i < data.onExitEventData.Length; i++) {
-            MethodInfo method = null;
-            UnityAction action = null;
-
-            if (data.onExitEventData[i].typeName == typeof(Tile).FullName) {
-                UnityEventData d = data.onExitEventData[i];
-                IntVector2 coordinates = new IntVector2(int.Parse(d.typeArgs[0]), int.Parse(d.typeArgs[1]));
-                Tile target = LevelManager.CurrentLevel.Tiles.GetTile(coordinates);
-                method = target.GetType().GetMethod(d.methodName);
-                action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, method);
+            UnityEngine.Object target = UnityEventData.GetTarget(data[i]);
+            method = target.GetType().GetMethod(data[i].methodName);
+            action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, method);
 
 #if UNITY_EDITOR
-                UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(OnExitEvent, action);
+            UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(e, action);
 #else
-            OnExitEvent.AddListener(action);
+            OnEnterEvent.AddListener(action);
 #endif
-            }
         }
     }
+
+    public void EventTest() { }
 
     public override void Enter(Block block) {
         base.Enter(block);

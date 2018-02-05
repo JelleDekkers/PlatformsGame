@@ -12,26 +12,37 @@ namespace Serializing {
         [XmlAttribute] public string[] typeArgs;
         [XmlAttribute] public string methodName;
 
+        public static readonly Dictionary<string, Type> DataLinks = new Dictionary<string, Type>() {
+            {typeof(Tile).FullName, typeof(Tile) },
+            {typeof(Block).FullName, typeof(Block) },
+            {typeof(Wall).FullName, typeof(Wall) }
+        };
+
         public UnityEventData() { } // default ctor necessary for xml
         public UnityEventData(Object target, string methodName) {
-            if (target.GetType() == typeof(Tile)) {
-                Tile t = target as Tile;
-                Init(target, methodName, t.coordinates.x.ToString(), t.coordinates.z.ToString());
-            } else if (target.GetType() == typeof(Tile)) {
-                Block b = target as Block;
-                Init(target, methodName, b.Coordinates.x.ToString(), b.Coordinates.z.ToString());
-            } else if (target.GetType() == typeof(Tile)) {
-                Portal p = target as Portal;
-                Init(target, methodName, p.Edge.TileOne.x.ToString(), p.Edge.TileOne.z.ToString(), p.Edge.TileTwo.x.ToString(), p.Edge.TileTwo.z.ToString());
+            if (target is ISerializableEventTarget) {
+                ISerializableEventTarget targetEvent = target as ISerializableEventTarget;
+                Init(target, methodName, targetEvent.GetEventArgs());
             } else {
-                UnityEngine.Debug.LogWarning("No corresponding type found for " + target);
+                UnityEngine.Debug.LogWarning(target + " is not a serializable event type");
             }
         }
 
         private void Init(Object obj, string methodName, params string[] typeArgs) {
-            typeName = obj.GetType().FullName;
+            typeName = GetLowestSubType(obj).FullName;
             this.methodName = methodName;
             this.typeArgs = typeArgs;
+        }
+
+        private Type GetLowestSubType(Object obj) {
+            Type result = obj.GetType();
+            for (int i = 0; i < 100; i++) {
+                if (result.BaseType == typeof(UnityEngine.MonoBehaviour))
+                    return result;
+                result = result.BaseType;
+            }
+            UnityEngine.Debug.LogWarning("No suitable type found");
+            return result;
         }
 
         public static UnityEventData[] GetEventData(UnityEvent e) {
@@ -39,6 +50,21 @@ namespace Serializing {
             for (int i = 0; i < data.Length; i++)
                 data[i] = new UnityEventData(e.GetPersistentTarget(i), e.GetPersistentMethodName(i));
             return data;
+        }
+
+        public static UnityEngine.Object GetTarget(UnityEventData data) {
+            Type t = DataLinks[data.typeName];
+            if (t == typeof(Tile)) {
+                return LevelManager.CurrentLevel.Tiles.GetTile(new IntVector2(int.Parse(data.typeArgs[0]), int.Parse(data.typeArgs[1])));
+            } else if (t == typeof(Block)) {
+                return LevelManager.CurrentLevel.Tiles.GetTile(new IntVector2(int.Parse(data.typeArgs[0]), int.Parse(data.typeArgs[1]))).occupant;
+            } else if (t == typeof(Wall)) {
+                return LevelManager.CurrentLevel.Walls.GetWall(new IntVector2(int.Parse(data.typeArgs[0]), int.Parse(data.typeArgs[1])),
+                                                               new IntVector2(int.Parse(data.typeArgs[2]), int.Parse(data.typeArgs[3])));
+            } else {
+                UnityEngine.Debug.LogWarning("No corresponding type found for " + data.typeName);
+                return null;
+            }
         }
     }
 }

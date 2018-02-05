@@ -1,10 +1,9 @@
 events/functies via attributes en reflection voor pressure plates/triggers:
 
-deserializeren van events, netter maken en ook doen voor block en portal
+exceptions voor als method of target null is bij saven
 triggerTile doen
 
-gameAction class verwijderen
-attributetester verwijderen
+bug bij rij tiles na slide tiles
 
 tile class moet parameterless functies krijgen voor move down/up
 deze functies ongeveer dezeflde naam zodat ze bij elkaar staan in event inspector

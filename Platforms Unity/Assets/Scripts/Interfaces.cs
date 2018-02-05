@@ -18,3 +18,7 @@ public interface IInputSystem {
     float GetAxisRawHorizontal();
     float GetAxisRawVertical();
 }
+
+public interface ISerializableEventTarget {
+    string[] GetEventArgs();
+}

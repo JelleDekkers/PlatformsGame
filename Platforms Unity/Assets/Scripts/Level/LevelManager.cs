@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using Serializing;
-using System.Linq;
 
 public class LevelManager : MonoBehaviour {
 
@@ -125,6 +124,7 @@ public class LevelManager : MonoBehaviour {
                                   new Vector3(tile.transform.position.x, Block.POSITION_OFFSET.y, tile.transform.position.z),
                                   Quaternion.Euler(0, data.Roty, 0),
                                   transform);
+            b.name = "Block " + coordinates + " (" + type.ToString() + ")";
             tile.SetOccupant(b);
             b.SetTileStandingOn(tile);
         }
@@ -136,6 +136,7 @@ public class LevelManager : MonoBehaviour {
             TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.edgeOneX, data.edgeCoordinates.edgeOneZ),
                                          new IntVector2(data.edgeCoordinates.edgeTwoX, data.edgeCoordinates.edgeTwoZ));
             Portal p = Instantiate(PrefabManager.Portal, edge.TileOne.ToVector3() + Tile.POSITION_OFFSET, Quaternion.identity, transform);
+            p.name = "Wall " + edge.TileOne + " " + edge.TileTwo + " (" + p.GetType().FullName.ToString() + ")";
             p.SetIsActiveOnStart(data.isActiveOnStart);
             p.transform.eulerAngles = Wall.GetCorrespondingRotation(edge);
             p.SetEdge(edge);

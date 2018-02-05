@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 using Serializing;
 
 [Serializable, SelectionBase]
-public class Tile : MonoBehaviour {
+public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     public static readonly Vector3 SIZE = new Vector3(1, 0.2f, 1);
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0f, 0.5f);
@@ -69,7 +69,7 @@ public class Tile : MonoBehaviour {
     }
 
     public virtual void Exit(Block block) {
-        if(occupant == block)
+        if (occupant == block)
             occupant = null;
     }
 
@@ -87,7 +87,7 @@ public class Tile : MonoBehaviour {
 
     private void OnMoveDownStartFunction() {
         IsUp = false;
-        if (OnMoveDownStart != null) 
+        if (OnMoveDownStart != null)
             OnMoveDownStart.Invoke();
     }
 
@@ -142,7 +142,7 @@ public class Tile : MonoBehaviour {
     }
 
     private void OnGameOver() {
-        if(!IsUp)
+        if (!IsUp)
             return;
 
         float delay = TileSettings.TransitionOnGameOverDelay + Random.Range(0, TileSettings.TransitionOnGameOverDurationRandomMax);
@@ -157,5 +157,9 @@ public class Tile : MonoBehaviour {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y - SIZE.y / 2, transform.position.z), SIZE);
         GizmosExtension.DrawArrow(transform.position, Vector3.down, Gizmos.color, .3f, 30);
+    }
+
+    public string[] GetEventArgs() {
+        return new string[] { coordinates.x.ToString(), coordinates.z.ToString() };
     }
 }

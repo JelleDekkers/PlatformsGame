@@ -4,7 +4,7 @@ using UnityEngine;
 using Serializing;
 
 [SelectionBase]
-public class Portal : Wall, ILaserDiverter, IActivatable {
+public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarget {
 
     public Laser Laser { get; private set; }
     public TileEdge Edge;// { get; private set; }
@@ -187,5 +187,9 @@ public class Portal : Wall, ILaserDiverter, IActivatable {
         portalFront.SetActive(false);
         portalBack.SetActive(false);
         boxCollider.enabled = false;
+    }
+
+    public string[] GetEventArgs() {
+        return new string[] { Edge.TileOne.x.ToString(), Edge.TileOne.z.ToString(), Edge.TileTwo.x.ToString(), Edge.TileTwo.z.ToString() };
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [Serializable, SelectionBase]
-public class Block : MonoBehaviour {
+public class Block : MonoBehaviour, ISerializableEventTarget {
 
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0.5f, 0.5f);
     public static readonly Vector3 SIZE = new Vector3(1f, 1f, 1f);
@@ -19,6 +19,8 @@ public class Block : MonoBehaviour {
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
     }
+
+    public void EventTest() { }
 
     protected virtual void IntroTransition() {
         Vector3 target = transform.position;
@@ -58,6 +60,10 @@ public class Block : MonoBehaviour {
         tileStandingOn.OnMoveDownStart += OnTileStandingOnMoveDownStart;
         tileStandingOn.OnMoveUpEnd += OnTileStandingOnMoveUpEnd;
         tileStandingOn.OnMoveUpStart += OnTileStandingOnMoveUpStart;
+    }
+
+    public string[] GetEventArgs() {
+        return new string[] { Coordinates.x.ToString(), Coordinates.z.ToString() };
     }
 
     #region Events
