@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Serializing;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,16 +10,19 @@ public class TriggerTile : Tile {
     private bool isRepeatable;
     public bool IsRepeatable { get { return isRepeatable; } }
 
-    public UnityEvent OnEnterUnityEvent;
-
-    // onenter/onexit play click sound? via event
+    public UnityEvent OnEnterEvent;
 
     public UnityEvent[] testEvents;
     public float delayBetween = 1;
 
+    public override void OnDeserializeEvents(TileData tileData) {
+        PressureTileData data = tileData as PressureTileData;
+        UnityEventData.DeserializeEvents(OnEnterEvent, data.onEnterEventData);
+    }
+
     public override void Enter(Block block) {
         base.Enter(block);
-        if (OnEnterUnityEvent != null)
-            OnEnterUnityEvent.Invoke();
+        if (OnEnterEvent != null)
+            OnEnterEvent.Invoke();
     }
 }

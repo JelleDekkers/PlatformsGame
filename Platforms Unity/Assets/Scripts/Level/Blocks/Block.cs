@@ -20,8 +20,6 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
         GameEvents.OnIntroComplete += OnIntroComplete;
     }
 
-    public void EventTest() { }
-
     protected virtual void IntroTransition() {
         Vector3 target = transform.position;
         transform.position = new Vector3(transform.position.x, transform.position.y + BlockSettings.IntroStartingHeight, transform.position.z); 

@@ -3,6 +3,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using System.Reflection;
 
 namespace Serializing {
 
@@ -46,10 +47,13 @@ namespace Serializing {
         }
 
         public static UnityEventData[] GetEventData(UnityEvent e) {
-            UnityEventData[] data = new UnityEventData[e.GetPersistentEventCount()];
-            for (int i = 0; i < data.Length; i++)
-                data[i] = new UnityEventData(e.GetPersistentTarget(i), e.GetPersistentMethodName(i));
-            return data;
+            List<UnityEventData> data = new List<UnityEventData>();
+            for (int i = 0; i < e.GetPersistentEventCount(); i++) {
+                if ((e.GetPersistentTarget(i) == null) || String.IsNullOrEmpty(e.GetPersistentMethodName(i)))
+                    continue;
+                data.Add(new UnityEventData(e.GetPersistentTarget(i), e.GetPersistentMethodName(i)));
+            }
+            return data.ToArray();
         }
 
         public static UnityEngine.Object GetTarget(UnityEventData data) {
@@ -64,6 +68,33 @@ namespace Serializing {
             } else {
                 UnityEngine.Debug.LogWarning("No corresponding type found for " + data.typeName);
                 return null;
+            }
+        }
+
+        public static void DeserializeEvents(UnityEvent e, UnityEventData[] data) {
+            for (int i = 0; i < data.Length; i++) {
+                MethodInfo method = null;
+                UnityAction action = null;
+
+                if (!DataLinks.ContainsKey(data[i].typeName)) {
+                    UnityEngine.Debug.LogWarning(data[i].typeName + " is not found in UnityEventData.DataLinks");
+                    return;
+                }
+
+                UnityEngine.Object target = GetTarget(data[i]);
+                method = target.GetType().GetMethod(data[i].methodName);
+
+                if(method == null) {
+                    UnityEngine.Debug.LogWarning("No method " + data[i].methodName + " found in " + target);
+                    return;
+                }
+
+                action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, method);
+#if UNITY_EDITOR
+                UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(e, action);
+#else
+                e.AddListener(action);
+#endif
             }
         }
     }

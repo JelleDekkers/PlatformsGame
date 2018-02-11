@@ -1,8 +1,5 @@
 events/functies via attributes en reflection voor pressure plates/triggers:
 
-exceptions voor als method of target null is bij saven
-triggerTile doen
-
 bug bij rij tiles na slide tiles
 
 tile class moet parameterless functies krijgen voor move down/up
