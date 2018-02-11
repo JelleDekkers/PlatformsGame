@@ -30,7 +30,6 @@ public class BlockMoveable : Block {
 
         if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
             Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
-            Debug.Log("moving from " + Coordinates + " to " + neighbourCoordinates + " has portal: " + portal);
             neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
         }
 
@@ -72,9 +71,6 @@ public class BlockMoveable : Block {
     }
 
     public virtual void Fall(IntVector2 direction, float duration) {
-        isMoving = true;
-        if (tileStandingOn != null)
-            tileStandingOn.SetOccupant(null);
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(FallCoroutine(direction, duration));
@@ -116,14 +112,13 @@ public class BlockMoveable : Block {
     }
 
     protected virtual IEnumerator FallCoroutine(IntVector2 direction, float movementDurationBeforeFall) {
-        isMoving = true;
         Tile tileWasStandingOn = tileStandingOn;
-        tileStandingOn.Exit(this);
-        tileStandingOn = null;
+        OnMoveStart(null);
 
         float time = 0f;
         Vector3 startPos = transform.position;
         Vector3 endPos = transform.position + direction.ToVector3();
+
         while (time < movementDurationBeforeFall * 0.5f) {
             transform.position = Vector3.Lerp(startPos, endPos, time / movementDurationBeforeFall);
             time += Time.deltaTime;
@@ -157,7 +152,6 @@ public class BlockMoveable : Block {
         if (newTile != null) {
             newTile.Enter(this);
             SubscribeToTileEvents(newTile);
-
         }
     }
 

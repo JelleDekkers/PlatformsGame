@@ -45,12 +45,12 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
     }
 
     protected void UnSubscribeToTileEvents(Tile t) {
-        if (tileStandingOn != null) {
-            t.OnMoveDownEnd -= OnTileStandingOnMoveDownEnd;
-            t.OnMoveDownStart -= OnTileStandingOnMoveDownStart;
-            t.OnMoveUpEnd -= OnTileStandingOnMoveUpEnd;
-            t.OnMoveUpStart -= OnTileStandingOnMoveUpStart;
-        }
+        if (tileStandingOn == null)
+            return;
+        t.OnMoveDownEnd -= OnTileStandingOnMoveDownEnd;
+        t.OnMoveDownStart -= OnTileStandingOnMoveDownStart;
+        t.OnMoveUpEnd -= OnTileStandingOnMoveUpEnd;
+        t.OnMoveUpStart -= OnTileStandingOnMoveUpStart;
     }
 
     protected void SubscribeToTileEvents(Tile t) {

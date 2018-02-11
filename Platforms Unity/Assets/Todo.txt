@@ -1,12 +1,8 @@
 events/functies via attributes en reflection voor pressure plates/triggers:
 
-bug bij pushen van 2 tiles, 1 valt naar beneden, player moved dan door de 2de block heen
-
 tile class moet parameterless functies krijgen voor move down/up, verveld met randomized values
 deze functies ongeveer dezeflde naam zodat ze bij elkaar staan in event inspector
 zelfde bij block
-
-walls worden niet verwijderd uit list bij delete
 
 general settings voor intro state done en useTransitions
 blockmoveable fallcutoff var

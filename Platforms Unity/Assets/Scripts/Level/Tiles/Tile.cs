@@ -11,7 +11,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0f, 0.5f);
 
     public IntVector2 coordinates;// { get; private set; }
-    public Block occupant;// { get; private set; }
+    public Block occupant;
     public bool IsUp { get; private set; }
     public Transform TileMesh { get { return transform.GetChild(0); } }
 
@@ -77,9 +77,6 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
 
-        //currentCoroutine = StartCoroutine(Tween.Scale(transform, 0, moveUpStandardDuration, Vector3.zero, Vector3.one, OnMoveUpStartFunction, OnMoveUpEndFunction));
-        //Vector3 start = new Vector3(transform.position.x, transform.position.y - Random.Range(10, 20), transform.position.z);
-        //StartCoroutine(Tween.Move(transform, 0, .75f, start, transform.position, null));
         Vector3 start = new Vector3(TileMesh.position.x, DownHeight, TileMesh.position.z);
         Vector3 target = new Vector3(TileMesh.position.x, UpHeight, TileMesh.position.z);
         currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(TileMesh, delay, duration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));

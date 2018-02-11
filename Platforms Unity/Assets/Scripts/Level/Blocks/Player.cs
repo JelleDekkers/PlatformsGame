@@ -119,10 +119,7 @@ public class Player : BlockMoveable {
     }
 
     protected override IEnumerator FallCoroutine(IntVector2 direction, float movementDurationBeforeFall) {
-        isMoving = true;
-        if(tileStandingOn != null)
-            tileStandingOn.Exit(null);
-        tileStandingOn = null;
+        OnMoveStart(null);
 
         float time = 0f;
         Vector3 rotationPivot = transform.position + (direction.ToVector3() / 2);
