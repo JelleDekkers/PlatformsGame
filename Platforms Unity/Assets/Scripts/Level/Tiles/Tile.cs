@@ -27,12 +27,12 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     private Coroutine currentCoroutine;
 
-    public virtual void OnDeserialize(TileData data) {
+    public virtual void Deserialize(TileData data) {
         coordinates = new IntVector2(data.x, data.z);
         moveUpAtStart = data.moveUpAtStart;
     }
 
-    public virtual void OnDeserializeEvents(TileData data) { }
+    public virtual void DeserializeEvents(TileData data) { }
 
     private void Awake() {
         GameEvents.OnGameOver += OnGameOver;
@@ -73,30 +73,6 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             occupant = null;
     }
 
-    private void OnMoveUpStartFunction() {
-        IsUp = true;
-        TileMesh.gameObject.SetActive(true);
-        if (OnMoveUpStart != null)
-            OnMoveUpStart.Invoke();
-    }
-
-    private void OnMoveUpEndFunction() {
-        if (OnMoveUpEnd != null)
-            OnMoveUpEnd.Invoke();
-    }
-
-    private void OnMoveDownStartFunction() {
-        IsUp = false;
-        if (OnMoveDownStart != null)
-            OnMoveDownStart.Invoke();
-    }
-
-    private void OnMoveDownEndFunction() {
-        TileMesh.gameObject.SetActive(false);
-        if (OnMoveDownEnd != null)
-            OnMoveDownEnd.Invoke();
-    }
-
     public void MoveUp(float duration, float delay) {
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
@@ -128,15 +104,6 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             MoveUp(TileSettings.MoveUpStandardDuration, 0);
     }
 
-    public void Test() {
-        Debug.Log("Test");
-    }
-
-
-    public void Hello() {
-        Debug.Log("Hello");
-    }
-
     public void SetOccupant(Block occupant) {
         this.occupant = occupant;
     }
@@ -162,4 +129,30 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     public string[] GetEventArgs() {
         return new string[] { coordinates.x.ToString(), coordinates.z.ToString() };
     }
+
+    #region Events
+    private void OnMoveUpStartFunction() {
+        IsUp = true;
+        TileMesh.gameObject.SetActive(true);
+        if (OnMoveUpStart != null)
+            OnMoveUpStart.Invoke();
+    }
+
+    private void OnMoveUpEndFunction() {
+        if (OnMoveUpEnd != null)
+            OnMoveUpEnd.Invoke();
+    }
+
+    private void OnMoveDownStartFunction() {
+        IsUp = false;
+        if (OnMoveDownStart != null)
+            OnMoveDownStart.Invoke();
+    }
+
+    private void OnMoveDownEndFunction() {
+        TileMesh.gameObject.SetActive(false);
+        if (OnMoveDownEnd != null)
+            OnMoveDownEnd.Invoke();
+    }
+    #endregion
 }

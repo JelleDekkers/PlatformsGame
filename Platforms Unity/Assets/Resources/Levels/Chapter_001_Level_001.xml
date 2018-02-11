@@ -1,64 +1,51 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="05/2/18 19:29:04">
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="11/2/18 19:39:32">
   <tiles>
-    <TileData type="Tile" x="1" z="-2" moveUpAtStart="true" />
-    <TileData type="Tile" x="1" z="-1" moveUpAtStart="true" />
-    <TileData type="Tile" x="0" z="-1" moveUpAtStart="true" />
-    <TileData type="Tile" x="0" z="0" moveUpAtStart="true" />
-    <TileData type="Tile" x="0" z="1" moveUpAtStart="true" />
-    <TileData type="Tile" x="0" z="2" moveUpAtStart="true" />
-    <TileData type="Tile" x="1" z="2" moveUpAtStart="true" />
-    <TileData type="Tile" x="2" z="1" moveUpAtStart="true" />
+    <TileData type="Tile" x="3" z="-1" moveUpAtStart="true" />
     <TileData type="Tile" x="3" z="0" moveUpAtStart="true" />
-    <TileData type="Tile" x="1" z="0" moveUpAtStart="true" />
-    <TileData type="Tile" x="2" z="0" moveUpAtStart="true" />
-    <TileData type="Tile" x="1" z="1" moveUpAtStart="true" />
-    <TileData xsi:type="PressureTileData" type="PressureTile" x="0" z="-2" moveUpAtStart="true">
+    <TileData xsi:type="PressureTileData" type="PressureTile" x="-1" z="1" moveUpAtStart="true">
       <onEnterEventData />
       <onExitEventData />
     </TileData>
-    <TileData type="Tile" x="2" z="-1" moveUpAtStart="true" />
-    <TileData type="Tile" x="2" z="-2" moveUpAtStart="true" />
-    <TileData type="Tile" x="3" z="-2" moveUpAtStart="true" />
-    <TileData type="Tile" x="3" z="-1" moveUpAtStart="true" />
+    <TileData type="Tile" x="3" z="3" moveUpAtStart="true" />
+    <TileData type="Tile" x="3" z="2" moveUpAtStart="true" />
+    <TileData type="Tile" x="3" z="1" moveUpAtStart="true" />
     <TileData type="Tile" x="2" z="-3" moveUpAtStart="true" />
     <TileData type="Tile" x="1" z="-3" moveUpAtStart="true" />
     <TileData type="Tile" x="0" z="-3" moveUpAtStart="true" />
-    <TileData xsi:type="GoalTileData" type="Goal" x="-1" z="1" moveUpAtStart="true" />
-    <TileData type="Tile" x="0" z="-4" moveUpAtStart="true" />
-    <TileData type="Tile" x="1" z="-4" moveUpAtStart="true" />
-    <TileData type="Tile" x="2" z="-4" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="-5" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="-5" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="-5" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="-6" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="-6" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="-6" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="-7" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="-7" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="-7" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="-8" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="-8" moveUpAtStart="true" />
-    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="-8" moveUpAtStart="true" />
-    <TileData type="Tile" x="0" z="-9" moveUpAtStart="true" />
-    <TileData type="Tile" x="1" z="-9" moveUpAtStart="true" />
-    <TileData type="Tile" x="2" z="-9" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="-2" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="-2" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="-2" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="-1" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="-1" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="-1" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="2" z="0" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="1" z="0" moveUpAtStart="true" />
+    <TileData xsi:type="SlideTileData" type="SlideTile" x="0" z="0" moveUpAtStart="true" />
+    <TileData xsi:type="GoalTileData" type="Goal" x="-1" z="2" moveUpAtStart="true" />
+    <TileData type="Tile" x="2" z="3" moveUpAtStart="true" />
+    <TileData type="Tile" x="1" z="3" moveUpAtStart="true" />
+    <TileData type="Tile" x="1" z="2" moveUpAtStart="true" />
+    <TileData type="Tile" x="2" z="2" moveUpAtStart="true" />
+    <TileData type="Tile" x="2" z="1" moveUpAtStart="true" />
+    <TileData type="Tile" x="1" z="1" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="1" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="2" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="3" moveUpAtStart="true" />
   </tiles>
   <blocks>
-    <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="-1" Roty="180" />
-    <BlockData xsi:type="LaserSourceBlockData" objectType="LaserSource" x="0" z="2" Roty="180" isActiveOnStart="false" />
-    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="1" z="2" Roty="180" />
-    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="3" z="0" Roty="180" />
-    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="1" z="-3" Roty="90" />
+    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="3" z="2" Roty="180" />
+    <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="2" Roty="180" />
+    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="1" z="1" Roty="90" />
   </blocks>
   <portals>
     <PortalData isActiveOnStart="true">
-      <edgeCoordinates edgeOneX="0" edgeOneZ="-1" edgeTwoX="-1" edgeTwoZ="-1" />
-      <connectedPortalCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="2" />
+      <edgeCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="4" />
+      <connectedPortalCoordinates edgeOneX="-1" edgeOneZ="0" edgeTwoX="0" edgeTwoZ="0" />
     </PortalData>
     <PortalData isActiveOnStart="true">
-      <edgeCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="2" />
-      <connectedPortalCoordinates edgeOneX="0" edgeOneZ="-1" edgeTwoX="-1" edgeTwoZ="-1" />
+      <edgeCoordinates edgeOneX="-1" edgeOneZ="0" edgeTwoX="0" edgeTwoZ="0" />
+      <connectedPortalCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="4" />
     </PortalData>
   </portals>
 </level>

@@ -30,6 +30,7 @@ public class BlockMoveable : Block {
 
         if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
             Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
+            Debug.Log("moving from " + Coordinates + " to " + neighbourCoordinates + " has portal: " + portal);
             neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
         }
 

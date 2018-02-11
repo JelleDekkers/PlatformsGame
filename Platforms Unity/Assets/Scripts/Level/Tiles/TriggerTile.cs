@@ -15,7 +15,7 @@ public class TriggerTile : Tile {
     public UnityEvent[] testEvents;
     public float delayBetween = 1;
 
-    public override void OnDeserializeEvents(TileData tileData) {
+    public override void DeserializeEvents(TileData tileData) {
         PressureTileData data = tileData as PressureTileData;
         UnityEventData.DeserializeEvents(OnEnterEvent, data.onEnterEventData);
     }

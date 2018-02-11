@@ -1,11 +1,12 @@
 events/functies via attributes en reflection voor pressure plates/triggers:
 
-bug bij rij tiles na slide tiles
+bug bij pushen van 2 tiles, 1 valt naar beneden, player moved dan door de 2de block heen
 
-tile class moet parameterless functies krijgen voor move down/up
+tile class moet parameterless functies krijgen voor move down/up, verveld met randomized values
 deze functies ongeveer dezeflde naam zodat ze bij elkaar staan in event inspector
+zelfde bij block
 
-bruggetje van tiles die getimed omhoog/omlaag komen
+walls worden niet verwijderd uit list bij delete
 
 general settings voor intro state done en useTransitions
 blockmoveable fallcutoff var
@@ -15,11 +16,13 @@ portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal
 portal disable mesh in editor als niet active is
 block moven testen bij disabled portal
 
+bruggetje van tiles die getimed omhoog/omlaag komen
+
 tiles waar blocks behalve speler niet op kunnen
 
 laser directors die je kunt verplaatsen, zelfde kleuren als de immoveable en moveable blocks
 
-blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?
+blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?, kan dan bijvoorbeeld getoggled worden dmv pressuretiles
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
 

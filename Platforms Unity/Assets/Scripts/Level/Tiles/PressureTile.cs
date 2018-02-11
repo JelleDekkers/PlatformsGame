@@ -13,7 +13,7 @@ public class PressureTile : Tile {
     public UnityEvent OnEnterEvent;
     public UnityEvent OnExitEvent;
 
-    public override void OnDeserializeEvents(TileData tileData) {
+    public override void DeserializeEvents(TileData tileData) {
         PressureTileData data = tileData as PressureTileData;
         UnityEventData.DeserializeEvents(OnEnterEvent, data.onEnterEventData);
         UnityEventData.DeserializeEvents(OnExitEvent, data.onExitEventData);

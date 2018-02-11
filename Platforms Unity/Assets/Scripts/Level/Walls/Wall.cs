@@ -4,6 +4,8 @@ using UnityEngine;
 [Serializable]
 public class Wall : MonoBehaviour {
 
+    public TileEdge Edge;// { get; private set; }
+
     public static Vector3 GetCorrespondingRotation(TileEdge edge) {
         IntVector2 dif = edge.TileTwo.ToAbsolute() - edge.TileOne.ToAbsolute();
 

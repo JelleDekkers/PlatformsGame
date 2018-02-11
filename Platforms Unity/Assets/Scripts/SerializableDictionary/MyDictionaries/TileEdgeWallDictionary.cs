@@ -18,6 +18,13 @@ public class TileEdgeWallDictionary : SerializableDictionary<TileEdge, Wall> {
     }
 
     public bool ContainsWall(TileEdge edge) {
+        //Debug.Log(edge + " hash 1" + edge.TileOne.GetHashCode() + " hash 2" + edge.TileTwo.GetHashCode());
+        //Debug.Log(ContainsKey(edge) + " " + ContainsKey(new TileEdge(edge.TileTwo, edge.TileOne)));
+        //Wall wallFound = GetWall(edge.TileOne, edge.TileTwo);
+        //if (wallFound != null) {
+        //    Debug.Log(wallFound.Edge + " hash 1" + wallFound.Edge.TileOne.GetHashCode() + " hash 2" + wallFound.Edge.TileTwo.GetHashCode());
+        //    Debug.Log(wallFound.Edge.Equals(edge) + " " + edge.GetHashCode() + " " + wallFound.Edge.GetHashCode());
+        //}
         return ContainsKey(edge) || ContainsKey(new TileEdge(edge.TileTwo, edge.TileOne));
     }
 

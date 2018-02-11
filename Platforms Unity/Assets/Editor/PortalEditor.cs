@@ -12,8 +12,6 @@ public class PortalEditor : DraggableEditorObject<Portal> {
         base.Awake();
         runInPlayMode = false;
         dragging = !LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge);
-        //if (obj.Edge != null)
-        //    snappedTobeforeDrag = obj.Edge;
     }
 
     protected override void OnDrag() {
@@ -84,9 +82,9 @@ public class PortalEditor : DraggableEditorObject<Portal> {
     }
 
     private void OnDestroy() {
-        if (Application.isEditor && !Application.isPlaying && obj == null && snappedTobeforeDrag != null) {
-            Debug.Log("remove wall");
-            LevelManager.CurrentLevel.Walls.RemoveWall(snappedTobeforeDrag);
+        if (Application.isEditor && !Application.isPlaying && obj == null) {
+            if(LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge))
+                LevelManager.CurrentLevel.Walls.RemoveWall(obj.Edge);
         }
     }
 }

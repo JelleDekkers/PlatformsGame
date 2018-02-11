@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    [SerializeField, HideInInspector]
+    [SerializeField]//, HideInInspector]
     private Level currentLevel;
     public static Level CurrentLevel {
         get { return Instance.currentLevel; }
@@ -107,7 +107,7 @@ public class LevelManager : MonoBehaviour {
             t.name = "Tile " + coordinates + " (" + type.ToString() + ")";
             t.transform.position = location;
             currentLevel.Tiles.Add(new IntVector2(data.x, data.z), t);
-            t.OnDeserialize(data);
+            t.Deserialize(data);
 
             if (t.GetType() == typeof(PressureTile))
                 tilesWithEvents.Add(t, data);
@@ -160,7 +160,7 @@ public class LevelManager : MonoBehaviour {
 
     public void AssignEvents(ref Dictionary<Tile, TileData> tilesWithEvents) {
         foreach (KeyValuePair<Tile, TileData> pair in tilesWithEvents)
-            pair.Key.OnDeserializeEvents(pair.Value);
+            pair.Key.DeserializeEvents(pair.Value);
     }
 
 #if UNITY_EDITOR

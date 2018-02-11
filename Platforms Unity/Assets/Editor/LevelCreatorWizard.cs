@@ -26,7 +26,10 @@ public class LevelCreator : ScriptableWizard {
     }
 
     private void Init() {
-        fileName = persistentFileName;
+        if (LevelManager.Instance.levelAsset != null)
+            fileName = LevelManager.Instance.levelAsset.name;
+        else
+            fileName = persistentFileName;
     }
 
     private void OnWizardCreate() {

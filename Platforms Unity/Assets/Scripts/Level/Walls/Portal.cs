@@ -7,16 +7,18 @@ using Serializing;
 public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarget {
 
     public Laser Laser { get; private set; }
-    public TileEdge Edge;// { get; private set; }
     public Transform Pivot { get { return transform.GetChild(0); } }
     public bool IsActive { get; private set; }
 
-    [SerializeField] private bool isActiveOnStart;
+    [SerializeField]
+    private bool isActiveOnStart;
     public bool IsActiveOnStart { get { return isActiveOnStart; } }
-    [SerializeField] private Portal connectedPortal;
+    [SerializeField]
+    private Portal connectedPortal;
     public Portal ConnectedPortal { get { return connectedPortal; } }
 
-    [SerializeField] private GameObject depthMaskFront, depthMaskBack;
+    [SerializeField]
+    private GameObject depthMaskFront, depthMaskBack;
     private GameObject portalFront;
     private GameObject portalBack;
     public BoxCollider RayBlockerFront { get; private set; }
