@@ -29,7 +29,7 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
     private BoxCollider boxCollider;
 
     private void Awake() {
-        if (TileSettings.UseStartingTransitions)
+        if (GeneralSettings.UseTransitions)
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
     
@@ -49,6 +49,10 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
 
     public void SetIsActiveOnStart(bool active) {
         isActiveOnStart = active;
+    }
+
+    public bool CanTeleport() {
+        return connectedPortal != null && IsActive;
     }
 
     public void SetEdge(TileEdge edge) {

@@ -30,7 +30,8 @@ public class BlockMoveable : Block {
 
         if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
             Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
-            neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
+            if (portal.CanTeleport()) 
+                neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
         }
 
         Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
@@ -119,7 +120,7 @@ public class BlockMoveable : Block {
         Vector3 startPos = transform.position;
         Vector3 endPos = transform.position + direction.ToVector3();
 
-        while (time < movementDurationBeforeFall * 0.5f) {
+        while (time < movementDurationBeforeFall * BlockSettings.FallCutOff) {
             transform.position = Vector3.Lerp(startPos, endPos, time / movementDurationBeforeFall);
             time += Time.deltaTime;
             yield return null;
@@ -130,7 +131,7 @@ public class BlockMoveable : Block {
         Rigidbody rBody = gameObject.GetComponent<Rigidbody>();
         StartCoroutine(tileWasStandingOn.EnableColliderTemporarily());
         rBody.isKinematic = false;
-        rBody.AddForce(direction.ToVector3() * 100, ForceMode.Acceleration);
+        rBody.AddForce(direction.ToVector3() * BlockSettings.FallForce, ForceMode.Acceleration);
     }
 
     #region Events

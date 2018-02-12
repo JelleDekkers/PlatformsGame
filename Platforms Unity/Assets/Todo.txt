@@ -1,13 +1,3 @@
-events/functies via attributes en reflection voor pressure plates/triggers:
-
-tile class moet parameterless functies krijgen voor move down/up, verveld met randomized values
-deze functies ongeveer dezeflde naam zodat ze bij elkaar staan in event inspector
-zelfde bij block
-
-general settings voor intro state done en useTransitions
-blockmoveable fallcutoff var
-gameManager gameover vars naar settings
-
 portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal active is en niet null is
 portal disable mesh in editor als niet active is
 block moven testen bij disabled portal

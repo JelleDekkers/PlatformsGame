@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.IO;
 using Malee;
 
-[CreateAssetMenu(fileName = "LevelsHandler", menuName = "Tools/Levels Handler", order = 3)]
+[CreateAssetMenu(fileName = "LevelsHandler", menuName = "Tools/Levels Handler", order = 1)]
 public class LevelsHandler : ScriptableObjectSingleton<LevelsHandler> {
 
     private const string FILE_EXTENSION = ".xml";

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "Block Settings", menuName = "Tools/Block Settings", order = 3)]
+[CreateAssetMenu(fileName = "Block Settings", menuName = "Tools/Settings/Block Settings", order = 3)]
 public class BlockSettings : ScriptableObjectSingleton<BlockSettings> {
 
     [SerializeField] private float moveDuration = 0.2f;
@@ -30,4 +30,10 @@ public class BlockSettings : ScriptableObjectSingleton<BlockSettings> {
 
     [SerializeField] private float destroyDelayOnFall = 1f;
     public static float DestroyDelayOnFall { get { return Instance.destroyDelayOnFall; } }
+
+    [SerializeField] private float fallCutOff = 0.5f;
+    public static float FallCutOff { get { return Instance.fallCutOff; } }
+
+    [SerializeField] private float fallForce = 100;
+    public static float FallForce { get { return Instance.fallForce; } }
 }

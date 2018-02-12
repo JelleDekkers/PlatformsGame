@@ -15,7 +15,7 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
     private Renderer rend;
 
     protected virtual void Awake() {
-        if(TileSettings.UseStartingTransitions)
+        if(GeneralSettings.UseTransitions)
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
     }

@@ -125,10 +125,8 @@ public class Player : BlockMoveable {
         Vector3 rotationPivot = transform.position + (direction.ToVector3() / 2);
         rotationPivot.y = 0;
         Vector3 rotationDirection = new Vector3(direction.z, 0, -direction.x);
-        isMoving = true;
 
         float angle = 90 / BlockSettings.MoveDuration;
-
         while (time < BlockSettings.MoveDuration) {
             transform.RotateAround(rotationPivot, rotationDirection, angle * Time.deltaTime);
             time += Time.deltaTime;
