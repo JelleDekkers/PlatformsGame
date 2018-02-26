@@ -31,6 +31,7 @@ public class BuildModeBlock : BuildMode {
         Block block = PrefabUtility.InstantiatePrefab(Prefabs[index]) as Block;
         block.SetTileStandingOn(tileStandingOn);
         tileStandingOn.SetOccupant(block);
+        block.name = Block.GetTypeName(block);
         block.transform.position = coordinates.ToVector3() + Block.POSITION_OFFSET;
         block.transform.SetParent(LevelManager.Instance.transform);
         block.transform.eulerAngles = GetCorrespondingRotation();

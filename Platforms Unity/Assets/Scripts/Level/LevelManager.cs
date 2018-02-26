@@ -104,7 +104,8 @@ public class LevelManager : MonoBehaviour {
             IntVector2 coordinates = new IntVector2(data.x, data.z);
             Vector3 location = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
             Tile t = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type), location, Quaternion.identity, transform);
-            t.name = "Tile " + coordinates + " (" + type.ToString() + ")";
+            // if in editor:
+            t.name = Tile.GetTypeName(t, coordinates);
             t.transform.position = location;
             currentLevel.Tiles.Add(new IntVector2(data.x, data.z), t);
             t.Deserialize(data);
@@ -124,7 +125,8 @@ public class LevelManager : MonoBehaviour {
                                   new Vector3(tile.transform.position.x, Block.POSITION_OFFSET.y, tile.transform.position.z),
                                   Quaternion.Euler(0, data.Roty, 0),
                                   transform);
-            b.name = "Block " + coordinates + " (" + type.ToString() + ")";
+            // if in editor:
+            b.name = Block.GetTypeName(b);
             tile.SetOccupant(b);
             b.SetTileStandingOn(tile);
         }
@@ -137,6 +139,7 @@ public class LevelManager : MonoBehaviour {
                                          new IntVector2(data.edgeCoordinates.edgeTwoX, data.edgeCoordinates.edgeTwoZ));
             Portal p = Instantiate(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal)) as Portal, edge.TileOne.ToVector3() + Tile.POSITION_OFFSET, Quaternion.identity, transform);
             p.name = "Wall " + edge.TileOne + " " + edge.TileTwo + " (" + p.GetType().FullName.ToString() + ")";
+            p.name = Wall.GetTypeName(p, edge);
             p.SetIsActiveOnStart(data.isActiveOnStart);
             p.transform.eulerAngles = Wall.GetCorrespondingRotation(edge);
             p.SetEdge(edge);

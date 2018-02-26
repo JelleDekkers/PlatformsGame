@@ -38,6 +38,7 @@ public class BuildModeWall : BuildMode {
         portal.SetEdge(edge);
         Level.Walls.AddWall(edge, portal);
         portal.transform.SetParent(LevelManager.Instance.transform);
+        portal.name = Wall.GetTypeName(portal, edge);
 
         Undo.RegisterCreatedObjectUndo(portal.gameObject, "Created: " + portal.name);
         EditorUtility.SetDirty(portal);

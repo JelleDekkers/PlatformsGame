@@ -101,6 +101,7 @@ public class PortalEditor : DraggableEditorObject<Portal> {
             LevelManager.CurrentLevel.Walls.RemoveWall(snappedTobeforeDrag);
         LevelManager.CurrentLevel.Walls.AddWall(snappedToWhileDragging, obj);
         obj.transform.SetParent(LevelManager.Instance.transform);
+        obj.name = Wall.GetTypeName(obj, snappedToWhileDragging);
         base.PlaceObject();
     }
 

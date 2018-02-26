@@ -144,6 +144,19 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
         return new string[] { coordinates.x.ToString(), coordinates.z.ToString() };
     }
 
+    public static string GetTypeName(Tile tile, IntVector2 coordinates) {
+        string name = "Tile " + coordinates;
+        if (tile.GetType() == typeof(Goal))
+            name += " (Goal)";
+        else if (tile.GetType() == typeof(PressureTile))
+            name += " (Pressure)";
+        else if (tile.GetType() == typeof(TriggerTile))
+            name += " (Trigger)";
+        else if (tile.GetType() == typeof(SlideTile))
+            name += " (Slide)";
+        return name;
+    }
+
     #region Events
     private void OnMoveUpStartFunction() {
         IsUp = true;

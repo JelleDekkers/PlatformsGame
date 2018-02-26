@@ -64,6 +64,20 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
         return new string[] { Coordinates.x.ToString(), Coordinates.z.ToString() };
     }
 
+    public static string GetTypeName(Block block) {
+        if (block.GetType() == typeof(Player))
+            return "Player";
+        else if (block.GetType() == typeof(BlockMoveable))
+            return "Block (Moveable)";
+        else if (block.GetType() == typeof(LaserSource))
+            return "Laser Source";
+        else if (block.GetType() == typeof(LaserReciever))
+            return "Laser Reciever";
+        else if (block.GetType() == typeof(LaserDiverter))
+            return "Laser Diverter";
+        return "Block (Immoveable)";
+    }
+
     #region Events
     protected virtual void OnIntroComplete() {
         SubscribeToTileEvents(tileStandingOn);
