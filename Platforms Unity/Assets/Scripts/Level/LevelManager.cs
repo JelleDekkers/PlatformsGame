@@ -135,7 +135,7 @@ public class LevelManager : MonoBehaviour {
             PortalData data = level.portals[i];
             TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.edgeOneX, data.edgeCoordinates.edgeOneZ),
                                          new IntVector2(data.edgeCoordinates.edgeTwoX, data.edgeCoordinates.edgeTwoZ));
-            Portal p = Instantiate(PrefabManager.Portal, edge.TileOne.ToVector3() + Tile.POSITION_OFFSET, Quaternion.identity, transform);
+            Portal p = Instantiate(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal)) as Portal, edge.TileOne.ToVector3() + Tile.POSITION_OFFSET, Quaternion.identity, transform);
             p.name = "Wall " + edge.TileOne + " " + edge.TileTwo + " (" + p.GetType().FullName.ToString() + ")";
             p.SetIsActiveOnStart(data.isActiveOnStart);
             p.transform.eulerAngles = Wall.GetCorrespondingRotation(edge);

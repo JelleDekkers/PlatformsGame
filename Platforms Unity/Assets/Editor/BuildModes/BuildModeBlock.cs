@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEditor;
 
 public class BuildModeBlock : BuildMode {
 
-    public override Object[] Prefabs { get { return PrefabManager.Blocks; } }
+    public override Object[] Prefabs { get; protected set; }
     public override string[] PrefabNames { get; protected set; }
 
     public BuildModeBlock() {
-        PrefabNames = GetObjectNames(Prefabs);
+        Prefabs = PrefabManager.Blocks.Keys.ToArray();
+        PrefabNames = PrefabManager.Blocks.Values.ToArray();
     }
 
     public override bool IsValidPosition(Vector3 position) {

@@ -20,5 +20,5 @@ public interface IInputSystem {
 }
 
 public interface ISerializableEventTarget {
-    string[] GetEventArgs();
+    string[] GetEventArgsForDeserialization();
 }

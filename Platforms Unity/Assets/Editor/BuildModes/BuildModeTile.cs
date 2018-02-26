@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UnityEditor;
 
 public class BuildModeTile : BuildMode {
 
-    public override Object[] Prefabs { get { return PrefabManager.Tiles; } }
-    public override string[] PrefabNames { get; protected set; }
+    public override Object[] Prefabs { get; protected set; }
+    public override string[] PrefabNames {get; protected set; }
 
-    public BuildModeTile() { 
-        PrefabNames = GetObjectNames(Prefabs);
+    public BuildModeTile() {
+        Prefabs = PrefabManager.Tiles.Keys.ToArray();
+        PrefabNames = PrefabManager.Tiles.Values.ToArray();
     }
 
     public override bool IsValidPosition(Vector3 position) {

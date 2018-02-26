@@ -60,7 +60,7 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
         tileStandingOn.OnMoveUpStart += OnTileStandingOnMoveUpStart;
     }
 
-    public string[] GetEventArgs() {
+    public string[] GetEventArgsForDeserialization() {
         return new string[] { Coordinates.x.ToString(), Coordinates.z.ToString() };
     }
 

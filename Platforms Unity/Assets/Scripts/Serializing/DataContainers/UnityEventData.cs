@@ -23,7 +23,7 @@ namespace Serializing {
         public UnityEventData(Object target, string methodName) {
             if (target is ISerializableEventTarget) {
                 ISerializableEventTarget targetEvent = target as ISerializableEventTarget;
-                Init(target, methodName, targetEvent.GetEventArgs());
+                Init(target, methodName, targetEvent.GetEventArgsForDeserialization());
             } else {
                 UnityEngine.Debug.LogWarning(target + " is not a serializable event type");
             }

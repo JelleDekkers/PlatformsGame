@@ -13,30 +13,28 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
     [SerializeField]
     private bool isActiveOnStart;
     public bool IsActiveOnStart { get { return isActiveOnStart; } }
+
     [SerializeField]
     private Portal connectedPortal;
     public Portal ConnectedPortal { get { return connectedPortal; } }
 
     [SerializeField]
-    private GameObject depthMaskFront, depthMaskBack;
-    private GameObject portalFront;
-    private GameObject portalBack;
+    private GameObject depthMaskFront, depthMaskBack, portalFront, portalBack;
+    [SerializeField]
+    private BoxCollider boxCollider;
+
     public BoxCollider RayBlockerFront { get; private set; }
     public BoxCollider RayBlockerBack { get; private set; }
 
     private const int DEPTH_MASK_VALUE = 3000;
     private const int NORMAL_MASK_VALUE = 2000;
-    private BoxCollider boxCollider;
-
+    
     private void Awake() {
         if (GeneralSettings.UseTransitions)
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
     
         IsActive = isActiveOnStart;
-        boxCollider = GetComponent<BoxCollider>();
-        portalFront = depthMaskFront.transform.parent.gameObject;
-        portalBack = depthMaskBack.transform.parent.gameObject;
         RayBlockerFront = portalBack.GetComponent<BoxCollider>();
         RayBlockerBack = portalFront.GetComponent<BoxCollider>();
     }
@@ -195,7 +193,7 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
         boxCollider.enabled = false;
     }
 
-    public string[] GetEventArgs() {
+    public string[] GetEventArgsForDeserialization() {
         return new string[] { Edge.TileOne.x.ToString(), Edge.TileOne.z.ToString(), Edge.TileTwo.x.ToString(), Edge.TileTwo.z.ToString() };
     }
 }

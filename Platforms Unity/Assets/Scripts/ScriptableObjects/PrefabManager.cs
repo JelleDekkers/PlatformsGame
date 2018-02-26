@@ -5,11 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Prefabs Manager", menuName = "Tools/Prefabs Manager", order = 1)]
 public class PrefabManager : ScriptableObjectSingleton<PrefabManager> {
 
-    [SerializeField] private Tile[] tiles; 
-    public static Tile[] Tiles { get { return Instance.tiles; } }
-
-    [SerializeField] private Block[] blocks;
-    public static Block[] Blocks { get { return Instance.blocks; } }
+    [SerializeField] TileNameDictionary tiles;
+    public static TileNameDictionary Tiles { get { return Instance.tiles; } }
 
     private DataLink<Tile> tilesDataLink;
     public static DataLink<Tile> TilesDataLink {
@@ -20,6 +17,9 @@ public class PrefabManager : ScriptableObjectSingleton<PrefabManager> {
         }
     }
 
+    [SerializeField] BlockNameDictionary blocks;
+    public static BlockNameDictionary Blocks { get { return Instance.blocks; } }
+
     private DataLink<Block> blocksDataLink;
     public static DataLink<Block> BlocksDataLink {
         get {
@@ -29,9 +29,17 @@ public class PrefabManager : ScriptableObjectSingleton<PrefabManager> {
         }
     }
 
-    [SerializeField]
-    private Portal portal;
-    public static Portal Portal { get { return Instance.portal; } }
+    [SerializeField] WallNameDictionary walls;
+    public static WallNameDictionary Walls { get { return Instance.walls; } }
+
+    private DataLink<Wall> wallsDataLink;
+    public static DataLink<Wall> WallsDataLink {
+        get {
+            if (Instance.wallsDataLink == null)
+                Instance.wallsDataLink = new DataLink<Wall>(Instance.walls);
+            return Instance.wallsDataLink;
+        }
+    }
 }
 
 public class DataLink<T> where T : MonoBehaviour {
@@ -42,6 +50,12 @@ public class DataLink<T> where T : MonoBehaviour {
         prefabLinks = new Dictionary<Type, T>();
         foreach (T t in prefabs)
             prefabLinks.Add(t.GetType(), t);
+    }
+
+    public DataLink(Dictionary<T, string> prefabs) {
+        prefabLinks = new Dictionary<Type, T>();
+        foreach (KeyValuePair<T, string> pair in prefabs)
+            prefabLinks.Add(pair.Key.GetType(), pair.Key);
     }
 
     public T GetPrefabByType(Type t) {

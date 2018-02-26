@@ -140,7 +140,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
         GizmosExtension.DrawArrow(transform.position, Vector3.down, Gizmos.color, .3f, 30);
     }
 
-    public string[] GetEventArgs() {
+    public string[] GetEventArgsForDeserialization() {
         return new string[] { coordinates.x.ToString(), coordinates.z.ToString() };
     }
 

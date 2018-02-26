@@ -1,19 +1,34 @@
-portal activate testen, moet alleen teleporten/laserDiverten als connectedPortal active is en niet null is
-portal disable mesh in editor als niet active is
-block moven testen bij disabled portal
+portal krijgt geen aangepaste naam bij plaatsen in editor
+levelManager doet weer andere voor builden van alles, via 1 dezelfde functie getName doen
 
-bruggetje van tiles die getimed omhoog/omlaag komen
+kijken of via editor levels inladen met prefab connecties kan
+misschien toch via aparte levelBuilder class?
+
+
+portal moved als selected en play is gestopt
+
+portal disable mesh in editor als niet active is en geen conneccted
+via zelfde logica als in portal.start()
+
 
 tiles waar blocks behalve speler niet op kunnen
+
+bruggetje van tiles die getimed omhoog/omlaag komen
 
 laser directors die je kunt verplaatsen, zelfde kleuren als de immoveable en moveable blocks
 
 blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?, kan dan bijvoorbeeld getoggled worden dmv pressuretiles
+rekening houden met serializatie
+
+platforms die vallen nadat je er op hebt gestaan
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
 
-level fade
 volledige goede flow met en zonder transitie tussen levels
+
+level fade
+
+levelNr ui in world
 
 camera roteren?
 uit/in-zoomen?
@@ -21,10 +36,11 @@ collectables, diamantje/piramides?
 
 depth mask per portal anders? in verband met hide bij new copy door oude portal, kijken naar dichtsbijzijnde camera
 
+lasers, zelfde doen als bij portal 2 lasers, zien er vet uit
+
 models voor bepaalde objecten
 shaders/textures voor portal en laser
 
-levelNr ui in world
 
 xml optimalizeren - automatisch
 
@@ -35,8 +51,9 @@ kleurenblind kleuren checken
 
 IL2CPP builden android
 
+achievements
+
 ideëen:
-platforms die vallen nadat je er op hebt gestaan
 tile die cubes genereert? of gewoon dropt vanaf lucht
 
 blocks die bij vallen een tile vormt waar je op kan lopen, zo kun je een brug maken
@@ -52,3 +69,4 @@ segmentum
 Robus
 Kubitron/Cubitron
 Kubold
+Tegel

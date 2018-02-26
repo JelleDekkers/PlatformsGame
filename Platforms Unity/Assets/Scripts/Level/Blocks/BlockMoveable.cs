@@ -52,9 +52,11 @@ public class BlockMoveable : Block {
 
         if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, tileStandingOn.coordinates + direction)) {
             Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, tileStandingOn.coordinates + direction) as Portal;
-            portal.Teleport(this, tileStandingOn.coordinates, duration);
-            StartCoroutine(MoveCoroutineThroughPortal(direction, duration));
-            return;
+            if (portal.CanTeleport()) {
+                portal.Teleport(this, tileStandingOn.coordinates, duration);
+                StartCoroutine(MoveCoroutineThroughPortal(direction, duration));
+                return;
+            }
         }
 
         if (newTile != null && newTile.IsUp) 

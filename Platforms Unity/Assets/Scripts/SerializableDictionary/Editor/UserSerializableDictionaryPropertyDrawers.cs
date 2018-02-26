@@ -7,4 +7,7 @@ using UnityEditor;
 [CustomPropertyDrawer(typeof(ObjectColorDictionary))]
 [CustomPropertyDrawer(typeof(CoordinateTileDictionary))]
 [CustomPropertyDrawer(typeof(TileEdgeWallDictionary))]
+[CustomPropertyDrawer(typeof(TileNameDictionary))]
+[CustomPropertyDrawer(typeof(BlockNameDictionary))]
+[CustomPropertyDrawer(typeof(WallNameDictionary))]
 public class AnySerializableDictionaryPropertyDrawer : SerializableDictionaryPropertyDrawer {}

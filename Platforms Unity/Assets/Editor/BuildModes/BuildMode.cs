@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class BuildMode {
 
-    public abstract Object[] Prefabs { get; }
+    public abstract Object[] Prefabs { get; protected set; }
     public abstract string[] PrefabNames { get; protected set; }
 
     protected Level Level { get { return LevelManager.CurrentLevel; } }
@@ -20,12 +20,4 @@ public abstract class BuildMode {
         Handles.DrawWireCube(position, size);
         SceneView.RepaintAll();
     }
-
-    protected string[] GetObjectNames(Object[] arr) {
-        string[] names = new string[arr.Length];
-        for (int i = 0; i < arr.Length; i++)
-            names[i] = arr[i].name;
-        return names;
-    }
-
 }

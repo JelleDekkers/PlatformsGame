@@ -8,10 +8,33 @@ public class PortalEditor : DraggableEditorObject<Portal> {
     
     protected TileEdge snappedToWhileDragging;
 
+    private bool isActive;
+
     protected override void Awake() {
         base.Awake();
+        isActive = obj.IsActive;
         runInPlayMode = false;
         dragging = !LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge);
+
+        if (obj.IsActiveOnStart || obj.ConnectedPortal)
+            obj.Activate();
+        else
+            obj.Deactivate();
+    }
+
+    protected override void OnSceneGUI() {
+        base.OnSceneGUI();
+        //Debug.Log(obj.IsActiveOnStart + " " + isActive + " " + (obj.IsActive == isActive));
+        //CheckForActivationChanges();
+    }
+
+    private void CheckForActivationChanges() {
+        if(obj.IsActiveOnStart != isActive) {
+            if (obj.IsActiveOnStart)
+                obj.Activate();
+            else
+                obj.Deactivate();
+        }
     }
 
     protected override void OnDrag() {
