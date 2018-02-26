@@ -13,19 +13,19 @@ public class BuildModeWall : BuildMode {
     }
 
     public override bool IsValidPosition(Vector3 position) {
-        IntVector2 coordinatesOne = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinatesOne = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         IntVector2 coordinatesTwo = GetNearestNeighbourCoordinates(coordinatesOne);
         TileEdge edge = new TileEdge(coordinatesOne, coordinatesTwo);
         return !Level.Walls.ContainsWall(edge);
     }
 
     public override void Update() {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
         DrawHelperGizmos(IsValidPosition(EditorHelper.GetMousePositionInScene()), coordinates.ToVector3() + Block.POSITION_OFFSET, Block.SIZE);
     }
 
     public override void Build(int index, Vector3 position) {
-        IntVector2 coordinatesOne = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinatesOne = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         IntVector2 coordinatesTwo = GetNearestNeighbourCoordinates(coordinatesOne);
         TileEdge edge = new TileEdge(coordinatesOne, coordinatesTwo);
         if (Level.Walls.ContainsWall(edge))
@@ -47,7 +47,7 @@ public class BuildModeWall : BuildMode {
     }
 
     public override void Remove(Vector3 position) {
-        IntVector2 coordinatesOne = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinatesOne = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         IntVector2 coordinatesTwo = GetNearestNeighbourCoordinates(coordinatesOne);
         TileEdge edge = new TileEdge(coordinatesOne, coordinatesTwo);
         if (!Level.Walls.ContainsWall(edge))
@@ -80,7 +80,7 @@ public class BuildModeWall : BuildMode {
     }
 
     public override void DrawHelperGizmos(bool isValidPosition, Vector3 position, Vector3 size) {
-        IntVector2 coordinatesOne = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinatesOne = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         IntVector2 coordinatesTwo = GetNearestNeighbourCoordinates(coordinatesOne);
 
         position = coordinatesTwo.ToVector3() - coordinatesOne.ToVector3();

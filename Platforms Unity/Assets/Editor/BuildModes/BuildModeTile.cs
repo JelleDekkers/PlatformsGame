@@ -13,17 +13,17 @@ public class BuildModeTile : BuildMode {
     }
 
     public override bool IsValidPosition(Vector3 position) {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         return Level.Tiles.GetTile(coordinates) == null;
     }
 
     public override void Update() {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
         DrawHelperGizmos(IsValidPosition(EditorHelper.GetMousePositionInScene()), coordinates.ToVector3(), Tile.SIZE);
     }
 
     public override void Build(int index, Vector3 position) {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         if (Level.Tiles.GetTile(coordinates) != null)
             return;
 
@@ -41,7 +41,7 @@ public class BuildModeTile : BuildMode {
     }
 
     public override void Remove(Vector3 position) {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         if (!Level.Tiles.ContainsCoordinates(coordinates) || Level.Tiles.GetTile(coordinates) == null)
             return;
 

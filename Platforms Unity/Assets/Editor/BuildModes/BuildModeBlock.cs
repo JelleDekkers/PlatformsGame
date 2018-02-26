@@ -13,17 +13,17 @@ public class BuildModeBlock : BuildMode {
     }
 
     public override bool IsValidPosition(Vector3 position) {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         return Level.Tiles.GetTile(coordinates) != null && Level.Tiles.GetTile(coordinates).occupant == null;
     }
 
     public override void Update() {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
         DrawHelperGizmos(IsValidPosition(EditorHelper.GetMousePositionInScene()), coordinates.ToVector3() + Block.POSITION_OFFSET, Block.SIZE);
     }
 
     public override void Build(int index, Vector3 position) {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         Tile tileStandingOn = Level.Tiles.GetTile(coordinates);
         if (tileStandingOn == null || tileStandingOn.occupant != null)
             return;
@@ -43,7 +43,7 @@ public class BuildModeBlock : BuildMode {
     }
 
     public override void Remove(Vector3 position) {
-        IntVector2 coordinates = LevelBuilder.ConvertPositionToGridCoordinate(position);
+        IntVector2 coordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(position);
         Tile tileStandingOn = Level.Tiles.GetTile(coordinates);
         if (tileStandingOn == null || tileStandingOn.occupant == null)
             return;
@@ -58,7 +58,7 @@ public class BuildModeBlock : BuildMode {
     }
 
     private Vector3 GetCorrespondingRotation() {
-        IntVector2 nearestCoordinates = LevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
+        IntVector2 nearestCoordinates = EditorLevelBuilder.ConvertPositionToGridCoordinate(EditorHelper.GetMousePositionInScene());
         Vector3 difference = nearestCoordinates.ToVector3() - EditorHelper.GetMousePositionInScene();
 
         difference.x = Mathf.Abs(difference.x);

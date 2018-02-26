@@ -36,13 +36,13 @@ public class LevelManagerEditor : Editor {
     }
 
     private void OnLevelAssetChanged() {
-        levelManager.ClearLevelFromScene();
+        LevelBuilder.ClearLevelObjectsFromScene(LevelManager.CurrentLevel);
         if(levelManager.levelAsset != null) 
             levelManager.LoadLevelFromFile(levelManager.levelAsset);
     }
 
     private void Reload() {
-        levelManager.ClearLevelFromScene();
+        LevelBuilder.ClearLevelObjectsFromScene(LevelManager.CurrentLevel);
         levelManager.LoadLevelFromFile(levelManager.levelAsset);
     }
 }

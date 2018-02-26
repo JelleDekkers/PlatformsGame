@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class LevelBuilder : Editor {
+public class EditorLevelBuilder : Editor {
 
-    private static LevelBuilder instance;
+    private static EditorLevelBuilder instance;
 
     private bool draggingMouse;
     private bool holdingCtrl;
@@ -23,7 +23,7 @@ public class LevelBuilder : Editor {
     [MenuItem("Level Tools/Level Builder")]
     public static void InitGUI() {
         if (instance == null) {
-            instance = (LevelBuilder)CreateInstance(typeof(LevelBuilder));
+            instance = (EditorLevelBuilder)CreateInstance(typeof(EditorLevelBuilder));
             instance.Init();
             SceneView.RepaintAll();
             Selection.activeObject = null;

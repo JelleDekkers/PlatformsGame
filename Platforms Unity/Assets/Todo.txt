@@ -1,8 +1,6 @@
-portal krijgt geen aangepaste naam bij plaatsen in editor
-levelManager doet weer andere voor builden van alles, via 1 dezelfde functie getName doen
-
-kijken of via editor levels inladen met prefab connecties kan
 misschien toch via aparte levelBuilder class?
+
+tiles waar blocks behalve speler niet op kunnen
 
 
 portal moved als selected en play is gestopt
@@ -11,9 +9,6 @@ portal disable mesh in editor als niet active is en geen conneccted
 via zelfde logica als in portal.start()
 
 
-tiles waar blocks behalve speler niet op kunnen
-
-bruggetje van tiles die getimed omhoog/omlaag komen
 
 laser directors die je kunt verplaatsen, zelfde kleuren als de immoveable en moveable blocks
 
@@ -21,6 +16,8 @@ blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar d
 rekening houden met serializatie
 
 platforms die vallen nadat je er op hebt gestaan
+
+bruggetje van tiles die getimed omhoog/omlaag komen
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
 
