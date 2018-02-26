@@ -60,7 +60,7 @@ public class Player : BlockMoveable {
         for (int i = 0; i < maxNeighboursPossible; i++) {
             if (movementInfo.neighbourBlock == null)
                 break;
-            else if (movementInfo.neighbourBlock.GetType() != typeof(BlockMoveable))
+            else if (movementInfo.neighbourBlock.GetType() != typeof(BlockMoveable) && movementInfo.neighbourBlock.GetType().BaseType != typeof(BlockMoveable))
                 return;
             else {
                 BlockMoveable neighbourBlock = movementInfo.neighbourBlock as BlockMoveable;
@@ -94,7 +94,7 @@ public class Player : BlockMoveable {
         if (neighbourTile != null && neighbourTile.IsUp) {
            if (neighbourTile.occupant != null) {
                 movementInfo.neighbourBlock = neighbourTile.occupant;
-                if (neighbourTile.occupant.GetType() == typeof(BlockMoveable)) {
+                if (neighbourTile.occupant.GetType() == typeof(BlockMoveable) || neighbourTile.occupant.GetType().BaseType == typeof(BlockMoveable)) {
                     canMove = true;
                     return movementInfo;
                 } else {

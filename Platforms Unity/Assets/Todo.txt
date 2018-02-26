@@ -1,6 +1,12 @@
 
 kan opeens diagonaal bewegen?
-portal bug bij doorheen moven
+
+blocks worden niet direct op tile gezet
+
+blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?, kan dan bijvoorbeeld getoggled worden dmv pressuretiles
+rekening houden met serializatie
+
+
 
 portal moved als selected en play is gestopt
 
@@ -8,11 +14,6 @@ portal disable mesh in editor als niet active is en geen conneccted
 via zelfde logica als in portal.start()
 
 
-
-laser directors die je kunt verplaatsen, zelfde kleuren als de immoveable en moveable blocks
-
-blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?, kan dan bijvoorbeeld getoggled worden dmv pressuretiles
-rekening houden met serializatie
 
 
 platforms die vallen nadat je er op hebt gestaan

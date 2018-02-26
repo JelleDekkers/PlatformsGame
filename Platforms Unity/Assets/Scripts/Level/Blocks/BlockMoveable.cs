@@ -44,7 +44,7 @@ public class BlockMoveable : Block {
                 return movementInfo;
             } else if (neighbourTile.occupant != null) {
                 movementInfo.neighbourBlock = neighbourTile.occupant;
-                if (neighbourTile.occupant.GetType() == typeof(BlockMoveable)) {
+                if (neighbourTile.occupant.GetType() == typeof(BlockMoveable) || neighbourTile.occupant.GetType().BaseType == typeof(BlockMoveable)) {
                     canMove = true;
                     return movementInfo;
                 } else {

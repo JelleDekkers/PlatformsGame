@@ -10,6 +10,7 @@ namespace Serializing {
     [XmlInclude(typeof(LaserSourceBlockData))]
     [XmlInclude(typeof(LaserDiverterBlockData))]
     [XmlInclude(typeof(LaserRecieverBlockData))]
+    [XmlInclude(typeof(LaserDiverterMoveableBlockData))]
     public class BlockData {
 
         private static readonly Dictionary<Type, Type> DataLinks = new Dictionary<Type, Type>() {
@@ -18,7 +19,8 @@ namespace Serializing {
             {typeof(Player), typeof(PlayerBlockData) },
             {typeof(LaserSource), typeof(LaserSourceBlockData) },
             {typeof(LaserDiverter), typeof(LaserDiverterBlockData) },
-            {typeof(LaserReciever), typeof(LaserRecieverBlockData) }
+            {typeof(LaserReciever), typeof(LaserRecieverBlockData) },
+            {typeof(LaserDiverterMoveable), typeof(LaserDiverterMoveableBlockData) }
         };
 
         public static Type GetLinkedDataType(Type objectType) {
@@ -66,5 +68,10 @@ namespace Serializing {
     public class LaserRecieverBlockData : BlockData {
         protected LaserRecieverBlockData() : base() { }
         public LaserRecieverBlockData(LaserReciever b) : base(b) { }
+    }
+
+    public class LaserDiverterMoveableBlockData : BlockData {
+        protected LaserDiverterMoveableBlockData() : base() { }
+        public LaserDiverterMoveableBlockData(LaserDiverterMoveable b) : base(b) { }
     }
 }
