@@ -17,7 +17,6 @@ public class EditorLevelBuilder : Editor {
     private int buttonWidth = 90;
     private BuildMode buildMode;
     private Type[] buildModes = new Type[] { null, typeof(BuildModeTile), typeof(BuildModeBlock), typeof(BuildModeWall) };
-    //private BuildMode[] buildModes = new BuildMode[] { null, new BuildModeTile(), new BuildModeBlock(), new BuildModeWall() };
     private string[] buildModeNames = new string[] { "None", "Tiles", "Blocks", "Walls" };
 
     [MenuItem("Level Tools/Level Builder")]
@@ -105,30 +104,6 @@ public class EditorLevelBuilder : Editor {
         subSelectionIndex = GUI.SelectionGrid(r, subSelectionIndex, buildMode.PrefabNames, buildMode.Prefabs.Length);
         GUI.Label(new Rect(10, 30, 1000, 20), "Right click to place.", guiStyle);
         GUI.Label(new Rect(10, 50, 1000, 20), "Hold Ctrl + right click to remove.", guiStyle);
-
-        //if (r.Contains(Event.current.mousePosition)) {
-        //    int index = (int)((Event.current.mousePosition.x - r.x) / buttonWidth);
-        //    if (index < buildMode.Prefabs.Length) {
-        //        Rect textureRect = new Rect(r.x + (index * buttonWidth), r.y + r.height, buttonWidth, buttonWidth);
-        //        UnityEngine.Object o = buildMode.Prefabs[index];
-        //        //Debug.Log(o.name);
-        //        //Texture2D t = AssetPreview.GetAssetPreview(buildMode.Prefabs[index]);
-        //        //Debug.Log(t.name);
-        //        //Graphics.DrawTexture(textureRect, AssetPreview.GetAssetPreview(buildMode.Prefabs[index]));
-
-
-        //        UnityEngine.Object pref = PrefabUtility.GetPrefabObject(o);
-        //        Debug.Log("pref " + pref);
-
-        //        Texture icon = UnityEditor.AssetPreview.GetAssetPreview(pref);
-        //        Debug.Log("GetAssetPreview " + icon);
-        //        if (icon == null) {
-        //            icon = AssetDatabase.GetCachedIcon(AssetDatabase.GetAssetPath(pref));
-        //            Debug.Log("GetCachedIcon " + icon);
-        //        }
-        //        EditorGUI.DrawPreviewTexture(textureRect, icon);
-        //    }
-        //}
             
         Handles.EndGUI();
     }

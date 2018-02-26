@@ -1,7 +1,6 @@
-misschien toch via aparte levelBuilder class?
 
-tiles waar blocks behalve speler niet op kunnen
-
+kan opeens diagonaal bewegen?
+portal bug bij doorheen moven
 
 portal moved als selected en play is gestopt
 
@@ -14,6 +13,7 @@ laser directors die je kunt verplaatsen, zelfde kleuren als de immoveable en mov
 
 blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?, kan dan bijvoorbeeld getoggled worden dmv pressuretiles
 rekening houden met serializatie
+
 
 platforms die vallen nadat je er op hebt gestaan
 

@@ -47,33 +47,65 @@ public class Player : BlockMoveable {
     private void TryMoveInDirection(IntVector2 direction) {
         List<MovementInfo> connections;
         int maxNeighboursPossible = LevelManager.CurrentLevel.Tiles.Count;
+        bool canMove;
 
-        MovementInfo info;
         // check self:
-        if (CanMoveInDirection(direction, out info))
-            connections = new List<MovementInfo>() { info };
+        MovementInfo movementInfo = GetMovementInfo(direction, out canMove);
+        if (canMove)
+            connections = new List<MovementInfo>() { movementInfo };
         else
             return;
 
         // get list of neighbouring connected blocks
         for (int i = 0; i < maxNeighboursPossible; i++) {
-            if (info.neighbourBlock == null)
+            if (movementInfo.neighbourBlock == null)
                 break;
-            else if (info.neighbourBlock.GetType() != typeof(BlockMoveable))
+            else if (movementInfo.neighbourBlock.GetType() != typeof(BlockMoveable))
                 return;
             else {
-                BlockMoveable neighbourBlock = info.neighbourBlock as BlockMoveable;
-                if (neighbourBlock.CanMoveInDirection(info.newDirection, out info))
-                    connections.Add(info);
+                BlockMoveable neighbourBlock = movementInfo.neighbourBlock as BlockMoveable;
+                movementInfo = neighbourBlock.GetMovementInfo(movementInfo.newDirection, out canMove);
+                if (canMove)
+                    connections.Add(movementInfo);
                 else
-                    break;
+                    return;
             }
         }
 
         // move all connected blocks:
         for(int i = 0; i < connections.Count; i++) {
-            connections[i].block.MoveInDirection(connections[i].direction, BlockSettings.MoveDuration);
+            connections[i].block.Move(connections[i]);
         }
+    }
+
+    public override MovementInfo GetMovementInfo(IntVector2 direction, out bool canMove) {
+        IntVector2 neighbourCoordinates = tileStandingOn.coordinates + direction;
+        Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
+        MovementInfo movementInfo = new MovementInfo(this, direction, direction, null, neighbourTile, null);
+
+        if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
+            Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
+            if (portal.CanTeleport()) {
+                movementInfo.portal = portal;
+                neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
+            }
+        }
+
+        if (neighbourTile != null && neighbourTile.IsUp) {
+           if (neighbourTile.occupant != null) {
+                movementInfo.neighbourBlock = neighbourTile.occupant;
+                if (neighbourTile.occupant.GetType() == typeof(BlockMoveable)) {
+                    canMove = true;
+                    return movementInfo;
+                } else {
+                    canMove = false;
+                    return movementInfo;
+                }
+            }
+        }
+
+        canMove = true;
+        return movementInfo;
     }
 
     protected override IEnumerator MoveCoroutine(Tile newTile, IntVector2 direction, float duration) {
@@ -97,7 +129,7 @@ public class Player : BlockMoveable {
         isMoving = false;
     }
 
-    protected override IEnumerator MoveCoroutineThroughPortal(IntVector2 direction, float duration) {
+    protected override IEnumerator MoveThroughPortalCoroutine(IntVector2 direction, float duration) {
         OnMoveStart(null);
 
         float time = 0f;

@@ -9,6 +9,7 @@ namespace Serializing {
     [XmlInclude(typeof(TriggerTileData))]
     [XmlInclude(typeof(GoalTileData))]
     [XmlInclude(typeof(SlideTileData))]
+    [XmlInclude(typeof(PlayerOnlyTileData))]
     public class TileData {
 
         private static readonly Dictionary<Type, Type> DataLinks = new Dictionary<Type, Type>() {
@@ -16,7 +17,8 @@ namespace Serializing {
             {typeof(Goal), typeof(GoalTileData) },
             {typeof(PressureTile), typeof(PressureTileData) },
             {typeof(TriggerTile), typeof(TriggerTileData) },
-            {typeof(SlideTile), typeof(SlideTileData) }
+            {typeof(SlideTile), typeof(SlideTileData) },
+            {typeof(PlayerOnlyTile), typeof(PlayerOnlyTileData) }
         };
 
         public static Type GetLinkedDataType(Type objectType) {
@@ -61,5 +63,10 @@ namespace Serializing {
     public class SlideTileData : TileData {
         protected SlideTileData() : base() { }
         public SlideTileData(SlideTile t) : base(t) { }
+    }
+
+    public class PlayerOnlyTileData : TileData {
+        protected PlayerOnlyTileData() : base() { }
+        public PlayerOnlyTileData(PlayerOnlyTile t) : base(t) { }
     }
 }

@@ -154,6 +154,8 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             name += " (Trigger)";
         else if (tile.GetType() == typeof(SlideTile))
             name += " (Slide)";
+        else if (tile.GetType() == typeof(PlayerOnlyTile))
+            name += " (PlayerOnly)";
         return name;
     }
 

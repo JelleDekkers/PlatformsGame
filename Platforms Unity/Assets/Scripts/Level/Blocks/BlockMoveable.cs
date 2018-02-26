@@ -24,47 +24,53 @@ public class BlockMoveable : Block {
         base.IntroTransition();
     }
 
-    public virtual bool CanMoveInDirection(IntVector2 direction, out MovementInfo movementInfo) {
+    public virtual MovementInfo GetMovementInfo(IntVector2 direction, out bool canMove) {
         IntVector2 neighbourCoordinates = tileStandingOn.coordinates + direction;
-        movementInfo = new MovementInfo(this, direction, direction, null);
+        Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
+        MovementInfo movementInfo = new MovementInfo(this, direction, direction, null, neighbourTile, null);
 
         if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {
             Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, neighbourCoordinates) as Portal;
-            if (portal.CanTeleport()) 
+            if (portal.CanTeleport()) {
+                movementInfo.portal = portal;
                 neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
+            }
         }
-
-        Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
 
         if (neighbourTile != null && neighbourTile.IsUp) {
-            if (neighbourTile.occupant == null) {
-                return true;
-            } else {
+            // anders voor player:
+            if (neighbourTile.GetType() == typeof(PlayerOnlyTile)) {
+                canMove = false;
+                return movementInfo;
+            } else if (neighbourTile.occupant != null) {
                 movementInfo.neighbourBlock = neighbourTile.occupant;
-                return true;
-            }
-        }
-        return true;
-    }
-
-    public virtual void MoveInDirection(IntVector2 direction, float duration) {
-        Tile newTile = LevelManager.CurrentLevel.Tiles.GetTile(tileStandingOn.coordinates + direction);
-
-        if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, tileStandingOn.coordinates + direction)) {
-            Portal portal = LevelManager.CurrentLevel.Walls.GetWall(tileStandingOn.coordinates, tileStandingOn.coordinates + direction) as Portal;
-            if (portal.CanTeleport()) {
-                portal.Teleport(this, tileStandingOn.coordinates, duration);
-                StartCoroutine(MoveCoroutineThroughPortal(direction, duration));
-                return;
+                if (neighbourTile.occupant.GetType() == typeof(BlockMoveable)) {
+                    canMove = true;
+                    return movementInfo;
+                } else {
+                    canMove = false;
+                    return movementInfo;
+                }
             }
         }
 
-        if (newTile != null && newTile.IsUp) 
-            StartCoroutine(MoveCoroutine(newTile, direction, duration));
-        else 
-            Fall(direction, duration);
+        canMove = true;
+        return movementInfo;
     }
 
+    public virtual void Move(MovementInfo movement) {
+        if (movement.portal != null) {
+            movement.portal.Teleport(this, tileStandingOn.coordinates, BlockSettings.MoveDuration);
+            StartCoroutine(MoveThroughPortalCoroutine(movement.newDirection, BlockSettings.MoveDuration));
+            return;
+        }
+
+        if (movement.newTile != null && movement.newTile.IsUp)
+            StartCoroutine(MoveCoroutine(movement.newTile, movement.direction, BlockSettings.MoveDuration));
+        else
+            Fall(movement.direction, BlockSettings.MoveDuration);
+    }
+   
     public void MoveFromPortal(IntVector2 direction, IntVector2 from, float duration) {
         Tile newTile = LevelManager.CurrentLevel.Tiles.GetTile(from + direction);
         if (newTile != null)
@@ -96,7 +102,7 @@ public class BlockMoveable : Block {
         OnMoveEnd(endPos, direction);
     }
 
-    protected virtual IEnumerator MoveCoroutineThroughPortal(IntVector2 direction, float duration) {
+    protected virtual IEnumerator MoveThroughPortalCoroutine(IntVector2 direction, float duration) {
         OnMoveStart(null);
 
         float time = 0f;
@@ -166,17 +172,16 @@ public class BlockMoveable : Block {
     }
 
     private void OnMoveEndedOnSlideTile(IntVector2 directionSlidTo) {
-        MovementInfo info;
-        if (CanMoveInDirection(directionSlidTo, out info)) {
-            if (info.neighbourBlock == null) {
-                MoveInDirection(info.newDirection, BlockSettings.MoveDuration);
-                // in case I do want sliding blocks to push moveable blocks one tile further:
-            //} else if (info.neighbourBlock.GetType() == typeof(BlockMoveable)) {
-            //    BlockMoveable newNeighbourBlock = info.neighbourBlock as BlockMoveable;
-            //    if (newNeighbourBlock.CanMoveInDirection(info.newDirection, out info))
-            //        newNeighbourBlock.MoveInDirection(info.newDirection, BlockSettings.MoveDuration);
-            }
+        bool canMove;
+        MovementInfo movementInfo = GetMovementInfo(directionSlidTo, out canMove);
+        if (canMove) {
+            Move(movementInfo);
         }
+        // in case I do want sliding blocks to push moveable blocks one tile further:
+        //} else if (info.neighbourBlock.GetType() == typeof(BlockMoveable)) {
+        //    BlockMoveable newNeighbourBlock = info.neighbourBlock as BlockMoveable;
+        //    if (newNeighbourBlock.CanMoveInDirection(info.newDirection, out info))
+        //        newNeighbourBlock.MoveInDirection(info.newDirection, BlockSettings.MoveDuration);        
     }
 
     protected override void OnTileStandingOnMoveDownStart() {
