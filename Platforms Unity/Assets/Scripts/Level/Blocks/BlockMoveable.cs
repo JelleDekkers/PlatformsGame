@@ -61,7 +61,7 @@ public class BlockMoveable : Block {
     public virtual void Move(MovementInfo movement) {
         if (movement.portal != null) {
             movement.portal.Teleport(this, tileStandingOn.coordinates, BlockSettings.MoveDuration);
-            StartCoroutine(MoveThroughPortalCoroutine(movement.newDirection, BlockSettings.MoveDuration));
+            StartCoroutine(MoveOutOfPortalCoroutine(movement.direction, BlockSettings.MoveDuration));
             return;
         }
 
@@ -71,7 +71,7 @@ public class BlockMoveable : Block {
             Fall(movement.direction, BlockSettings.MoveDuration);
     }
    
-    public void MoveFromPortal(IntVector2 direction, IntVector2 from, float duration) {
+    public void MoveOutOfPortal(IntVector2 direction, IntVector2 from, float duration) {
         Tile newTile = LevelManager.CurrentLevel.Tiles.GetTile(from + direction);
         if (newTile != null)
             StartCoroutine(MoveCoroutine(newTile, direction, duration));
@@ -102,7 +102,7 @@ public class BlockMoveable : Block {
         OnMoveEnd(endPos, direction);
     }
 
-    protected virtual IEnumerator MoveThroughPortalCoroutine(IntVector2 direction, float duration) {
+    protected virtual IEnumerator MoveOutOfPortalCoroutine(IntVector2 direction, float duration) {
         OnMoveStart(null);
 
         float time = 0f;

@@ -129,7 +129,7 @@ public class Player : BlockMoveable {
         isMoving = false;
     }
 
-    protected override IEnumerator MoveThroughPortalCoroutine(IntVector2 direction, float duration) {
+    protected override IEnumerator MoveOutOfPortalCoroutine(IntVector2 direction, float duration) {
         OnMoveStart(null);
 
         float time = 0f;

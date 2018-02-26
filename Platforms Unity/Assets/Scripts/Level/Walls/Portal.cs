@@ -84,7 +84,7 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
         block.enabled = false;
         copy.SetTileStandingOn(null);
         IntVector2 moveDirection = new IntVector2(connectedPortal.Edge.TileOne.x - connectedPortal.Edge.TileTwo.x, connectedPortal.Edge.TileOne.z - connectedPortal.Edge.TileTwo.z);
-        copy.MoveFromPortal(moveDirection, connectedPortal.Edge.TileTwo, duration);
+        copy.MoveOutOfPortal(moveDirection, connectedPortal.Edge.TileTwo, duration);
 
         while (time < duration) {
             time += Time.deltaTime;
@@ -111,7 +111,7 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
         copy.SetTileStandingOn(null);
         //IntVector2 moveDirection = connectedPortal.Edge.TileOne.ToAbsolute() - connectedPortal.Edge.TileTwo.ToAbsolute();
         IntVector2 moveDirection = new IntVector2(connectedPortal.Edge.TileTwo.x - connectedPortal.Edge.TileOne.x, connectedPortal.Edge.TileTwo.z - connectedPortal.Edge.TileOne.z);
-        copy.MoveFromPortal(moveDirection, connectedPortal.Edge.TileOne, duration);
+        copy.MoveOutOfPortal(moveDirection, connectedPortal.Edge.TileOne, duration);
 
         while (time < duration) {
             time += Time.deltaTime;
