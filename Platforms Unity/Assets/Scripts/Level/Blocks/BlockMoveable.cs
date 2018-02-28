@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class BlockMoveable : Block {
+public class BlockMoveable : Block, ILaserHittable {
 
     [SerializeField]
     protected bool isMoving = false; // public get, protected set
@@ -141,6 +141,12 @@ public class BlockMoveable : Block {
         rBody.isKinematic = false;
         rBody.AddForce(direction.ToVector3() * BlockSettings.FallForce, ForceMode.Acceleration);
     }
+
+    public virtual void OnLaserHitStart(LaserSource source) {
+        Debug.Log("destroy " + name);
+    }
+
+    public virtual void OnLaserHitEnd() { }
 
     #region Events
     protected override void OnIntroComplete() {

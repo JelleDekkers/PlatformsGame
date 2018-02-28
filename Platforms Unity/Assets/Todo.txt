@@ -1,10 +1,19 @@
+laser laserHitObject() optimaliseren:
+volgorde aanroepen init() en fire() klopt niet?
+
+laserssource isLethal en isActiveonstart worden niet geserializeerd bij opslaan en laden
+waarschijnlijk ook niet andere obejcten met variabelen?
+
+block destroy bij contact met laser
+laser color scriptable? source + diverter 2 verschillen, lasers naar laserHandler die een laser gameobject spawnen?
+
+gameVars hernoemen naar GameConfig?
 
 kan opeens diagonaal bewegen?
 
-blocks worden niet direct op tile gezet
+blocks worden soms niet direct op tile gezet
 
-blauwe lasers voor non damaging, rode voor damaging, zelfde als laserTile maar dan met bool?, kan dan bijvoorbeeld getoggled worden dmv pressuretiles
-rekening houden met serializatie
+pressure tile vergeet event bij reload
 
 
 
@@ -14,15 +23,13 @@ portal disable mesh in editor als niet active is en geen conneccted
 via zelfde logica als in portal.start()
 
 
-
-
 platforms die vallen nadat je er op hebt gestaan
 
 bruggetje van tiles die getimed omhoog/omlaag komen
 
 betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan naar beneden valt
 
-volledige goede flow met en zonder transitie tussen levels
+volledige goede flow met en zonder(voor debug) transitie tussen levels
 
 level fade
 

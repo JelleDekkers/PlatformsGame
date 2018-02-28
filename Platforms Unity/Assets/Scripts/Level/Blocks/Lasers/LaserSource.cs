@@ -5,60 +5,44 @@ using UnityEngine;
 
 public class LaserSource : Block, IActivatable {
 
-    public List<ILaserDiverter> Diverters { get; private set; }
     public bool IsActive { get; private set; }
 
-    private Laser laser;
-    private bool canFire;
+    [SerializeField] private bool isLethal;
+    public bool IsLethal { get { return isLethal; } }
 
     [SerializeField] private bool isActiveOnStart = true;
     public bool IsActiveOnStart { get { return isActiveOnStart; } }
 
+    [SerializeField] private Color lethalColor, nonLethalColor;
+
+    private Laser laser;
+
     protected override void Awake() {
         base.Awake();
-        Diverters = new List<ILaserDiverter>();
         laser = transform.GetChild(0).GetComponent<Laser>();
         laser.Init(this);
-        Deactivate();    
+
+        if(!isActiveOnStart)
+            Deactivate();
+
+        if (isLethal)
+            laser.ChangeColor(lethalColor);
+        else
+            laser.ChangeColor(nonLethalColor);
     }
 
     public void SetIsActiveOnStart(bool active) {
         isActiveOnStart = active;
     }
 
-    private void Update() {
-        if (IsActive && canFire)
-            Fire();
+    public void SetLethal(bool lethal) {
+        isLethal = lethal;
+        laser.ChangeColor(lethalColor);
     }
 
-    private void Fire() {
-        laser.Fire();
-        for (int i = 0; i < Diverters.Count; i++) {
-            Diverters[i].DivertLaser();
-        }
-    }
-
-    public void AddDiverter(ILaserDiverter diverter) {
-        Diverters.Add(diverter);
-        diverter.OnDivertLaserStart(this);
-    }
-
-    public void RemoveDiverter(ILaserDiverter diverter) {
-        for (int i = Diverters.Count - 1; i >= 0; i--) {
-            ILaserDiverter last = Diverters[i];
-            last.OnDivertLaserEnd();
-            Diverters.RemoveAt(i);
-            if (last == diverter) 
-                return;
-        }
-    }
-
-    private void ClearAllDiverters() {
-        for (int i = Diverters.Count - 1; i >= 0; i--) {
-            ILaserDiverter last = Diverters[i];
-            last.OnDivertLaserEnd();
-            Diverters.RemoveAt(i);
-        }
+    public void ToggleLethal() {
+        isLethal = !isLethal;
+        laser.ChangeColor(nonLethalColor);
     }
 
     public Laser CreateNewLaser(Transform diverter) {
@@ -72,7 +56,7 @@ public class LaserSource : Block, IActivatable {
         return laser;
     }
 
-    public void Toggle() {
+    public void ToggleActivateState() {
         if (IsActive)
             Deactivate();
         else
@@ -82,31 +66,30 @@ public class LaserSource : Block, IActivatable {
     public void Activate() {
         IsActive = true;
         laser.SetActive(true);
+        enabled = true;
     }
 
     public void Deactivate() {
         IsActive = false;
         laser.SetActive(false);
-        ClearAllDiverters();
+        enabled = false;
     }
 
     #region Events
     protected override void OnIntroComplete() {
-        canFire = isActiveOnStart;
         IsActive = isActiveOnStart;
         if (IsActive)
             Activate();
+
     }
 
     protected override void OnTileStandingOnMoveUpEnd() {
         base.OnTileStandingOnMoveUpEnd();
-        canFire = true;
         Activate();
     }
 
     protected override void OnTileStandingOnMoveDownStart() {
         base.OnTileStandingOnMoveDownStart();
-        canFire = false;
         Deactivate();
     }
     #endregion

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class LaserDiverter : Block, ILaserDiverter {
+public class LaserDiverter : Block, ILaserHittable, ILaserDiverter {
 
     public Laser Laser { get; private set; }
 
@@ -11,23 +11,24 @@ public class LaserDiverter : Block, ILaserDiverter {
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y - 90, transform.eulerAngles.z);
     }
 
-    public void DivertLaser() {
-        Laser.Fire();
-    }
-
-    public void OnDivertLaserStart(LaserSource src) {
+    public void OnLaserHitStart(LaserSource source) {
         if (Laser == null) {
             Laser = transform.GetChild(0).GetComponent<Laser>();
-            if(Laser == null)
-                Laser = src.CreateNewLaser(transform);
+            if (Laser == null)
+                Laser = source.CreateNewLaser(transform);
         }
 
-        Laser.Init(src);
+        Laser.Init(source);
         Laser.SetActive(true);
     }
 
-    public void OnDivertLaserEnd() {
-        Laser.SetActive(false);
+    public void OnLaserHitEnd() {
+        if(Laser != null)
+            Laser.SetActive(false);
+    }
+
+    public void FireLaser() {
+        Laser.Fire();
     }
 
     private void OnDrawGizmos() {

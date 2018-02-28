@@ -75,6 +75,8 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
             return "Laser Reciever";
         else if (block.GetType() == typeof(LaserDiverter))
             return "Laser Diverter";
+        else if (block.GetType() == typeof(LaserDiverterMoveable))
+            return "Laser Diverter (Moveable)";
         return "Block (Immoveable)";
     }
 

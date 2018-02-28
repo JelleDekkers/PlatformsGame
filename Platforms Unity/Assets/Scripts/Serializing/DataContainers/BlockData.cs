@@ -53,10 +53,12 @@ namespace Serializing {
 
     public class LaserSourceBlockData : BlockData {
         [XmlAttribute] public bool isActiveOnStart;
+        [XmlAttribute] public bool isLethal;
 
         protected LaserSourceBlockData() : base() { }
         public LaserSourceBlockData(LaserSource b) : base(b) {
             isActiveOnStart = b.IsActiveOnStart;
+            isLethal = b.IsLethal;
         }
     }
 

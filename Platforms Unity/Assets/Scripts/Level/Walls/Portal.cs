@@ -4,7 +4,7 @@ using UnityEngine;
 using Serializing;
 
 [SelectionBase]
-public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarget {
+public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISerializableEventTarget {
 
     public Laser Laser { get; private set; }
     public Transform Pivot { get { return transform.GetChild(0); } }
@@ -151,28 +151,7 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
             Deactivate();
     }
 
-    public void OnDivertLaserStart(LaserSource src) {
-        if (Laser == null) {
-            Laser = transform.GetChild(0).GetComponent<Laser>();
-            if (Laser == null) {
-                Quaternion direction = Quaternion.Euler(transform.eulerAngles.x, connectedPortal.transform.eulerAngles.y + 90, connectedPortal.transform.eulerAngles.z);
-                Laser = src.CreateNewLaser(connectedPortal.Pivot, direction);
-            }
-        }
-
-        Laser.Init(src);
-        Laser.SetActive(true);
-    }
-
-    public void OnDivertLaserEnd() {
-        Laser.SetActive(false);
-    }
-
-    public void DivertLaser() {
-        Laser.Fire();
-    }
-
-    public void Toggle() {
+    public void ToggleActivateState() {
         if (IsActive)
             Deactivate();
         else
@@ -195,5 +174,26 @@ public class Portal : Wall, ILaserDiverter, IActivatable, ISerializableEventTarg
 
     public string[] GetEventArgsForDeserialization() {
         return new string[] { Edge.TileOne.x.ToString(), Edge.TileOne.z.ToString(), Edge.TileTwo.x.ToString(), Edge.TileTwo.z.ToString() };
+    }
+
+    public void OnLaserHitStart(LaserSource source) {
+        if (Laser == null) {
+            Laser = transform.GetChild(0).GetComponent<Laser>();
+            if (Laser == null) {
+                Quaternion direction = Quaternion.Euler(transform.eulerAngles.x, connectedPortal.transform.eulerAngles.y + 90, connectedPortal.transform.eulerAngles.z);
+                Laser = source.CreateNewLaser(connectedPortal.Pivot, direction);
+            }
+        }
+
+        Laser.Init(source);
+        Laser.SetActive(true);
+    }
+
+    public void OnLaserHitEnd() {
+        Laser.SetActive(false);
+    }
+
+    public void FireLaser() {
+        Laser.Fire();
     }
 }

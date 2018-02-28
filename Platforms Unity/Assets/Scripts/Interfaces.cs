@@ -1,17 +1,10 @@
 ﻿public interface IActivatable {
     bool IsActive { get; }
     bool IsActiveOnStart { get; }
-    void Toggle();
+    void ToggleActivateState();
     void Activate();
     void Deactivate();
     void SetIsActiveOnStart(bool active);
-}
-
-public interface ILaserDiverter {
-    Laser Laser { get; }
-    void OnDivertLaserStart(LaserSource src);
-    void DivertLaser();
-    void OnDivertLaserEnd();
 }
 
 public interface IInputSystem {
@@ -21,4 +14,17 @@ public interface IInputSystem {
 
 public interface ISerializableEventTarget {
     string[] GetEventArgsForDeserialization();
+}
+
+
+public interface ILaserHittable {
+    void OnLaserHitStart(LaserSource source);
+    void OnLaserHitEnd();
+}
+
+public interface ILaserDiverter {
+    Laser Laser { get; }
+    void OnLaserHitStart(LaserSource source);
+    void OnLaserHitEnd();
+    void FireLaser();
 }
