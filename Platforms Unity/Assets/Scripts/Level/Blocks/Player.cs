@@ -35,6 +35,8 @@ public class Player : BlockMoveable {
     private void Update() {
         horizontalInput = (int)input.GetAxisRawHorizontal();
         verticalInput = (int)input.GetAxisRawVertical();
+        if (horizontalInput != 0)
+            verticalInput = 0;
 
         if (CanMove(horizontalInput, verticalInput))
             TryMoveInDirection(new IntVector2(horizontalInput, verticalInput));
