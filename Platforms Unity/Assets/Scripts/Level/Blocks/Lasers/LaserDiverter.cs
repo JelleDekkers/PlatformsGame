@@ -4,6 +4,8 @@ public class LaserDiverter : Block, ILaserHittable, ILaserDiverter {
 
     public Laser Laser { get; private set; }
 
+    private LaserSource laserSource;
+
     public void RotateRight() {
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z);
     }
@@ -20,11 +22,14 @@ public class LaserDiverter : Block, ILaserHittable, ILaserDiverter {
 
         Laser.Init(source);
         Laser.SetActive(true);
+        laserSource = source;
+        laserSource.OnLaserColorChanged += Laser.ChangeColor;
     }
 
     public void OnLaserHitEnd() {
         if(Laser != null)
             Laser.SetActive(false);
+        laserSource.OnLaserColorChanged -= Laser.ChangeColor;
     }
 
     public void FireLaser() {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using Serializing;
 using UnityEngine;
 
@@ -7,12 +6,15 @@ public class LaserSource : Block, IActivatable {
 
     public bool IsActive { get; private set; }
 
+    public Action<Color> OnLaserColorChanged;
+
     [SerializeField] private bool isLethal;
     public bool IsLethal { get { return isLethal; } }
 
     [SerializeField] private bool isActiveOnStart = true;
     public bool IsActiveOnStart { get { return isActiveOnStart; } }
 
+    public Color CurrentLaserColor { get; private set; }
     [SerializeField] private Color lethalColor, nonLethalColor;
 
     private Laser laser;
@@ -32,19 +34,33 @@ public class LaserSource : Block, IActivatable {
             Deactivate();
 
         if (isLethal)
-            laser.ChangeColor(lethalColor);
+            CurrentLaserColor = lethalColor;
         else
-            laser.ChangeColor(nonLethalColor);
+            CurrentLaserColor = nonLethalColor;
+
+        laser.ChangeColor(CurrentLaserColor);
     }
 
     public void SetLethal(bool lethal) {
         isLethal = lethal;
-        laser.ChangeColor(lethalColor);
+        if (isLethal)
+            CurrentLaserColor = lethalColor;
+        else
+            CurrentLaserColor = nonLethalColor;
+        laser.ChangeColor(CurrentLaserColor);
+        if(OnLaserColorChanged != null)
+            OnLaserColorChanged(CurrentLaserColor);
     }
 
     public void ToggleLethal() {
         isLethal = !isLethal;
-        laser.ChangeColor(nonLethalColor);
+        if (isLethal)
+            CurrentLaserColor = lethalColor;
+        else
+            CurrentLaserColor = nonLethalColor;
+        laser.ChangeColor(CurrentLaserColor);
+        if(OnLaserColorChanged != null)
+            OnLaserColorChanged(CurrentLaserColor);
     }
 
     public Laser CreateNewLaser(Transform diverter) {

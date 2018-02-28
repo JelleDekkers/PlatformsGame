@@ -143,6 +143,11 @@ public class BlockMoveable : Block, ILaserHittable {
     }
 
     public virtual void OnLaserHitStart(LaserSource source) {
+        if (source.IsLethal)
+            Destroy();
+    }
+
+    protected virtual void Destroy() {
         Debug.Log("destroy " + name);
     }
 

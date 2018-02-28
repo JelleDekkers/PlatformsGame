@@ -1,13 +1,14 @@
 block destroy effect bij contact met laser
+
 laser color scriptable? source + diverter 2 verschillen, lasers naar laserHandler die een laser gameobject spawnen?
 
 gameSettings hernoemen naar GameConfig?
 
 blocks worden soms niet direct op tile gezet
-bij reloaden worden blocks niet op tile gezet
 
 lasersource lethality switch moet op alle lasers werken
-ray moet andesr werken bij nonlethal/lethal
+
+level reload in-game zet tiles neer op verkeerde plakken, misschien door die ene error
 
 
 

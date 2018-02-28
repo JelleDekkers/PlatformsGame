@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Laser : MonoBehaviour {
@@ -24,6 +23,7 @@ public class Laser : MonoBehaviour {
         material = renderer.material;
         materialTiling = transform.parent.localScale;
         materialOffset = Vector3.zero;
+        ChangeColor(source.CurrentLaserColor);
     }
 
     private void Update() {
@@ -71,6 +71,7 @@ public class Laser : MonoBehaviour {
             hittableObjectCurrentlyHitting.OnLaserHitEnd();
 
         if (gameObjectHit.GetInterface<ILaserHittable>() != null) {
+            Debug.Log("hitting Ihittable" + gameObjectHit.name);
             hittableObjectCurrentlyHitting = gameObjectHit.GetInterface<ILaserHittable>();
             hittableObjectCurrentlyHitting.OnLaserHitStart(source);
         } else {

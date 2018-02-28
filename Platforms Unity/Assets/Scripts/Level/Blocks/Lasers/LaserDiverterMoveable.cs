@@ -3,6 +3,8 @@
 public class LaserDiverterMoveable : BlockMoveable, ILaserDiverter {
     public Laser Laser { get; private set; }
 
+    private LaserSource laserSource;
+
     public void RotateRight() {
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 90, transform.eulerAngles.z);
     }
@@ -14,15 +16,17 @@ public class LaserDiverterMoveable : BlockMoveable, ILaserDiverter {
         Laser.Fire();
     }
 
-    public override void OnLaserHitStart(LaserSource src) {
+    public override void OnLaserHitStart(LaserSource source) {
         if (Laser == null) {
             Laser = transform.GetChild(0).GetComponent<Laser>();
             if (Laser == null)
-                Laser = src.CreateNewLaser(transform);
+                Laser = source.CreateNewLaser(transform);
         }
 
-        Laser.Init(src);
+        Laser.Init(source);
         Laser.SetActive(true);
+        laserSource = source;
+        laserSource.OnLaserColorChanged += Laser.ChangeColor;
     }
 
     public override void OnLaserHitEnd() {
