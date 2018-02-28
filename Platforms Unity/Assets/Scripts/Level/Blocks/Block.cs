@@ -14,6 +14,8 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
 
     private Renderer rend;
 
+    public virtual void Deserialize(Serializing.BlockData data) { }
+
     protected virtual void Awake() {
         if(GeneralSettings.UseTransitions)
             GameEvents.OnLevelStart += IntroTransition;

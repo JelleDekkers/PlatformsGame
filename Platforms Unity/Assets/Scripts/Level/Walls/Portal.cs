@@ -45,8 +45,8 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         StartCoroutine(Tween.MoveBetween(transform, 0, duration, start, transform.position, null, null));
     }
 
-    public void SetIsActiveOnStart(bool active) {
-        isActiveOnStart = active;
+    public virtual void Deserialize(PortalData data) {
+        isActiveOnStart = data.isActiveOnStart;
     }
 
     public bool CanTeleport() {

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="27/2/18 11:24:39">
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="28/2/18 15:36:20">
   <tiles>
     <TileData type="Tile" x="3" z="-1" moveUpAtStart="true" />
     <TileData type="Tile" x="3" z="0" moveUpAtStart="true" />
     <TileData xsi:type="PressureTileData" type="PressureTile" x="-1" z="1" moveUpAtStart="true">
-      <onEnterEventData />
+      <onEnterEventData>
+        <UnityEventData typeName="Block" typeArgs="0 -5" methodName="ToggleLethal" />
+      </onEnterEventData>
       <onExitEventData />
     </TileData>
     <TileData type="Tile" x="3" z="3" moveUpAtStart="true" />
@@ -36,21 +38,27 @@
     <TileData xsi:type="PlayerOnlyTileData" type="PlayerOnlyTile" x="4" z="1" moveUpAtStart="true" />
     <TileData xsi:type="PlayerOnlyTileData" type="PlayerOnlyTile" x="4" z="2" moveUpAtStart="true" />
     <TileData xsi:type="PlayerOnlyTileData" type="PlayerOnlyTile" x="4" z="3" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="-4" moveUpAtStart="true" />
+    <TileData type="Tile" x="1" z="-4" moveUpAtStart="true" />
+    <TileData type="Tile" x="2" z="-4" moveUpAtStart="false" />
+    <TileData type="Tile" x="2" z="-5" moveUpAtStart="true" />
+    <TileData type="Tile" x="1" z="-5" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="-5" moveUpAtStart="true" />
   </tiles>
   <blocks>
-    <BlockData xsi:type="LaserDiverterMoveableBlockData" objectType="LaserDiverterMoveable" x="3" z="-1" Roty="180" />
     <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="3" z="2" Roty="180" />
-    <BlockData xsi:type="LaserSourceBlockData" objectType="LaserSource" x="0" z="-1" Roty="90" isActiveOnStart="false" isLethal="true" />
+    <BlockData xsi:type="LaserDiverterMoveableBlockData" objectType="LaserDiverterMoveable" x="0" z="-3" Roty="90" />
     <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="2" Roty="180" />
     <BlockData objectType="Block" x="2" z="1" Roty="90" />
     <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="1" z="1" Roty="90" />
+    <BlockData xsi:type="LaserSourceBlockData" objectType="LaserSource" x="0" z="-5" Roty="0" isActiveOnStart="true" isLethal="false" />
   </blocks>
   <portals>
     <PortalData isActiveOnStart="true">
       <edgeCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="4" />
       <connectedPortalCoordinates edgeOneX="-1" edgeOneZ="0" edgeTwoX="0" edgeTwoZ="0" />
     </PortalData>
-    <PortalData isActiveOnStart="true">
+    <PortalData isActiveOnStart="false">
       <edgeCoordinates edgeOneX="-1" edgeOneZ="0" edgeTwoX="0" edgeTwoZ="0" />
       <connectedPortalCoordinates edgeOneX="1" edgeOneZ="3" edgeTwoX="1" edgeTwoZ="4" />
     </PortalData>

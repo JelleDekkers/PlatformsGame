@@ -17,6 +17,12 @@ public class LaserSource : Block, IActivatable {
 
     private Laser laser;
 
+    public override void Deserialize(BlockData data) {
+        base.Deserialize(data);
+        isActiveOnStart = (data as LaserSourceBlockData).isActiveOnStart;
+        isLethal = (data as LaserSourceBlockData).isLethal;
+    }
+
     protected override void Awake() {
         base.Awake();
         laser = transform.GetChild(0).GetComponent<Laser>();
@@ -29,10 +35,6 @@ public class LaserSource : Block, IActivatable {
             laser.ChangeColor(lethalColor);
         else
             laser.ChangeColor(nonLethalColor);
-    }
-
-    public void SetIsActiveOnStart(bool active) {
-        isActiveOnStart = active;
     }
 
     public void SetLethal(bool lethal) {

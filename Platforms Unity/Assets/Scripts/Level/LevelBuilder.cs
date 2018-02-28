@@ -19,16 +19,16 @@ public static class LevelBuilder  {
             Type type = Type.GetType(data.type);
 
             IntVector2 coordinates = new IntVector2(data.x, data.z);
-            Vector3 location = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
+            Vector3 position = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
 #if UNITY_EDITOR
             Tile tile = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.TilesDataLink.GetPrefabByType(type)) as Tile;
-            tile.transform.position = location;
-            tile.transform.SetParent(transform);
+
             tile.name = Tile.GetTypeName(tile, coordinates);
-#else 
-            Tile tile = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type), location, Quaternion.identity, transform);
+#else
+            Tile tile = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type));
 #endif
-            tile.transform.position = location;
+            tile.transform.SetParent(transform);
+            tile.transform.position = position;
             level.Tiles.Add(new IntVector2(data.x, data.z), tile);
             tile.Deserialize(data);
 
@@ -47,15 +47,16 @@ public static class LevelBuilder  {
             Quaternion rotation = Quaternion.Euler(0, data.Roty, 0);
 #if UNITY_EDITOR
             Block block = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.BlocksDataLink.GetPrefabByType(type)) as Block;
+            block.name = Block.GetTypeName(block);
+#else
+            Block b = GameObject.Instantiate(PrefabManager.BlocksDataLink.GetPrefabByType(type));
+#endif
             block.transform.position = position;
             block.transform.rotation = rotation;
             block.transform.SetParent(transform);
-            block.name = Block.GetTypeName(block);
-#else
-            Block b = GameObject.Instantiate(PrefabManager.BlocksDataLink.GetPrefabByType(type), position, rotation, transform);
-#endif
             tile.SetOccupant(block);
             block.SetTileStandingOn(tile);
+            block.Deserialize(data);
         }
     }
 
@@ -64,21 +65,21 @@ public static class LevelBuilder  {
             PortalData data = levelData.portals[i];
             TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.edgeOneX, data.edgeCoordinates.edgeOneZ),
                                          new IntVector2(data.edgeCoordinates.edgeTwoX, data.edgeCoordinates.edgeTwoZ));
-
             Vector3 position = edge.TileOne.ToVector3() + Tile.POSITION_OFFSET;
 #if UNITY_EDITOR
             Portal portal = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal))) as Portal;
-            portal.transform.position = position;
-            portal.transform.SetParent(transform);
+
             portal.name = Wall.GetTypeName(portal, edge);
 #else
-            Portal portal = GameObject.Instantiate(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal)) as Portal, position, Quaternion.identity, transform);
+            Portal portal = GameObject.Instantiate(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal)) as Portal;
 
 #endif
-            portal.SetIsActiveOnStart(data.isActiveOnStart);
+            portal.transform.position = position;
+            portal.transform.SetParent(transform);
             portal.transform.eulerAngles = Wall.GetCorrespondingRotation(edge);
             portal.SetEdge(edge);
             level.Walls.Add(edge, portal);
+            portal.Deserialize(data);
         }
 
         // portal connections:
@@ -119,6 +120,4 @@ public static class LevelBuilder  {
         level = null;
         Debug.Log("Cleared level");
     }
-
-
 }

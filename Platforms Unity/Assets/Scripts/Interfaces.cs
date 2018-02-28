@@ -4,7 +4,6 @@
     void ToggleActivateState();
     void Activate();
     void Deactivate();
-    void SetIsActiveOnStart(bool active);
 }
 
 public interface IInputSystem {
