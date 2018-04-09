@@ -32,14 +32,18 @@ public class LevelManager : MonoBehaviour {
     private const string FOLDER_PATH = "Assets/Resources/Levels/";
 
     public void SaveLevelToFile(Level level) {
-        string dataPath = FOLDER_PATH + levelAsset.name + FILE_EXTENSION;
-        Debug.Log("Trying to save " + dataPath);
-        LevelData data = new LevelData(level);
-        var serializer = new XmlSerializer(typeof(LevelData));
-        var stream = new FileStream(dataPath, FileMode.Create);
-        serializer.Serialize(stream, data);
-        stream.Close();
-        Debug.Log("Succesfully Saved " + levelAsset.name + " to " + dataPath);
+        try {
+            string dataPath = FOLDER_PATH + levelAsset.name + FILE_EXTENSION;
+            Debug.Log("Trying to save " + dataPath);
+            LevelData data = new LevelData(level);
+            var serializer = new XmlSerializer(typeof(LevelData));
+            var stream = new FileStream(dataPath, FileMode.Create);
+            serializer.Serialize(stream, data);
+            stream.Close();
+            Debug.Log("<color=green>Succesfully Saved </color>" + levelAsset.name + " to " + dataPath);
+        } catch (Exception exception) {
+            Debug.Log("<color=red>Saving Failed: </color>" + exception);
+        }
     }
 
     public bool LevelRequirementsHaveBeenMet() {
@@ -60,12 +64,12 @@ public class LevelManager : MonoBehaviour {
 
             currentLevel = new Level();
             LevelBuilder.BuildLevelObjects(currentLevel, data, transform);
-            Debug.Log("Succesfully loaded " + dataPath);
+            Debug.Log("<color=green>Succesfully loaded </color>" + dataPath);
 
             if (GameEvents.OnLevelLoaded != null)
                 GameEvents.OnLevelLoaded.Invoke();
         } else {
-            throw new Exception("No file found at " + dataPath);
+            throw new Exception("<color=red>No file found at </color>" + dataPath);
         }
     }
 

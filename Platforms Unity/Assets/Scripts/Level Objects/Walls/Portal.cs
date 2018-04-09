@@ -30,7 +30,7 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     private const int NORMAL_MASK_VALUE = 2000;
     
     private void Awake() {
-        if (GeneralSettings.UseTransitions)
+        if (GeneralConfig.UseTransitionAnimations)
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
     
@@ -40,8 +40,8 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     }
 
     private void IntroTransition() {
-        Vector3 start = new Vector3(transform.position.x, transform.position.y + BlockSettings.IntroStartingHeight, transform.position.z);
-        float duration = BlockSettings.IntroStandardDuration + Random.Range(0, BlockSettings.IntroDurationMax);
+        Vector3 start = new Vector3(transform.position.x, transform.position.y + BlockConfig.IntroAnimationStartingHeight, transform.position.z);
+        float duration = BlockConfig.IntroAnimationDuration.GetRandom();
         StartCoroutine(Tween.MoveBetween(transform, 0, duration, start, transform.position, null, null));
     }
 

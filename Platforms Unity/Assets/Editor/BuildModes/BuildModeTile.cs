@@ -29,7 +29,7 @@ public class BuildModeTile : BuildMode {
 
         Tile tile = PrefabUtility.InstantiatePrefab(Prefabs[index]) as Tile;
         tile.SetCoordinates(coordinates);
-        tile.name = Tile.GetTypeName(tile, coordinates);
+        tile.name = tile.GetType().FullName + coordinates;
         Level.Tiles.AddTile(tile, coordinates);
         tile.transform.position = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
         tile.transform.SetParent(LevelManager.Instance.transform);

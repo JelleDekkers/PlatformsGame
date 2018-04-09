@@ -60,15 +60,15 @@ public class BlockMoveable : Block, ILaserHittable {
 
     public virtual void Move(MovementInfo movement) {
         if (movement.portal != null) {
-            movement.portal.Teleport(this, tileStandingOn.coordinates, BlockSettings.MoveDuration);
-            StartCoroutine(MoveOutOfPortalCoroutine(movement.direction, BlockSettings.MoveDuration));
+            movement.portal.Teleport(this, tileStandingOn.coordinates, BlockConfig.MoveDuration);
+            StartCoroutine(MoveOutOfPortalCoroutine(movement.direction, BlockConfig.MoveDuration));
             return;
         }
 
         if (movement.newTile != null && movement.newTile.IsUp)
-            StartCoroutine(MoveCoroutine(movement.newTile, movement.direction, BlockSettings.MoveDuration));
+            StartCoroutine(MoveCoroutine(movement.newTile, movement.direction, BlockConfig.MoveDuration));
         else
-            Fall(movement.direction, BlockSettings.MoveDuration);
+            Fall(movement.direction, BlockConfig.MoveDuration);
     }
    
     public void MoveOutOfPortal(IntVector2 direction, IntVector2 from, float duration) {
@@ -128,7 +128,7 @@ public class BlockMoveable : Block, ILaserHittable {
         Vector3 startPos = transform.position;
         Vector3 endPos = transform.position + direction.ToVector3();
 
-        while (time < movementDurationBeforeFall * BlockSettings.FallCutOff) {
+        while (time < movementDurationBeforeFall * BlockConfig.FallCutOff) {
             transform.position = Vector3.Lerp(startPos, endPos, time / movementDurationBeforeFall);
             time += Time.deltaTime;
             yield return null;
@@ -139,7 +139,7 @@ public class BlockMoveable : Block, ILaserHittable {
         Rigidbody rBody = gameObject.GetComponent<Rigidbody>();
         StartCoroutine(tileWasStandingOn.EnableColliderTemporarily());
         rBody.isKinematic = false;
-        rBody.AddForce(direction.ToVector3() * BlockSettings.FallForce, ForceMode.Acceleration);
+        rBody.AddForce(direction.ToVector3() * BlockConfig.FallForce, ForceMode.Acceleration);
     }
 
     public virtual void OnLaserHitStart(LaserSource source) {

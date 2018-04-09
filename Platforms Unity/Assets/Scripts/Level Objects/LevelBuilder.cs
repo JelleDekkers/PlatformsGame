@@ -23,7 +23,7 @@ public static class LevelBuilder  {
 #if UNITY_EDITOR
             Tile tile = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.TilesDataLink.GetPrefabByType(type)) as Tile;
 
-            tile.name = Tile.GetTypeName(tile, coordinates);
+            tile.name = tile.GetType().FullName + " " + coordinates;
 #else
             Tile tile = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type));
 #endif
@@ -47,7 +47,7 @@ public static class LevelBuilder  {
             Quaternion rotation = Quaternion.Euler(0, data.Roty, 0);
 #if UNITY_EDITOR
             Block block = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.BlocksDataLink.GetPrefabByType(type)) as Block;
-            block.name = Block.GetTypeName(block);
+            block.name = type.FullName + " " + block.Coordinates;
 #else
             Block b = GameObject.Instantiate(PrefabManager.BlocksDataLink.GetPrefabByType(type));
 #endif
@@ -69,7 +69,7 @@ public static class LevelBuilder  {
 #if UNITY_EDITOR
             Portal portal = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal))) as Portal;
 
-            portal.name = Wall.GetTypeName(portal, edge);
+            portal.name = portal.GetType().FullName + " " + edge.ToString();
 #else
             Portal portal = GameObject.Instantiate(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal)) as Portal;
 

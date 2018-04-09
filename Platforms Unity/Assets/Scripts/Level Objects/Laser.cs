@@ -71,7 +71,6 @@ public class Laser : MonoBehaviour {
             hittableObjectCurrentlyHitting.OnLaserHitEnd();
 
         if (gameObjectHit.GetInterface<ILaserHittable>() != null) {
-            Debug.Log("hitting Ihittable" + gameObjectHit.name);
             hittableObjectCurrentlyHitting = gameObjectHit.GetInterface<ILaserHittable>();
             hittableObjectCurrentlyHitting.OnLaserHitStart(source);
         } else {

@@ -43,7 +43,7 @@ public class TileEditor : DraggableEditorObject<Tile> {
     protected override void PlaceObject() {
         LevelManager.CurrentLevel.Tiles.AddTile(obj, coordinatesWhileDragging);
         obj.transform.position = coordinatesWhileDragging.ToVector3() + Tile.POSITION_OFFSET;
-        obj.name = Tile.GetTypeName(obj, coordinatesWhileDragging);
+        obj.name = obj.GetType().FullName + coordinatesWhileDragging.ToString();
         obj.coordinates = coordinatesWhileDragging;
         if(obj.occupant != null)
             obj.occupant.transform.position = new Vector3(obj.transform.position.x, obj.occupant.transform.position.y, obj.transform.position.z);

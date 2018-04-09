@@ -28,8 +28,8 @@ public class Player : BlockMoveable {
     protected override void IntroTransition() {
         isMoving = true;
         Vector3 target = transform.position;
-        transform.position = new Vector3(transform.position.x, transform.position.y + PlayerSettings.IntroStartingHeight, transform.position.z);
-        StartCoroutine(Tween.MoveBetween(transform, PlayerSettings.IntroDelay, PlayerSettings.IntroDuration, transform.position, target));
+        transform.position = new Vector3(transform.position.x, transform.position.y + PlayerConfig.IntroAnimationStartingHeight, transform.position.z);
+        StartCoroutine(Tween.MoveBetween(transform, PlayerConfig.IntroAnimationStartingDelay, PlayerConfig.IntroAnimationDuration, transform.position, target));
     }
 
     private void Update() {
@@ -119,8 +119,8 @@ public class Player : BlockMoveable {
         Vector3 rotationDirection = new Vector3(direction.z, 0, -direction.x);
         Vector3 endPos = transform.position + direction.ToVector3();
 
-        float angle = 90 / BlockSettings.MoveDuration;
-        while(time < BlockSettings.MoveDuration * 0.95f) {
+        float angle = 90 / BlockConfig.MoveDuration;
+        while(time < BlockConfig.MoveDuration * 0.95f) {
             transform.RotateAround(rotationPivot, rotationDirection, angle * Time.deltaTime);
             time += Time.deltaTime;
             yield return null;
@@ -140,8 +140,8 @@ public class Player : BlockMoveable {
         Vector3 rotationDirection = new Vector3(direction.z, 0, -direction.x);
         Vector3 endPos = transform.position + direction.ToVector3();
 
-        float angle = 90 / BlockSettings.MoveDuration;
-        while (time < BlockSettings.MoveDuration * 0.95f) {
+        float angle = 90 / BlockConfig.MoveDuration;
+        while (time < BlockConfig.MoveDuration * 0.95f) {
             transform.RotateAround(rotationPivot, rotationDirection, angle * Time.deltaTime);
             time += Time.deltaTime;
             yield return null;
@@ -160,8 +160,8 @@ public class Player : BlockMoveable {
         rotationPivot.y = 0;
         Vector3 rotationDirection = new Vector3(direction.z, 0, -direction.x);
 
-        float angle = 90 / BlockSettings.MoveDuration;
-        while (time < BlockSettings.MoveDuration) {
+        float angle = 90 / BlockConfig.MoveDuration;
+        while (time < BlockConfig.MoveDuration) {
             transform.RotateAround(rotationPivot, rotationDirection, angle * Time.deltaTime);
             time += Time.deltaTime;
             yield return null;
@@ -172,9 +172,9 @@ public class Player : BlockMoveable {
         GameEvents.OnGameOver.Invoke();
 
         rBody.isKinematic = false;
-        rBody.AddForce(direction.ToVector3() * BlockSettings.FallDirectionalForce);
-        rBody.AddForce(Vector3.down * BlockSettings.FallDownwardForce);
-        rBody.AddTorque(rotationDirection * BlockSettings.FallRotationalForce);
+        rBody.AddForce(direction.ToVector3() * BlockConfig.FallDirectionalForce);
+        rBody.AddForce(Vector3.down * BlockConfig.FallDownwardForce);
+        rBody.AddTorque(rotationDirection * BlockConfig.FallRotationalForce);
     }
 
     protected override void OnDestroy() {

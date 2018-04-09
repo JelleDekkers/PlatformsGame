@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
             GameEvents.OnLevelStart.Invoke();
         GameEvents.OnGameOver += () => StartCoroutine(GameOverCounter());
 
-        if (GeneralSettings.UseTransitions)
+        if (GeneralConfig.UseTransitionAnimations)
             StartCoroutine(IntroCounter());
         else
             GameEvents.OnIntroComplete.Invoke();
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator IntroCounter() {
         float time = 0;
-        float duration = PlayerSettings.IntroDelay + PlayerSettings.IntroDuration + GeneralSettings.IntroCounterOffset; 
+        float duration = PlayerConfig.IntroAnimationStartingDelay + PlayerConfig.IntroAnimationDuration + GeneralConfig.IntroCounterExtraDurationOffset; 
         while (time < duration) {
             time += Time.deltaTime;
             yield return null;
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator GameOverCounter() {
         Debug.Log("Game Over");
         float time = 0;
-        float duration = GeneralSettings.GameOverCounter;
+        float duration = GeneralConfig.GameOverCounterDuration;
         while (time < duration) {
             time += Time.deltaTime;
             yield return null;
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
     private void RestartLevel() {
         LevelManager.Instance.LoadLevelFromFile(LevelManager.Instance.levelAsset);
 
-        if (GeneralSettings.UseTransitions)
+        if (GeneralConfig.UseTransitionAnimations)
             StartCoroutine(IntroCounter());
         else
             GameEvents.OnIntroComplete.Invoke();

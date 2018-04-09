@@ -27,11 +27,4 @@ public class Wall : MonoBehaviour {
     public static Vector3 GetCorrespondingRotation(IntVector2 coordinatesOne, IntVector2 coordinatesTWo) {
         return GetCorrespondingRotation(new TileEdge(coordinatesOne, coordinatesTWo));
     }
-
-    public static string GetTypeName(Wall wall, TileEdge edge) {
-        string name = "Wall " + edge;
-        if (wall.GetType() == typeof(Portal))
-            name += " (Portal)";
-        return name;
-    }
 }

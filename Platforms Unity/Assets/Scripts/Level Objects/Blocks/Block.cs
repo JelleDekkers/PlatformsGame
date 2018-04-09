@@ -17,16 +17,17 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
     public virtual void Deserialize(Serializing.BlockData data) { }
 
     protected virtual void Awake() {
-        if(GeneralSettings.UseTransitions)
+        if(GeneralConfig.UseTransitionAnimations)
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
     }
 
     protected virtual void IntroTransition() {
         Vector3 target = transform.position;
-        transform.position = new Vector3(transform.position.x, transform.position.y + BlockSettings.IntroStartingHeight, transform.position.z); 
-        float duration = BlockSettings.IntroStandardDuration + Random.Range(0, BlockSettings.IntroDurationMax);
-        StartCoroutine(Tween.MoveBetween(transform, BlockSettings.IntroDelay, duration, transform.position, target));
+        transform.position = new Vector3(transform.position.x, transform.position.y + BlockConfig.IntroAnimationStartingHeight, transform.position.z);
+        float duration = BlockConfig.IntroAnimationDuration.GetRandom();
+        float delay = BlockConfig.IntroAnimationDelay.GetRandom();
+        StartCoroutine(Tween.MoveBetween(transform, delay, duration, transform.position, target));
     }
 
     public void SetTileStandingOn(Tile tile) {
@@ -43,7 +44,7 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
     }
 
     protected virtual void DestroySelfWithTimer() {
-        Destroy(gameObject, BlockSettings.DestroyDelayOnFall);
+        Destroy(gameObject, BlockConfig.DestroyDelayOnFall);
     }
 
     protected void UnSubscribeToTileEvents(Tile t) {
@@ -64,22 +65,6 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
 
     public string[] GetEventArgsForDeserialization() {
         return new string[] { Coordinates.x.ToString(), Coordinates.z.ToString() };
-    }
-
-    public static string GetTypeName(Block block) {
-        if (block.GetType() == typeof(Player))
-            return "Player";
-        else if (block.GetType() == typeof(BlockMoveable))
-            return "Block (Moveable)";
-        else if (block.GetType() == typeof(LaserSource))
-            return "Laser Source";
-        else if (block.GetType() == typeof(LaserReciever))
-            return "Laser Reciever";
-        else if (block.GetType() == typeof(LaserDiverter))
-            return "Laser Diverter";
-        else if (block.GetType() == typeof(LaserDiverterMoveable))
-            return "Laser Diverter (Moveable)";
-        return "Block (Immoveable)";
     }
 
     #region Events

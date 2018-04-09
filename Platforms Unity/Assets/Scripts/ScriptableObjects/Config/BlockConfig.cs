@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "Block Settings", menuName = "Tools/Settings/Block Settings", order = 3)]
-public class BlockSettings : ScriptableObjectSingleton<BlockSettings> {
+[CreateAssetMenu(fileName = "Block Config", menuName = "Tools/Configs/Block Config", order = 3)]
+public class BlockConfig : ScriptableObjectSingleton<BlockConfig> {
 
     [SerializeField] private float moveDuration = 0.2f;
     public static float MoveDuration { get { return Instance.moveDuration; } }
@@ -16,17 +16,14 @@ public class BlockSettings : ScriptableObjectSingleton<BlockSettings> {
     [SerializeField] private float fallRotationalForce = 20f;
     public static float FallRotationalForce { get { return Instance.fallRotationalForce; } }
 
-    [SerializeField] private float introDurationRandomMax = 1f;
-    public static float IntroDurationMax { get { return Instance.introDurationRandomMax; } }
+    [SerializeField] private FloatMinMax introAnimationDuration = new FloatMinMax(1f, 2f);
+    public static FloatMinMax IntroAnimationDuration { get { return Instance.introAnimationDuration; } }
 
-    [SerializeField] private float introStandardDuration = 1f;
-    public static float IntroStandardDuration { get { return Instance.introStandardDuration; } }
+    [SerializeField] private float introAnimationStartingHeight = 10f;
+    public static float IntroAnimationStartingHeight { get { return Instance.introAnimationStartingHeight; } }
 
-    [SerializeField] private float introStartingHeight = 10f;
-    public static float IntroStartingHeight { get { return Instance.introStartingHeight; } }
-
-    [SerializeField] private float introDelay = 0.5f;
-    public static float IntroDelay { get { return Instance.introDelay; } }
+    [SerializeField] private FloatMinMax introAnimationDelay = new FloatMinMax(0.5f, 0.6f);
+    public static FloatMinMax IntroAnimationDelay { get { return Instance.introAnimationDelay; } }
 
     [SerializeField] private float destroyDelayOnFall = 1f;
     public static float DestroyDelayOnFall { get { return Instance.destroyDelayOnFall; } }
