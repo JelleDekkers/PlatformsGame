@@ -4,7 +4,6 @@ using UnityEngine;
 public class Laser : MonoBehaviour {
 
     [SerializeField] private new Renderer renderer;
-    [SerializeField] private float materialOffsetSpeed = 0.4f;
 
     private Transform mesh;
     private GameObject objectCurrentlyHitting;
@@ -22,20 +21,21 @@ public class Laser : MonoBehaviour {
         this.source = source;
         material = renderer.material;
         materialTiling = transform.parent.localScale;
-        materialOffset = Vector3.zero;
-        ChangeColor(source.CurrentLaserColor);
+        ChangeLethalState(source.IsLethal);
     }
 
     private void Update() {
         Fire();
         materialTiling.y = transform.GetChild(0).localScale.y;
         material.mainTextureScale = materialTiling; 
-        materialOffset.y = Time.time * materialOffsetSpeed * -1;
+        materialOffset.y = Time.time * LaserConfig.MaterialOffsetSpeed * -1;
         material.mainTextureOffset = materialOffset;
     }
 
-    public void ChangeColor(Color color) {
-        material.color = color;
+    public void ChangeLethalState(bool isLethal) {
+        material.color = (isLethal) ? LaserConfig.LethalLaserColor : LaserConfig.NormalLaserColor;
+        objectCurrentlyHitting = null;
+        hittableObjectCurrentlyHitting = null;
     }
 
     public void SetActive(bool active) {

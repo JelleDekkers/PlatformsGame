@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="09/4/18 16:52:03">
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="09/4/18 16:55:58">
   <tiles>
     <TileData type="Tile" x="3" z="-1" moveUpAtStart="true" />
     <TileData type="Tile" x="3" z="0" moveUpAtStart="true" />
-    <TileData xsi:type="PressureTileData" type="PressureTile" x="-1" z="1" moveUpAtStart="true">
-      <onEnterEventData />
-      <onExitEventData />
-    </TileData>
+    <TileData xsi:type="TriggerTileData" type="TriggerTile" x="-1" z="1" moveUpAtStart="true" />
     <TileData type="Tile" x="3" z="3" moveUpAtStart="true" />
     <TileData type="Tile" x="3" z="2" moveUpAtStart="true" />
     <TileData type="Tile" x="3" z="1" moveUpAtStart="true" />
@@ -34,7 +31,9 @@
     <TileData type="Tile" x="0" z="3" moveUpAtStart="true" />
   </tiles>
   <blocks>
-    <BlockData xsi:type="LaserDiverterMoveableBlockData" objectType="LaserDiverterMoveable" x="0" z="0" Roty="90" />
+    <BlockData xsi:type="LaserDiverterMoveableBlockData" objectType="LaserDiverterMoveable" x="0" z="-1" Roty="90" />
+    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="1" z="0" Roty="90" />
+    <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="1" Roty="0" />
   </blocks>
   <portals>
     <PortalData isActiveOnStart="true">

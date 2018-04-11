@@ -22,7 +22,7 @@ public class Player : BlockMoveable {
         instance = this;
         if(input == null)
             input = InputSystem.GetPlatformDependentInputSystem(); 
-        OnFall += GameEvents.OnGameOver;
+        onFall += GameEvents.OnGameOver;
     }
 
     protected override void IntroTransition() {
@@ -167,8 +167,8 @@ public class Player : BlockMoveable {
             yield return null;
         }
 
-        if (OnFall != null)
-            OnFall.Invoke();
+        if (onFall != null)
+            onFall.Invoke();
         GameEvents.OnGameOver.Invoke();
 
         rBody.isKinematic = false;
@@ -177,8 +177,13 @@ public class Player : BlockMoveable {
         rBody.AddTorque(rotationDirection * BlockConfig.FallRotationalForce);
     }
 
+    protected override void Vaporize() {
+        GameEvents.OnGameOver.Invoke();
+        base.Vaporize();
+    }
+
     protected override void OnDestroy() {
         base.OnDestroy();
-        OnFall -= GameEvents.OnGameOver;
+        onFall -= GameEvents.OnGameOver;
     }
 }

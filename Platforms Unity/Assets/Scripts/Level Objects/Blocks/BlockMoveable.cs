@@ -11,12 +11,12 @@ public class BlockMoveable : Block, ILaserHittable {
 
     protected Coroutine currentCoroutine;
     protected Rigidbody rBody;
-    protected Action OnFall;
+    protected Action onFall, onMoveStartEvent, onMoveEndEvent;
 
     protected override void Awake() {
         base.Awake();
         rBody = GetComponent<Rigidbody>();
-        OnFall += DestroySelfWithTimer;
+        onFall += DestroySelfWithTimer;
     }
 
     protected override void IntroTransition() {
@@ -134,8 +134,8 @@ public class BlockMoveable : Block, ILaserHittable {
             yield return null;
         }
 
-        if(OnFall != null)
-            OnFall.Invoke();
+        if(onFall != null)
+            onFall.Invoke();
         Rigidbody rBody = gameObject.GetComponent<Rigidbody>();
         StartCoroutine(tileWasStandingOn.EnableColliderTemporarily());
         rBody.isKinematic = false;
@@ -143,15 +143,20 @@ public class BlockMoveable : Block, ILaserHittable {
     }
 
     public virtual void OnLaserHitStart(LaserSource source) {
+        Debug.Log("hit by laser start " + name);
         if (source.IsLethal)
-            Destroy();
-    }
-
-    protected virtual void Destroy() {
-        Debug.Log("destroy " + name);
+            Vaporize();
     }
 
     public virtual void OnLaserHitEnd() { }
+
+    protected virtual void Vaporize() {
+        Destroy(gameObject, BlockConfig.VaporizeEffectDuration);
+        if (isMoving)
+            onMoveEndEvent += () => Destroy(this);
+        else
+            Destroy(this);
+    }
 
     #region Events
     protected override void OnIntroComplete() {
@@ -173,13 +178,19 @@ public class BlockMoveable : Block, ILaserHittable {
             newTile.Enter(this);
             SubscribeToTileEvents(newTile);
         }
+
+        if (onMoveStartEvent != null)
+            onMoveStartEvent.Invoke();
     }
 
     private void OnMoveEnd(Vector3 endPos, IntVector2 direction) {
         isMoving = false;
 
         if (tileStandingOn != null && tileStandingOn.GetType() == typeof(SlideTile))
-            OnMoveEndedOnSlideTile(direction);    
+            OnMoveEndedOnSlideTile(direction);
+
+        if (onMoveEndEvent != null)
+            onMoveEndEvent.Invoke();
     }
 
     private void OnMoveEndedOnSlideTile(IntVector2 directionSlidTo) {
@@ -198,8 +209,8 @@ public class BlockMoveable : Block, ILaserHittable {
     protected override void OnTileStandingOnMoveDownStart() {
         base.OnTileStandingOnMoveDownStart();
         isMoving = true;
-        if (OnFall != null)
-            OnFall.Invoke();
+        if (onFall != null)
+            onFall.Invoke();
     }
 
     protected override void OnTileStandingOnMoveUpEnd() {

@@ -6,16 +6,13 @@ public class LaserSource : Block, IActivatable {
 
     public bool IsActive { get; private set; }
 
-    public Action<Color> OnLaserColorChanged;
+    public Action<bool> onLethalStateChanged;
 
     [SerializeField] private bool isLethal;
     public bool IsLethal { get { return isLethal; } }
 
     [SerializeField] private bool isActiveOnStart = true;
     public bool IsActiveOnStart { get { return isActiveOnStart; } }
-
-    public Color CurrentLaserColor { get; private set; }
-    [SerializeField] private Color lethalColor, nonLethalColor;
 
     private Laser laser;
 
@@ -29,38 +26,26 @@ public class LaserSource : Block, IActivatable {
         base.Awake();
         laser = transform.GetChild(0).GetComponent<Laser>();
         laser.Init(this);
+        laser.ChangeLethalState(isLethal);
 
-        if(!isActiveOnStart)
+        if (!isActiveOnStart)
             Deactivate();
-
-        if (isLethal)
-            CurrentLaserColor = lethalColor;
-        else
-            CurrentLaserColor = nonLethalColor;
-
-        laser.ChangeColor(CurrentLaserColor);
     }
 
     public void SetLethal(bool lethal) {
-        isLethal = lethal;
-        if (isLethal)
-            CurrentLaserColor = lethalColor;
-        else
-            CurrentLaserColor = nonLethalColor;
-        laser.ChangeColor(CurrentLaserColor);
-        if(OnLaserColorChanged != null)
-            OnLaserColorChanged(CurrentLaserColor);
+        SetLaserLethality(lethal);
     }
 
     public void ToggleLethal() {
-        isLethal = !isLethal;
-        if (isLethal)
-            CurrentLaserColor = lethalColor;
-        else
-            CurrentLaserColor = nonLethalColor;
-        laser.ChangeColor(CurrentLaserColor);
-        if(OnLaserColorChanged != null)
-            OnLaserColorChanged(CurrentLaserColor);
+        SetLaserLethality(!isLethal);
+    }
+
+    private void SetLaserLethality(bool lethal) {
+        isLethal = lethal;
+        laser.ChangeLethalState(lethal);
+
+        if (onLethalStateChanged != null)
+            onLethalStateChanged(isLethal);
     }
 
     public Laser CreateNewLaser(Transform diverter) {
@@ -82,15 +67,17 @@ public class LaserSource : Block, IActivatable {
     }
 
     public void Activate() {
-        IsActive = true;
-        laser.SetActive(true);
-        enabled = true;
+        SetActiveState(true);
     }
 
     public void Deactivate() {
-        IsActive = false;
-        laser.SetActive(false);
-        enabled = false;
+        SetActiveState(false);
+    }
+
+    private void SetActiveState(bool state) {
+        IsActive = state;
+        laser.SetActive(state);
+        enabled = state;
     }
 
     #region Events

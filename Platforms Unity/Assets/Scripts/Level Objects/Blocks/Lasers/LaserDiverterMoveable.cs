@@ -26,7 +26,7 @@ public class LaserDiverterMoveable : BlockMoveable, ILaserDiverter {
         Laser.Init(source);
         Laser.SetActive(true);
         laserSource = source;
-        laserSource.OnLaserColorChanged += Laser.ChangeColor;
+        laserSource.onLethalStateChanged += Laser.ChangeLethalState;
     }
 
     public override void OnLaserHitEnd() {

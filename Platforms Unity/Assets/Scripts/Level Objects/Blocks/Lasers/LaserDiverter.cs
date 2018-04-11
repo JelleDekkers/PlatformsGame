@@ -23,13 +23,13 @@ public class LaserDiverter : Block, ILaserHittable, ILaserDiverter {
         Laser.Init(source);
         Laser.SetActive(true);
         laserSource = source;
-        laserSource.OnLaserColorChanged += Laser.ChangeColor;
+        laserSource.onLethalStateChanged += Laser.ChangeLethalState;
     }
 
     public void OnLaserHitEnd() {
         if(Laser != null)
             Laser.SetActive(false);
-        laserSource.OnLaserColorChanged -= Laser.ChangeColor;
+        laserSource.onLethalStateChanged -= Laser.ChangeLethalState;
     }
 
     public void FireLaser() {

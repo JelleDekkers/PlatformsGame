@@ -1,12 +1,12 @@
-block intro/outro met animationCurve?
+player vaporize stretch bug
 
-block destroy effect bij contact met laser
+lasersource deactivate laser at awake, activate at animation complete
 
-laser color scriptable? source + diverter 2 verschillen, lasers naar laserHandler die een laser gameobject spawnen?
+source + diverter 2 verschillen, lasers naar laserHandler die een laser gameobject spawnen?
 
 blocks worden soms niet direct op tile gezet
 
-level reload in-game zet tiles neer op verkeerde plakken, misschien door die ene error
+level reload in-game zet tiles neer op verkeerde plekken, misschien door die ene error
 
 portal moved als selected en play is gestopt
 
@@ -17,7 +17,8 @@ volledige goede flow met en zonder(voor debug) transitie tussen levels
 
 
 
-platforms die vallen nadat je er op hebt gestaan
+platforms die vallen nadat je er op hebt gestaan, alleen player of alle blocks? 
+ook platforms waar je 2 keer op kan staan?
 
 bruggetje van tiles die getimed omhoog/omlaag komen
 
@@ -27,6 +28,11 @@ level fade
 
 levelNr ui in world
 
+nieuw level laden na game over, met chapters
+
+chapters verschillende kleuren achtergrond
+
+
 camera roteren?
 uit/in-zoomen?
 collectables, diamantje/piramides?
@@ -34,6 +40,8 @@ collectables, diamantje/piramides?
 depth mask per portal anders? in verband met hide bij new copy door oude portal, kijken naar dichtsbijzijnde camera
 
 lasers, zelfde doen als bij portal 2 lasers, zien er vet uit
+
+block destroy/dissolve effect bij contact met lethal laser
 
 models voor bepaalde objecten
 shaders/textures voor portal en laser
@@ -51,12 +59,19 @@ IL2CPP builden android
 achievements
 
 ideëen:
-tile die cubes genereert? of gewoon dropt vanaf lucht
+laser director die lasers van lethal switched
+slide tile voor ook player, kan dan niet bewegen tot stilstand
+pressure tile die cubes genereert? of gewoon dropt vanaf lucht
+block die, bij van tile vallen, een nieuwe tile vormt
 pressure tiles die alleen werken met bepaalde cubes (blauwe cube op blauwe platform)
-blocks die bij vallen een tile vormt waar je op kan lopen, zo kun je een brug maken
-conveyer belt platform? te doen via events, als een blok de weg blokkeert, dan subscriben aan onmoved en nogmaals proberen te moven
+conveyer belt platform, die blocks een richting op duwt, te doen via events, als een blok de weg blokkeert, dan subscriben aan onmoved en nogmaals proberen te moven
 piston?
-tiles die je kunt bewegen naar een punt, deze kunnen dan bijv een piston op zich hebben
+piston blocks die immoveable kunnen moven
+spike tiles die bijv via een timer kunnen activeren, om meer skill erin te brengen
+menu ook als tiles naast elkaar waar de speler overheen loopt als selection
+ball die altijd rolt
+pressure tile state moet visueel beter te zien zijn
+puzzle van pressure tile die elkaars neighbours togglen
 
 naam ideëen:
 TileSnapper

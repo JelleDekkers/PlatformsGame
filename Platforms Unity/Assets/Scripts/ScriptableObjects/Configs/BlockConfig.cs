@@ -33,4 +33,7 @@ public class BlockConfig : ScriptableObjectSingleton<BlockConfig> {
 
     [SerializeField] private float fallForce = 100;
     public static float FallForce { get { return Instance.fallForce; } }
+
+    [SerializeField] private float destroyByLaserEffectDuration = 1f;
+    public static float VaporizeEffectDuration { get { return Instance.destroyByLaserEffectDuration; } }
 }
