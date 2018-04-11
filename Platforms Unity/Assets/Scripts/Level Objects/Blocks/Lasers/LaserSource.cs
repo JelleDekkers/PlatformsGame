@@ -26,18 +26,6 @@ public class LaserSource : Block, IActivatable {
         base.Awake();
         laser = transform.GetChild(0).GetComponent<Laser>();
         laser.Init(this);
-        laser.ChangeLethalState(isLethal);
-
-        if (!isActiveOnStart)
-            Deactivate();
-    }
-
-    public void SetLethal(bool lethal) {
-        SetLaserLethality(lethal);
-    }
-
-    public void ToggleLethal() {
-        SetLaserLethality(!isLethal);
     }
 
     private void SetLaserLethality(bool lethal) {
@@ -59,33 +47,17 @@ public class LaserSource : Block, IActivatable {
         return laser;
     }
 
-    public void ToggleActivateState() {
-        if (IsActive)
-            Deactivate();
-        else
-            Activate();
-    }
-
-    public void Activate() {
-        SetActiveState(true);
-    }
-
-    public void Deactivate() {
-        SetActiveState(false);
-    }
-
     private void SetActiveState(bool state) {
         IsActive = state;
         laser.SetActive(state);
         enabled = state;
     }
-
+    
     #region Events
     protected override void OnIntroComplete() {
         IsActive = isActiveOnStart;
         if (IsActive)
             Activate();
-
     }
 
     protected override void OnTileStandingOnMoveUpEnd() {
@@ -96,6 +68,29 @@ public class LaserSource : Block, IActivatable {
     protected override void OnTileStandingOnMoveDownStart() {
         base.OnTileStandingOnMoveDownStart();
         Deactivate();
+        Debug.Log("moving down");
+    }
+    #endregion
+
+    #region Unity Actions
+    public void SetLethal(bool lethal) {
+        SetLaserLethality(lethal);
+    }
+
+    public void ToggleLethal() {
+        SetLaserLethality(!isLethal);
+    }
+
+    public void ToggleActiveState() {
+        SetActiveState(!IsActive);
+    }
+
+    public void Activate() {
+        SetActiveState(true);
+    }
+
+    public void Deactivate() {
+        SetActiveState(false);
     }
     #endregion
 

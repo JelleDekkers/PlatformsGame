@@ -16,7 +16,7 @@ public class Laser : MonoBehaviour {
     private Vector2 materialOffset;
 
     public void Init(LaserSource source) {
-        enabled = true;
+        //enabled = true;
         mesh = transform.GetChild(0);
         this.source = source;
         material = renderer.material;
@@ -44,6 +44,8 @@ public class Laser : MonoBehaviour {
             hittableObjectCurrentlyHitting = null;
         }
         gameObject.SetActive(active);
+        enabled = active;
+        Debug.Log("laser state " + active);
     }
 
     public void ScaleMesh(float distance) {

@@ -151,7 +151,7 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
             Deactivate();
     }
 
-    public void ToggleActivateState() {
+    public void ToggleActiveState() {
         if (IsActive)
             Deactivate();
         else

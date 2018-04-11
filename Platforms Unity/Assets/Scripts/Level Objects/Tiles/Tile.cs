@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     public IntVector2 coordinates;// { get; private set; }
     public Block occupant;
     public bool IsUp { get; private set; }
-    public Transform TileMesh { get { return transform.GetChild(0); } }
+    public Transform MeshParent { get { return transform.GetChild(0); } }
 
     public Action OnMoveDownStart, OnMoveDownEnd;
     public Action OnMoveUpStart, OnMoveUpEnd;
@@ -38,17 +38,17 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
         GameEvents.OnGameOver += OnGameOver;
 
         if (GeneralConfig.UseTransitionAnimations)
-            TileMesh.position = new Vector3(TileMesh.position.x, DownHeight, transform.position.z);
+            MeshParent.position = new Vector3(MeshParent.position.x, DownHeight, transform.position.z);
 
         if (moveUpAtStart) {
             MoveUpRandomized();
         } else {
-            TileMesh.gameObject.SetActive(false);
+            MeshParent.gameObject.SetActive(false);
         }
     }
 
     public IEnumerator EnableColliderTemporarily() {
-        BoxCollider col = TileMesh.gameObject.AddComponent<BoxCollider>();
+        BoxCollider col = MeshParent.gameObject.AddComponent<BoxCollider>();
         float timer = 0;
         while (timer < TileConfig.TempColliderEnabledDuration) {
             timer += Time.deltaTime;
@@ -73,18 +73,18 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     public void MoveUpRandomized() {
         float delay = TileConfig.MoveUpAnimationDelay.GetRandom();
         float duration = TileConfig.MoveUpAnimationDuration.GetRandom();
-        Vector3 start = new Vector3(TileMesh.position.x, DownHeight, TileMesh.position.z);
-        Vector3 target = new Vector3(TileMesh.position.x, UpHeight, TileMesh.position.z);
-        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(TileMesh, delay, duration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
+        Vector3 start = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
+        Vector3 target = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
+        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, delay, duration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
     }
 
     public void MoveUp() {
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
 
-        Vector3 start = new Vector3(TileMesh.position.x, DownHeight, TileMesh.position.z);
-        Vector3 target = new Vector3(TileMesh.position.x, UpHeight, TileMesh.position.z);
-        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(TileMesh, 0, TileConfig.MoveUpStandardAnimationDuration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
+        Vector3 start = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
+        Vector3 target = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
+        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, 0, TileConfig.MoveUpStandardAnimationDuration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
     }
 
     public void MoveDownRandomized() {
@@ -92,12 +92,12 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             StopCoroutine(currentCoroutine);
 
         if (occupant != null)
-            occupant.transform.SetParent(TileMesh);
+            occupant.transform.SetParent(MeshParent);
         
         float delay = TileConfig.MoveDownAnimationDelay.GetRandom();
-        Vector3 start = new Vector3(TileMesh.position.x, UpHeight, TileMesh.position.z);
-        Vector3 target = new Vector3(TileMesh.position.x, DownHeight, TileMesh.position.z);
-        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(TileMesh, delay, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
+        Vector3 start = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
+        Vector3 target = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
+        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, delay, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
     }
 
     public void MoveDown() {
@@ -105,11 +105,11 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             StopCoroutine(currentCoroutine);
 
         if (occupant != null)
-            occupant.transform.SetParent(TileMesh);
+            occupant.transform.SetParent(MeshParent);
 
-        Vector3 start = new Vector3(TileMesh.position.x, UpHeight, TileMesh.position.z);
-        Vector3 target = new Vector3(TileMesh.position.x, DownHeight, TileMesh.position.z);
-        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(TileMesh, 0, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
+        Vector3 start = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
+        Vector3 target = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
+        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, 0, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
     }
 
     public void ToggleMovement() {
@@ -147,7 +147,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     #region Events
     private void OnMoveUpStartFunction() {
         IsUp = true;
-        TileMesh.gameObject.SetActive(true);
+        MeshParent.gameObject.SetActive(true);
         if (OnMoveUpStart != null)
             OnMoveUpStart.Invoke();
     }
@@ -164,7 +164,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     }
 
     private void OnMoveDownEndFunction() {
-        TileMesh.gameObject.SetActive(false);
+        MeshParent.gameObject.SetActive(false);
         if (OnMoveDownEnd != null)
             OnMoveDownEnd.Invoke();
     }

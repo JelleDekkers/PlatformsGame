@@ -1,7 +1,7 @@
 ﻿public interface IActivatable {
     bool IsActive { get; }
     bool IsActiveOnStart { get; }
-    void ToggleActivateState();
+    void ToggleActiveState();
     void Activate();
     void Deactivate();
 }

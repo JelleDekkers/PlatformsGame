@@ -80,13 +80,19 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
 
     protected virtual void OnTileStandingOnMoveDownStart() {
         if(tileStandingOn != null)
-            transform.SetParent(tileStandingOn.TileMesh);
+            transform.SetParent(tileStandingOn.MeshParent);
     }
 
     protected virtual void OnTileStandingOnMoveDownEnd() { }
 
     protected virtual void OnDestroy() {
         GameEvents.OnIntroComplete -= OnIntroComplete;
+    }
+    #endregion
+
+    #region Unity Actions
+    public void RotateClockWise(int amount) {
+        transform.Rotate(Vector3.up * amount);
     }
     #endregion
 }
