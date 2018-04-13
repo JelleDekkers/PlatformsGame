@@ -72,18 +72,20 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
         SubscribeToTileEvents(tileStandingOn);
     }
 
-    protected virtual void OnTileStandingOnMoveUpStart() {
-        //transform.SetParent(tileStandingOn.TileMesh);
-    }
+    protected virtual void OnTileStandingOnMoveUpStart() { }
 
-    protected virtual void OnTileStandingOnMoveUpEnd() { }
+    protected virtual void OnTileStandingOnMoveUpEnd() {
+        transform.SetParent(null);
+    }
 
     protected virtual void OnTileStandingOnMoveDownStart() {
         if(tileStandingOn != null)
             transform.SetParent(tileStandingOn.MeshParent);
     }
 
-    protected virtual void OnTileStandingOnMoveDownEnd() { }
+    protected virtual void OnTileStandingOnMoveDownEnd() {
+        UnSubscribeToTileEvents(tileStandingOn);
+    }
 
     protected virtual void OnDestroy() {
         GameEvents.OnIntroComplete -= OnIntroComplete;

@@ -1,10 +1,14 @@
-laser source deactivate at tile move down bug?
+level reload in-game zet tiles neer op verkeerde plekken
+
 source + diverter 2 verschillen, lasers naar laserHandler die een laser gameobject spawnen?
 
+move down animations moeten ook via useAnimations config option
+
 blocks worden soms niet direct op tile gezet
-level reload in-game zet tiles neer op verkeerde plekken, misschien door die ene error
+
 
 portal moved als selected en play is gestopt
+kan coordinates snapped to variabelen naar nunllable maken
 portal disable mesh in editor als niet active is en geen conneccted
 via zelfde logica als in portal.start()
 
@@ -12,7 +16,7 @@ volledige goede flow met en zonder(voor debug) transitie tussen levels
 
 
 
-platforms die vallen nadat je er op hebt gestaan, alleen player of alle blocks? 
+platforms die vallen nadat je er op hebt gestaan
 ook platforms waar je 2 keer op kan staan?
 
 bruggetje van tiles die getimed omhoog/omlaag komen
@@ -22,6 +26,8 @@ betere fall() bij moven vanaf pressure tile naar een tile die bij onExit() dan n
 level fade
 
 levelNr ui in world
+
+iets verzinnen voor een center punt waar de camera start
 
 nieuw level laden na game over, met chapters
 
@@ -67,6 +73,7 @@ menu ook als tiles naast elkaar waar de speler overheen loopt als selection
 ball die altijd rolt
 pressure tile state moet visueel beter te zien zijn
 puzzle van pressure tile die elkaars neighbours togglen
+
 
 naam ideëen:
 TileSnapper

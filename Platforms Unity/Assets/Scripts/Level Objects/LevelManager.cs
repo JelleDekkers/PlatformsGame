@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour {
             stream.Close();
             Debug.Log("<color=green>Succesfully Saved </color>" + levelAsset.name + " to " + dataPath);
         } catch (Exception exception) {
-            Debug.Log("<color=red>Saving Failed: </color>" + exception);
+            Debug.LogError("<color=red>Saving Failed: </color>" + exception);
         }
     }
 
@@ -51,25 +51,29 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void LoadLevelFromFile(TextAsset asset) {
-        string dataPath = FOLDER_PATH + asset.name + FILE_EXTENSION;
-        Debug.Log("Trying to load " + dataPath);
-        if (File.Exists(dataPath)) {
-            var serializer = new XmlSerializer(typeof(LevelData));
-            var stream = new FileStream(dataPath, FileMode.Open);
-            LevelData data = serializer.Deserialize(stream) as LevelData;
-            stream.Close();
+        try {
+            string dataPath = FOLDER_PATH + asset.name + FILE_EXTENSION;
+            Debug.Log("Trying to load " + dataPath);
+            if (File.Exists(dataPath)) {
+                var serializer = new XmlSerializer(typeof(LevelData));
+                var stream = new FileStream(dataPath, FileMode.Open);
+                LevelData data = serializer.Deserialize(stream) as LevelData;
+                stream.Close();
 
-            if(currentLevel != null)
-                LevelBuilder.ClearLevelObjectsFromScene(currentLevel);
+                if (currentLevel != null)
+                    LevelBuilder.ClearLevelObjectsFromScene(currentLevel);
 
-            currentLevel = new Level();
-            LevelBuilder.BuildLevelObjects(currentLevel, data, transform);
-            Debug.Log("<color=green>Succesfully loaded </color>" + dataPath);
+                currentLevel = new Level();
+                LevelBuilder.BuildLevelObjects(currentLevel, data, transform);
+                Debug.Log("<color=green>Succesfully loaded </color>" + dataPath);
 
-            if (GameEvents.OnLevelLoaded != null)
-                GameEvents.OnLevelLoaded.Invoke();
-        } else {
-            throw new Exception("<color=red>No file found at </color>" + dataPath);
+                if (GameEvents.OnLevelLoaded != null)
+                    GameEvents.OnLevelLoaded.Invoke();
+            } else {
+                throw new Exception("<color=red>No file found at </color>" + dataPath);
+            }
+        } catch(Exception exception) {
+            throw new Exception("<color=red>Failed loading level: </color>" + exception);
         }
     }
 

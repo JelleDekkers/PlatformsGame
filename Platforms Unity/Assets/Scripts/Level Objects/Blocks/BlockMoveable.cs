@@ -167,6 +167,9 @@ public class BlockMoveable : Block, ILaserHittable {
     protected virtual void OnMoveStart(Tile newTile) {
         isMoving = true;
 
+        if (onMoveStartEvent != null)
+            onMoveStartEvent.Invoke();
+
         if (tileStandingOn != null) {
             tileStandingOn.Exit(this);
             UnSubscribeToTileEvents(tileStandingOn);
@@ -178,9 +181,6 @@ public class BlockMoveable : Block, ILaserHittable {
             newTile.Enter(this);
             SubscribeToTileEvents(newTile);
         }
-
-        if (onMoveStartEvent != null)
-            onMoveStartEvent.Invoke();
     }
 
     private void OnMoveEnd(Vector3 endPos, IntVector2 direction) {
@@ -209,18 +209,11 @@ public class BlockMoveable : Block, ILaserHittable {
     protected override void OnTileStandingOnMoveDownStart() {
         base.OnTileStandingOnMoveDownStart();
         isMoving = true;
-        if (onFall != null)
-            onFall.Invoke();
     }
 
     protected override void OnTileStandingOnMoveUpEnd() {
-        base.OnTileStandingOnMoveUpEnd();
-        transform.SetParent(null);
-    }
-
-    protected override void OnTileStandingOnMoveDownEnd() {
-        UnSubscribeToTileEvents(tileStandingOn);
-        Destroy(gameObject);
+        base.OnTileStandingOnMoveUpStart();
+        isMoving = false;
     }
     #endregion
 }

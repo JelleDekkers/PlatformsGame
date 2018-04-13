@@ -47,7 +47,7 @@ public static class LevelBuilder  {
             Quaternion rotation = Quaternion.Euler(0, data.Roty, 0);
 #if UNITY_EDITOR
             Block block = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.BlocksDataLink.GetPrefabByType(type)) as Block;
-            block.name = type.FullName + " " + block.Coordinates;
+            block.name = type.FullName + " " + coordinates;
 #else
             Block b = GameObject.Instantiate(PrefabManager.BlocksDataLink.GetPrefabByType(type));
 #endif

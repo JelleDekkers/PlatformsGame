@@ -55,6 +55,7 @@ public class LaserSource : Block, IActivatable {
     
     #region Events
     protected override void OnIntroComplete() {
+        base.OnIntroComplete();
         IsActive = isActiveOnStart;
         if (IsActive)
             Activate();
@@ -62,13 +63,13 @@ public class LaserSource : Block, IActivatable {
 
     protected override void OnTileStandingOnMoveUpEnd() {
         base.OnTileStandingOnMoveUpEnd();
-        Activate();
+        if (IsActive)
+            Activate();
     }
 
     protected override void OnTileStandingOnMoveDownStart() {
         base.OnTileStandingOnMoveDownStart();
         Deactivate();
-        Debug.Log("moving down");
     }
     #endregion
 

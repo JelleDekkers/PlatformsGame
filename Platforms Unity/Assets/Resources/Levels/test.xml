@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="13/4/18 15:58:24">
+  <tiles>
+    <TileData type="Tile" x="-3" z="-2" moveUpAtStart="true" />
+    <TileData type="Tile" x="-3" z="-1" moveUpAtStart="true" />
+    <TileData type="Tile" x="-3" z="-3" moveUpAtStart="true" />
+    <TileData xsi:type="GoalTileData" type="Goal" x="-2" z="-1" moveUpAtStart="true" />
+  </tiles>
+  <blocks>
+    <BlockData xsi:type="PlayerBlockData" objectType="Player" x="-3" z="-1" Roty="90" />
+    <BlockData xsi:type="LaserSourceBlockData" objectType="LaserSource" x="-3" z="-3" Roty="90" isActiveOnStart="true" isLethal="true" />
+  </blocks>
+  <portals />
+</level>

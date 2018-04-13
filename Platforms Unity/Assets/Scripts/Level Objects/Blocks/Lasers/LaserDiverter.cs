@@ -29,6 +29,11 @@ public class LaserDiverter : Block, ILaserHittable, ILaserDiverter {
         Laser.Fire();
     }
 
+    protected override void OnTileStandingOnMoveDownStart() {
+        base.OnTileStandingOnMoveDownStart();
+        Laser.SetActive(false);
+    }
+
     private void OnDrawGizmos() {
         GizmosExtension.DrawArrow(transform.position, transform.forward, Color.red);
     }
