@@ -3,6 +3,8 @@
 public class LaserDiverterMoveable : BlockMoveable, ILaserDiverter {
     public Laser Laser { get; private set; }
 
+    [SerializeField] private Laser laserPrefab;
+
     private LaserSource laserSource;
 
     public void RotateRight() {
@@ -17,11 +19,8 @@ public class LaserDiverterMoveable : BlockMoveable, ILaserDiverter {
     }
 
     public override void OnLaserHitStart(LaserSource source) {
-        if (Laser == null) {
-            Laser = transform.GetChild(0).GetComponent<Laser>();
-            if (Laser == null)
-                Laser = source.CreateNewLaser(transform);
-        }
+        if (Laser == null) 
+            Laser = Instantiate(laserPrefab, transform);
 
         Laser.Init(source);
         Laser.SetActive(true);

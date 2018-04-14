@@ -14,6 +14,8 @@ public class LaserSource : Block, IActivatable {
     [SerializeField] private bool isActiveOnStart = true;
     public bool IsActiveOnStart { get { return isActiveOnStart; } }
 
+    [SerializeField] private Laser laserPrefab;
+
     private Laser laser;
 
     public override void Deserialize(BlockData data) {
@@ -24,7 +26,7 @@ public class LaserSource : Block, IActivatable {
 
     protected override void Awake() {
         base.Awake();
-        laser = transform.GetChild(0).GetComponent<Laser>();
+        laser = Instantiate(laserPrefab, transform);
         laser.Init(this);
     }
 
@@ -36,12 +38,8 @@ public class LaserSource : Block, IActivatable {
             onLethalStateChanged(isLethal);
     }
 
-    public Laser CreateNewLaser(Transform diverter) {
-        return CreateNewLaser(diverter, Quaternion.Euler(transform.eulerAngles.x, diverter.transform.eulerAngles.y, diverter.transform.eulerAngles.z));
-    }
-
     public Laser CreateNewLaser(Transform diverter, Quaternion direction) {
-        Laser laser = Instantiate(this.laser, diverter.transform.position, Quaternion.identity) as Laser;
+        Laser laser = Instantiate(laserPrefab, diverter.transform.position, Quaternion.identity) as Laser;
         laser.transform.rotation = direction;
         laser.transform.SetParent(diverter);
         return laser;
