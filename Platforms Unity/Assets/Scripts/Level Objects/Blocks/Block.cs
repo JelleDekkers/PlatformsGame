@@ -75,7 +75,7 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
     protected virtual void OnTileStandingOnMoveUpStart() { }
 
     protected virtual void OnTileStandingOnMoveUpEnd() {
-        transform.SetParent(null);
+        transform.SetParent(LevelManager.Instance.transform);
     }
 
     protected virtual void OnTileStandingOnMoveDownStart() {
@@ -89,6 +89,7 @@ public class Block : MonoBehaviour, ISerializableEventTarget {
 
     protected virtual void OnDestroy() {
         GameEvents.OnIntroComplete -= OnIntroComplete;
+        GameEvents.OnLevelStart -= IntroTransition;
     }
     #endregion
 

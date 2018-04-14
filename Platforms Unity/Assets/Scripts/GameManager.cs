@@ -7,9 +7,16 @@ public class GameManager : MonoBehaviour {
 #if !UNITY_EDITOR
         Achievements.AchievementManager.Setup();
 #endif
-        if(GameEvents.OnLevelStart != null)
-            GameEvents.OnLevelStart.Invoke();
         GameEvents.OnGameOver += () => StartCoroutine(GameOverCounter());
+        StartNewLevel();
+    }
+
+    private void StartNewLevel() {
+        if(LevelManager.CurrentLevel == null)
+            LevelManager.Instance.LoadLevelFromFile(LevelManager.Instance.levelAsset);
+
+        if (GameEvents.OnLevelStart != null)
+            GameEvents.OnLevelStart.Invoke();
 
         if (GeneralConfig.UseTransitionAnimations)
             StartCoroutine(IntroCounter());
@@ -41,12 +48,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void RestartLevel() {
-        LevelManager.Instance.LoadLevelFromFile(LevelManager.Instance.levelAsset);
-
-        if (GeneralConfig.UseTransitionAnimations)
-            StartCoroutine(IntroCounter());
-        else
-            GameEvents.OnIntroComplete.Invoke();
+        LevelManager.Instance.ClearLevel();
+        LevelManager.CurrentLevel = null;
+        StartNewLevel();
     }
 
     private void OnDestroy() {

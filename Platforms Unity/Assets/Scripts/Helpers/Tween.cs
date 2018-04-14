@@ -17,11 +17,10 @@ public static class Tween {
     /// <returns></returns>
     public static IEnumerator Scale(Transform transform, float delay, float duration, Vector3 from, Vector3 to, Action onStart, Action onFinished) {
         float elapsedTime = 0;
-        WaitForEndOfFrame wait = new WaitForEndOfFrame();
 
         while (elapsedTime < delay) {
             elapsedTime += Time.deltaTime;
-            yield return wait;
+            yield return null;
         }
 
         if (onStart != null)
@@ -31,7 +30,7 @@ public static class Tween {
         while (elapsedTime < duration) {
             transform.localScale = Vector3.Lerp(from, to, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
-            yield return wait;
+            yield return null;
         }
 
         transform.localScale = to;
@@ -52,29 +51,28 @@ public static class Tween {
     /// <returns></returns>
     public static IEnumerator MoveBetweenRemaining(Transform transform, float delay, float duration, Vector3 from, Vector3 to, Action onStart, Action onFinished) {
         float elapsedTime = 0;
-        WaitForEndOfFrame wait = new WaitForEndOfFrame();
 
         while (elapsedTime < delay) {
             elapsedTime += Time.deltaTime;
-            yield return wait;
+            yield return null;
         }
 
         elapsedTime = 0;
         if (onStart != null)
             onStart.Invoke();
 
-        float distanceLeft = Vector3.Distance(to, transform.position);
+        float distanceLeft = Vector3.Distance(to, transform.localPosition);
         float totalDistance = Vector3.Distance(from, to);
         float percentage = (distanceLeft * -1 + totalDistance) / totalDistance;
         elapsedTime = duration * percentage;
 
         while (elapsedTime < duration) {
-            transform.position = Vector3.Lerp(from, to, elapsedTime / duration);
+            transform.localPosition = Vector3.Lerp(from, to, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
-            yield return wait;
+            yield return null;
         }
 
-        transform.position = to;
+        transform.localPosition = to;
         if(onFinished != null)
             onFinished.Invoke();
     }
@@ -92,26 +90,25 @@ public static class Tween {
     /// <returns></returns>
     public static IEnumerator MoveBetween(Transform transform, float delay, float duration, Vector3 from, Vector3 to, Action onStart = null, Action onFinished = null) {
         float elapsedTime = 0;
-        WaitForEndOfFrame wait = new WaitForEndOfFrame();
 
         while (elapsedTime < delay) {
             elapsedTime += Time.deltaTime;
-            yield return wait;
+            yield return null;
         }
 
         elapsedTime = 0;
 
-        transform.position = from;
+        transform.localPosition = from;
         if (onStart != null)
             onStart.Invoke();
 
         while (elapsedTime < duration) {
-            transform.position = Vector3.Lerp(from, to, elapsedTime / duration);
+            transform.localPosition = Vector3.Lerp(from, to, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
-            yield return wait;
+            yield return null;
         }
 
-        transform.position = to;
+        transform.localPosition = to;
         if (onFinished != null)
             onFinished.Invoke();
     }

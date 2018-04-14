@@ -1,10 +1,9 @@
-level reload in-game zet tiles neer op verkeerde plekken
 
 source + diverter 2 verschillen, lasers naar laserHandler die een laser gameobject spawnen?
 
 move down animations moeten ook via useAnimations config option
 
-blocks worden soms niet direct op tile gezet
+blocks worden soms niet direct op tile gezet met de editor tool
 
 
 portal moved als selected en play is gestopt

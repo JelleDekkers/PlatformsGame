@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour {
     private Level currentLevel;
     public static Level CurrentLevel {
         get { return Instance.currentLevel; }
-        private set { Instance.currentLevel = value; }
+        set { Instance.currentLevel = value; }
     }
 
     public TextAsset levelAsset;
@@ -34,7 +34,6 @@ public class LevelManager : MonoBehaviour {
     public void SaveLevelToFile(Level level) {
         try {
             string dataPath = FOLDER_PATH + levelAsset.name + FILE_EXTENSION;
-            Debug.Log("Trying to save " + dataPath);
             LevelData data = new LevelData(level);
             var serializer = new XmlSerializer(typeof(LevelData));
             var stream = new FileStream(dataPath, FileMode.Create);
@@ -53,7 +52,6 @@ public class LevelManager : MonoBehaviour {
     public void LoadLevelFromFile(TextAsset asset) {
         try {
             string dataPath = FOLDER_PATH + asset.name + FILE_EXTENSION;
-            Debug.Log("Trying to load " + dataPath);
             if (File.Exists(dataPath)) {
                 var serializer = new XmlSerializer(typeof(LevelData));
                 var stream = new FileStream(dataPath, FileMode.Open);
@@ -61,7 +59,7 @@ public class LevelManager : MonoBehaviour {
                 stream.Close();
 
                 if (currentLevel != null)
-                    LevelBuilder.ClearLevelObjectsFromScene(currentLevel);
+                    LevelManager.instance.ClearLevel();
 
                 currentLevel = new Level();
                 LevelBuilder.BuildLevelObjects(currentLevel, data, transform);
@@ -75,6 +73,17 @@ public class LevelManager : MonoBehaviour {
         } catch(Exception exception) {
             throw new Exception("<color=red>Failed loading level: </color>" + exception);
         }
+    }
+
+    public void ClearLevel() {
+        for (int i = transform.childCount - 1; i >= 0; i--) { 
+#if UNITY_EDITOR
+            DestroyImmediate(transform.GetChild(i).gameObject);
+#else
+            Destroy(transform.GetChild(i).gameObject);
+#endif
+        }
+        currentLevel = null;
     }
 
 #if UNITY_EDITOR

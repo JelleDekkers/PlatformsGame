@@ -37,11 +37,11 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     private void Awake() {
         GameEvents.OnGameOver += OnGameOver;
 
-        if (GeneralConfig.UseTransitionAnimations)
-            MeshParent.position = new Vector3(MeshParent.position.x, DownHeight, transform.position.z);
-
         if (moveUpAtStart) {
-            MoveUpRandomized();
+            if (GeneralConfig.UseTransitionAnimations) {
+                MeshParent.position = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
+                MoveUpRandomized();
+            }
         } else {
             MeshParent.gameObject.SetActive(false);
         }
@@ -73,17 +73,17 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     public void MoveUpRandomized() {
         float delay = TileConfig.MoveUpAnimationDelay.GetRandom();
         float duration = TileConfig.MoveUpAnimationDuration.GetRandom();
-        Vector3 start = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
-        Vector3 target = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
-        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, delay, duration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
+        Vector3 start = new Vector3(MeshParent.localPosition.x, DownHeight, MeshParent.localPosition.z);
+        Vector3 target = new Vector3(MeshParent.localPosition.x, UpHeight, MeshParent.localPosition.z);
+        currentCoroutine = StartCoroutine(Tween.MoveBetween(MeshParent, delay, duration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
     }
 
     public void MoveUp() {
         if (currentCoroutine != null)
             StopCoroutine(currentCoroutine);
 
-        Vector3 start = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
-        Vector3 target = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
+        Vector3 start = new Vector3(MeshParent.localPosition.x, DownHeight, MeshParent.localPosition.z);
+        Vector3 target = new Vector3(MeshParent.localPosition.x, UpHeight, MeshParent.localPosition.z);
         currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, 0, TileConfig.MoveUpStandardAnimationDuration, start, target, OnMoveUpStartFunction, OnMoveUpEndFunction));
     }
 
@@ -95,9 +95,9 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             occupant.transform.SetParent(MeshParent);
         
         float delay = TileConfig.MoveDownAnimationDelay.GetRandom();
-        Vector3 start = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
-        Vector3 target = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
-        currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, delay, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
+        Vector3 start = new Vector3(MeshParent.localPosition.x, UpHeight, MeshParent.localPosition.z);
+        Vector3 target = new Vector3(MeshParent.localPosition.x, DownHeight, MeshParent.localPosition.z);
+        currentCoroutine = StartCoroutine(Tween.MoveBetween(MeshParent, delay, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
     }
 
     public void MoveDown() {
@@ -107,12 +107,12 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
         if (occupant != null)
             occupant.transform.SetParent(MeshParent);
 
-        Vector3 start = new Vector3(MeshParent.position.x, UpHeight, MeshParent.position.z);
-        Vector3 target = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
+        Vector3 start = new Vector3(MeshParent.localPosition.x, UpHeight, MeshParent.localPosition.z);
+        Vector3 target = new Vector3(MeshParent.localPosition.x, DownHeight, MeshParent.localPosition.z);
         currentCoroutine = StartCoroutine(Tween.MoveBetweenRemaining(MeshParent, 0, TileConfig.MoveDownAnimationDuration, start, target, OnMoveDownStartFunction, OnMoveDownEndFunction));
     }
 
-    public void ToggleMovement() {
+    public void TogglePositionState() {
         if (IsUp)
             MoveDown();
         else

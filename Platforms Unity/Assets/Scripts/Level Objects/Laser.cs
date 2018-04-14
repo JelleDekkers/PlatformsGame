@@ -45,7 +45,6 @@ public class Laser : MonoBehaviour {
         }
         gameObject.SetActive(active);
         enabled = active;
-        Debug.Log("laser state " + active);
     }
 
     public void ScaleMesh(float distance) {

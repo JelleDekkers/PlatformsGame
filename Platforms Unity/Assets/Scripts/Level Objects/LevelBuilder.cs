@@ -20,15 +20,15 @@ public static class LevelBuilder  {
 
             IntVector2 coordinates = new IntVector2(data.x, data.z);
             Vector3 position = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
+
 #if UNITY_EDITOR
             Tile tile = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.TilesDataLink.GetPrefabByType(type)) as Tile;
-
             tile.name = tile.GetType().FullName + " " + coordinates;
 #else
             Tile tile = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type));
 #endif
-            tile.transform.SetParent(transform);
             tile.transform.position = position;
+            tile.transform.SetParent(transform);
             level.Tiles.Add(new IntVector2(data.x, data.z), tile);
             tile.Deserialize(data);
 
@@ -102,22 +102,24 @@ public static class LevelBuilder  {
             pair.Key.DeserializeEvents(pair.Value);
     }
 
-    public static void ClearLevelObjectsFromScene(Level level) {
-        foreach (var i in level.Tiles) {
-            if (i.Value != null) {
-                if (i.Value.occupant != null)
-                    GameObject.DestroyImmediate(i.Value.occupant.gameObject);
-                GameObject.DestroyImmediate(i.Value.gameObject);
-            }
-        }
-        level.Tiles.Clear();
+    //public static void RemoveLevelObjectsFromScene() {
+    //    LevelManager.Instance.ClearLevel();
 
-        foreach (var i in level.Walls) {
-            if (i.Value != null)
-                GameObject.DestroyImmediate(i.Value.gameObject);
-        }
-        level.Walls.Clear();
-        level = null;
-        Debug.Log("Cleared level");
-    }
+    //    // clears level per object type:
+    //    //foreach (var i in level.Tiles) {
+    //    //    if (i.Value != null) {
+    //    //        if (i.Value.occupant != null)
+    //    //            GameObject.DestroyImmediate(i.Value.occupant.gameObject);
+    //    //        GameObject.DestroyImmediate(i.Value.gameObject);
+    //    //    }
+    //    //}
+    //    //level.Tiles.Clear();
+
+    //    //foreach (var i in level.Walls) {
+    //    //    if (i.Value != null)
+    //    //        GameObject.DestroyImmediate(i.Value.gameObject);
+    //    //}
+    //    //level.Walls.Clear();
+    //    //level = null;
+    //}
 }

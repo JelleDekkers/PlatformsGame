@@ -27,22 +27,29 @@ public class LevelManagerEditor : Editor {
         }
         if (GUILayout.Button(new GUIContent("Save As", tooltip))) 
             LevelCreator.CreateWizard();
+        GUI.enabled = true;
+
+        GUI.enabled = LevelManager.Instance.levelAsset != null;
         if (GUILayout.Button(new GUIContent("Reload")))
             Reload();
+        GUI.enabled = true;
 
+        GUI.enabled = LevelManager.CurrentLevel != null;
+        if (GUILayout.Button(new GUIContent("Remove Objects")))
+            LevelManager.Instance.ClearLevel();
         GUI.enabled = true;
 
         levelPrevFrame = levelManager.levelAsset;
     }
 
     private void OnLevelAssetChanged() {
-        LevelBuilder.ClearLevelObjectsFromScene(LevelManager.CurrentLevel);
+        LevelManager.Instance.ClearLevel();
         if(levelManager.levelAsset != null) 
             levelManager.LoadLevelFromFile(levelManager.levelAsset);
     }
 
     private void Reload() {
-        LevelBuilder.ClearLevelObjectsFromScene(LevelManager.CurrentLevel);
+        LevelManager.Instance.ClearLevel();
         levelManager.LoadLevelFromFile(levelManager.levelAsset);
     }
 }
