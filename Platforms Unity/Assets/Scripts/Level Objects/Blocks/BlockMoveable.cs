@@ -37,7 +37,7 @@ public class BlockMoveable : Block, ILaserHittable {
             }
         }
 
-        if (neighbourTile != null && neighbourTile.IsUp) {
+        if (neighbourTile != null && neighbourTile.IsInUpState) {
             // anders voor player:
             if (neighbourTile.GetType() == typeof(PlayerOnlyTile)) {
                 canMove = false;
@@ -65,7 +65,7 @@ public class BlockMoveable : Block, ILaserHittable {
             return;
         }
 
-        if (movement.newTile != null && movement.newTile.IsUp)
+        if (movement.newTile != null && movement.newTile.IsInUpState)
             StartCoroutine(MoveCoroutine(movement.newTile, movement.direction, BlockConfig.MoveDuration));
         else
             Fall(movement.direction, BlockConfig.MoveDuration);

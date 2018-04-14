@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     public IntVector2 coordinates;// { get; private set; }
     public Block occupant;
-    public bool IsUp { get; private set; }
+    public bool IsInUpState;// { get; private set; }
     public Transform MeshParent { get { return transform.GetChild(0); } }
 
     public Action OnMoveDownStart, OnMoveDownEnd;
@@ -41,6 +41,9 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
             if (GeneralConfig.UseTransitionAnimations) {
                 MeshParent.position = new Vector3(MeshParent.position.x, DownHeight, MeshParent.position.z);
                 MoveUpRandomized();
+            } else {
+                OnMoveUpStartFunction();
+                OnMoveUpEndFunction();
             }
         } else {
             MeshParent.gameObject.SetActive(false);
@@ -113,7 +116,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     }
 
     public void TogglePositionState() {
-        if (IsUp)
+        if (IsInUpState)
             MoveDown();
         else
             MoveUp();
@@ -124,7 +127,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     }
 
     private void OnGameOver() {
-        if (!IsUp)
+        if (!IsInUpState)
             return;
 
         MoveDownRandomized();
@@ -132,7 +135,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     }
 
     private void OnDrawGizmos() {
-        if (moveUpAtStart || IsUp)
+        if (moveUpAtStart || IsInUpState)
             return;
 
         Gizmos.color = Color.yellow;
@@ -146,7 +149,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     #region Events
     private void OnMoveUpStartFunction() {
-        IsUp = true;
+        IsInUpState = true;
         MeshParent.gameObject.SetActive(true);
         if (OnMoveUpStart != null)
             OnMoveUpStart.Invoke();
@@ -158,7 +161,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     }
 
     private void OnMoveDownStartFunction() {
-        IsUp = false;
+        IsInUpState = false;
         if (OnMoveDownStart != null)
             OnMoveDownStart.Invoke();
     }

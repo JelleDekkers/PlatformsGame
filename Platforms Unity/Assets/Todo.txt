@@ -1,3 +1,5 @@
+player valt door tile heen
+
 blocks worden soms niet direct op tile gezet met de editor tool
 
 portal moved als selected en play is gestopt
