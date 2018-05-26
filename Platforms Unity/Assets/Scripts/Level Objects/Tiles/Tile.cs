@@ -27,13 +27,6 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     private Coroutine currentCoroutine;
 
-    public virtual void Deserialize(TileData data) {
-        coordinates = new IntVector2(data.x, data.z);
-        moveUpAtStart = data.moveUpAtStart;
-    }
-
-    public virtual void DeserializeEvents(TileData data) { }
-
     private void Awake() {
         GameEvents.OnGameOver += OnGameOver;
 
@@ -146,6 +139,19 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     public string[] GetEventArgsForDeserialization() {
         return new string[] { coordinates.x.ToString(), coordinates.z.ToString() };
     }
+
+    #region Serialization
+    public virtual void Deserialize(TileData data) {
+        coordinates = new IntVector2(data.x, data.z);
+        moveUpAtStart = data.moveUpAtStart;
+    }
+
+    public virtual TileData GetSerializedData() {
+        return new TileData(this);
+    }
+
+    public virtual void DeserializeEvents(TileData data) { }
+    #endregion
 
     #region Events
     private void OnMoveUpStartFunction() {

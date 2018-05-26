@@ -15,14 +15,14 @@ namespace Serializing {
         [XmlArray("blocks")] public BlockData[] blocks;
         [XmlArray("portals")] public PortalData[] portals;
 
-        private List<Block> tempBlocks = new List<Block>();
+        private List<Block> cachedBlocks = new List<Block>();
 
         private LevelData() { }
 
         public LevelData(Level level) {
             time = DateTime.Today.ToString("dd/M/yy") + " " + DateTime.Now.ToString("HH:mm:ss");
             tiles = ParseToTileData(level.Tiles);
-            blocks = ParseToBlockData(tempBlocks);
+            blocks = ParseToBlockData(cachedBlocks);
             portals = ParseToPortalData(level.Walls);
         }
 
@@ -33,17 +33,17 @@ namespace Serializing {
                 Type linkedDataType = TileData.GetLinkedDataType(pair.Value.GetType());
                 t[i] = (TileData)Activator.CreateInstance(linkedDataType, new object[] { pair.Value });
                 if (pair.Value.occupant != null)
-                    tempBlocks.Add(pair.Value.occupant);
+                    cachedBlocks.Add(pair.Value.occupant);
                 i++;
             }
             return t;
         }
 
         public BlockData[] ParseToBlockData(List<Block> blocks) {
-            BlockData[] b = new BlockData[tempBlocks.Count];
-            for(int i = 0; i < tempBlocks.Count; i++) {
-                Type linkedDataType = BlockData.GetLinkedDataType(tempBlocks[i].GetType());
-                b[i] = (BlockData)Activator.CreateInstance(linkedDataType, new object[] { tempBlocks[i] });
+            BlockData[] b = new BlockData[cachedBlocks.Count];
+            for(int i = 0; i < cachedBlocks.Count; i++) {
+                Type linkedDataType = BlockData.GetLinkedDataType(cachedBlocks[i].GetType());
+                b[i] = (BlockData)Activator.CreateInstance(linkedDataType, new object[] { cachedBlocks[i] });
             }
             return b;
         }

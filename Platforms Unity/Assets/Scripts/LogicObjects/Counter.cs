@@ -1,30 +1,40 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.Events;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using UnityEngine.Events;
 
-//public class Counter : LogicObject {
+public class Counter : LogicObject {
 
-//    [SerializeField]
-//    private int targetValue = 1;
+    [SerializeField]
+    private int targetValue = 1;
 
-//    public int currentValue;
+    public int currentValue;
+    public UnityEvent OnTargetReachedEvent;
+    public UnityEvent OnValueChangedAfterTargetReachedEvent;
 
-//    protected override string IconTextireName { get { return "Counter_Icon"; } }
+    [MenuItem("GameObject/" + MENU_PATH + "Counter", false, 0)]
+    [MenuItem(MENU_PATH + "Counter", false, 0)]
+    public static void CreateCounterObject() {
+        GameObject g = new GameObject();
+        g.name = "Counter";
+        g.AddComponent<Counter>();
+    }
 
-//    public UnityAction OnTargetReached;
+    public void Increment() {
+        OnValueChanged(currentValue++);
+        currentValue++;
+    }
 
-//    public void Increment() {
-//        currentValue++;
+    public void Decrement() {
+        OnValueChanged(currentValue--);
+        currentValue--;
+    }
 
-//        if (currentValue == targetValue)
-//            OnTargetReached.Invoke();
-//    }
-
-//    public void Decrement() {
-//        currentValue--;
-
-//        if (currentValue == targetValue)
-//            OnTargetReached.Invoke();
-//    }
-//}
+    private void OnValueChanged(int newValue) {
+        if(newValue == targetValue && OnTargetReachedEvent != null)
+            OnTargetReachedEvent.Invoke();
+        else if(currentValue == targetValue && OnValueChangedAfterTargetReachedEvent != null) 
+            OnValueChangedAfterTargetReachedEvent.Invoke();
+    }
+}

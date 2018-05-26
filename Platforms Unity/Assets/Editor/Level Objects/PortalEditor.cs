@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
+using System.Collections.Generic;
+
 [CustomEditor(typeof(Portal), true)]
 public class PortalEditor : DraggableEditorObject<Portal> {
 
     private TileEdge snappedTobeforeDrag;
-    
-    protected TileEdge snappedToWhileDragging;
+    private TileEdge snappedToWhileDragging;
 
     private bool isActive;
 
@@ -14,18 +15,23 @@ public class PortalEditor : DraggableEditorObject<Portal> {
         base.Awake();
         isActive = obj.IsActive;
         runInPlayMode = false;
-        dragging = !LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge);
-
         if (obj.IsActiveOnStart || obj.ConnectedPortal)
             obj.Activate();
         else
             obj.Deactivate();
     }
 
+    // deze miste? is ook de reden dat block soms niet werkt?
+    private void OnEnable() {
+        if (!LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge))
+            LevelManager.CurrentLevel.Walls.AddWall(obj.Edge, obj);
+        dragging = !LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge);
+    }
+
     protected override void OnSceneGUI() {
         base.OnSceneGUI();
         //Debug.Log(obj.IsActiveOnStart + " " + isActive + " " + (obj.IsActive == isActive));
-        //CheckForActivationChanges();
+        CheckForActivationChanges();
     }
 
     private void CheckForActivationChanges() {

@@ -1,15 +1,12 @@
-player valt door tile heen
-
-blocks worden soms niet direct op tile gezet met de editor tool
-
-portal moved als selected en play is gestopt
-kan coordinates snapped to variabelen naar nunllable maken
 portal disable mesh in editor als niet active is en geen conneccted
 via zelfde logica als in portal.start()
 
-volledige goede flow met en zonder(voor debug) transitie tussen levels
+blocks worden soms niet direct op tile gezet met de editor tool
+wordt bij de rest gefixt door de onenable stuff, via andere manier doen?
 
+logic objects kunnen saven/loaden
 
+paar levels hebben die goed werken voor stage gesprek
 
 platforms die vallen nadat je er op hebt gestaan
 ook platforms waar je 2 keer op kan staan?

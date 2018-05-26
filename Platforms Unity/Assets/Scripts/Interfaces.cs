@@ -15,7 +15,6 @@ public interface ISerializableEventTarget {
     string[] GetEventArgsForDeserialization();
 }
 
-
 public interface ILaserHittable {
     void OnLaserHitStart(LaserSource source);
     void OnLaserHitEnd();

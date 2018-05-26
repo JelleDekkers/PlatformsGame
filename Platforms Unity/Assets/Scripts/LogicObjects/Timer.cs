@@ -11,20 +11,18 @@
 
 //public class Timer : LogicObject {
 
-//    //[SerializeField]
-//    //private float interval = 1;
-//    //[SerializeField]
-//    //private float max = 10;
+//    [SerializeField]
+//    private float interval = 1;
+//    [SerializeField]
+//    private float max = 10;
 
-//    //public UnityEvent OnReachedZero;
+//    public UnityEvent OnReachedZero;
 
-//    protected override string IconTextireName { get { return "Timer_Icon"; } }
+//    public void Toggle() {
 
-//    //public void Toggle() {
+//    }
 
-//    //}
+//    public void Pause() {
 
-//    //public void Pause() {
-
-//    //}
+//    }
 //}

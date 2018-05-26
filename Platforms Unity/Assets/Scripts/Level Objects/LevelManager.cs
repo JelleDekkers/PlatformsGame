@@ -59,7 +59,7 @@ public class LevelManager : MonoBehaviour {
                 stream.Close();
 
                 if (currentLevel != null)
-                    LevelManager.instance.ClearLevel();
+                    ClearLevel();
 
                 currentLevel = new Level();
                 LevelBuilder.BuildLevelObjects(currentLevel, data, transform);
