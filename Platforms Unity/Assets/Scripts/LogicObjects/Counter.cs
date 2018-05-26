@@ -22,12 +22,12 @@ public class Counter : LogicObject {
     }
 
     public void Increment() {
-        OnValueChanged(currentValue++);
+        OnValueChanged(currentValue + 1);
         currentValue++;
     }
 
     public void Decrement() {
-        OnValueChanged(currentValue--);
+        OnValueChanged(currentValue - 1);
         currentValue--;
     }
 

@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     public IntVector2 coordinates;// { get; private set; }
     public Block occupant;
-    public bool IsInUpState;// { get; private set; }
+    public bool IsInUpState { get; private set; }
     public Transform MeshParent { get { return transform.GetChild(0); } }
 
     public Action OnMoveDownStart, OnMoveDownEnd;

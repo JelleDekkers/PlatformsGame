@@ -1,5 +1,3 @@
-block pushen na teleport bug
-
 blocks worden soms niet direct op tile gezet met de editor tool
 wordt bij de rest gefixt door de onenable stuff, via andere manier doen?
 
@@ -24,6 +22,8 @@ nieuw level laden na game over, met chapters
 
 chapters verschillende kleuren achtergrond
 
+achievements
+
 
 camera roteren?
 uit/in-zoomen?
@@ -47,8 +47,6 @@ en voor duplicate check
 kleurenblind kleuren checken
 
 IL2CPP builden android
-
-achievements
 
 ideëen:
 laser director die lasers van lethal switched
