@@ -84,7 +84,6 @@ public class Player : BlockMoveable {
         IntVector2 neighbourCoordinates = tileStandingOn.coordinates + direction;
         Debug.Log("moving from " + Coordinates + " to " + neighbourCoordinates);
         Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
-        Debug.Log("tile is null " + (neighbourTile == null));
         MovementInfo movementInfo = new MovementInfo(this, direction, direction, null, neighbourTile, null);
 
         if (LevelManager.CurrentLevel.Walls.ContainsWall(tileStandingOn.coordinates, neighbourCoordinates)) {

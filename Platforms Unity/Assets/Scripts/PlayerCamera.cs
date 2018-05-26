@@ -32,7 +32,8 @@ public class PlayerCamera : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        FollowPlayer();
+        if(Player.Instance != null)
+            FollowPlayer();
     }
 
     private void FollowPlayer() {

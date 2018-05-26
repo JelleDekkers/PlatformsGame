@@ -19,12 +19,11 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     public Portal ConnectedPortal { get { return connectedPortal; } }
 
     [SerializeField]
-    private GameObject depthMaskFront, depthMaskBack, portalFront, portalBack;
+    private GameObject depthMaskFront, depthMaskBack, frontVisual, backVisual;
     [SerializeField]
     private BoxCollider boxCollider;
-
-    public BoxCollider RayBlockerFront { get; private set; }
-    public BoxCollider RayBlockerBack { get; private set; }
+    [SerializeField]
+    public BoxCollider rayBlockerFront, rayBlockerBack;
 
     private const int DEPTH_MASK_VALUE = 3000;
     private const int NORMAL_MASK_VALUE = 2000;
@@ -35,8 +34,6 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         GameEvents.OnIntroComplete += OnIntroComplete;
     
         IsActive = isActiveOnStart;
-        RayBlockerFront = portalBack.GetComponent<BoxCollider>();
-        RayBlockerBack = portalFront.GetComponent<BoxCollider>();
     }
 
     private void IntroTransition() {
@@ -50,6 +47,10 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     }
 
     public bool CanTeleport() {
+#if UNITY_EDITOR 
+        if (Application.isPlaying)
+            return connectedPortal != null && IsActiveOnStart;
+#endif
         return connectedPortal != null && IsActive;
     }
 
@@ -75,8 +76,8 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         float time = 0;
 
         depthMaskFront.SetActive(true);
-        RayBlockerFront.enabled = true;
-        connectedPortal.RayBlockerBack.enabled = true;
+        rayBlockerFront.enabled = true;
+        connectedPortal.rayBlockerBack.enabled = true;
         connectedPortal.depthMaskBack.SetActive(true);
         block.SetRenderQueue(DEPTH_MASK_VALUE);
         BlockMoveable copy = Instantiate(block, connectedPortal.Edge.TileTwo.ToVector3() + Block.POSITION_OFFSET, Quaternion.identity);
@@ -92,8 +93,8 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         }
 
         depthMaskFront.SetActive(false);
-        RayBlockerFront.enabled = false;
-        connectedPortal.RayBlockerBack.enabled = false;
+        rayBlockerFront.enabled = false;
+        connectedPortal.rayBlockerBack.enabled = false;
         connectedPortal.depthMaskBack.SetActive(false);
     }
 
@@ -101,8 +102,8 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         float time = 0;
 
         depthMaskBack.SetActive(true);
-        RayBlockerBack.enabled = true;
-        connectedPortal.RayBlockerFront.enabled = true;
+        rayBlockerBack.enabled = true;
+        connectedPortal.rayBlockerFront.enabled = true;
         connectedPortal.depthMaskFront.SetActive(true);
         block.SetRenderQueue(DEPTH_MASK_VALUE);
         BlockMoveable copy = Instantiate(block, connectedPortal.Edge.TileOne.ToVector3() + Block.POSITION_OFFSET, Quaternion.identity);
@@ -119,8 +120,8 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         }
 
         depthMaskBack.SetActive(false);
-        RayBlockerBack.enabled = false;
-        connectedPortal.RayBlockerFront.enabled = false;
+        rayBlockerBack.enabled = false;
+        connectedPortal.rayBlockerFront.enabled = false;
         connectedPortal.depthMaskFront.SetActive(false);
     }
 
@@ -160,16 +161,18 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
 
     public void Activate() {
         IsActive = true;
-        portalFront.SetActive(true);
-        portalBack.SetActive(true);
-        boxCollider.enabled = true;
+        EnableVisuals(true);
     }
 
     public void Deactivate() {
         IsActive = false;
-        portalFront.SetActive(false);
-        portalBack.SetActive(false);
-        boxCollider.enabled = false;
+        EnableVisuals(false);
+    }
+
+    public void EnableVisuals(bool enable) {
+        frontVisual.SetActive(enable);
+        backVisual.SetActive(enable);
+        boxCollider.enabled = enable;
     }
 
     public string[] GetEventArgsForDeserialization() {

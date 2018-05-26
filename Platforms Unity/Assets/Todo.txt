@@ -1,5 +1,4 @@
-portal disable mesh in editor als niet active is en geen conneccted
-via zelfde logica als in portal.start()
+block pushen na teleport bug
 
 blocks worden soms niet direct op tile gezet met de editor tool
 wordt bij de rest gefixt door de onenable stuff, via andere manier doen?

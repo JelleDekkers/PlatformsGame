@@ -15,13 +15,9 @@ public class PortalEditor : DraggableEditorObject<Portal> {
         base.Awake();
         isActive = obj.IsActive;
         runInPlayMode = false;
-        if (obj.IsActiveOnStart || obj.ConnectedPortal)
-            obj.Activate();
-        else
-            obj.Deactivate();
+        obj.EnableVisuals(obj.CanTeleport());
     }
 
-    // deze miste? is ook de reden dat block soms niet werkt?
     private void OnEnable() {
         if (!LevelManager.CurrentLevel.Walls.ContainsWall(obj.Edge))
             LevelManager.CurrentLevel.Walls.AddWall(obj.Edge, obj);
