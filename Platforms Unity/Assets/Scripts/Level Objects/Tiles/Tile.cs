@@ -45,6 +45,7 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
 
     public IEnumerator EnableColliderTemporarily() {
         BoxCollider col = MeshParent.gameObject.AddComponent<BoxCollider>();
+        col.center = new Vector3(0, -0.4f, 0);
         float timer = 0;
         while (timer < TileConfig.TempColliderEnabledDuration) {
             timer += Time.deltaTime;

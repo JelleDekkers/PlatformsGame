@@ -91,11 +91,14 @@ public class Player : BlockMoveable {
             if (portal.CanTeleport()) {
                 movementInfo.portal = portal;
                 neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
+                neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
             }
         }
 
         if (neighbourTile != null && neighbourTile.IsInUpState) {
+            Debug.Log("check 1");
            if (neighbourTile.occupant != null) {
+                Debug.Log("occupant " + neighbourTile.occupant);
                 movementInfo.neighbourBlock = neighbourTile.occupant;
                 if (neighbourTile.occupant.GetType() == typeof(BlockMoveable) || neighbourTile.occupant.GetType().BaseType == typeof(BlockMoveable)) {
                     canMove = true;

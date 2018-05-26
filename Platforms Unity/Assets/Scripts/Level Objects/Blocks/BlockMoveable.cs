@@ -34,6 +34,7 @@ public class BlockMoveable : Block, ILaserHittable {
             if (portal.CanTeleport()) {
                 movementInfo.portal = portal;
                 neighbourCoordinates = portal.GetPortalExitCoordinates(tileStandingOn.coordinates, out movementInfo.newDirection);
+                neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
             }
         }
 
