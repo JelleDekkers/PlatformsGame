@@ -11,6 +11,12 @@ public interface IInputSystem {
     float GetAxisRawVertical();
 }
 
+public interface ISerializable {
+    MyGUID Guid { get; }
+    DataContainer Serialize();
+    object Deserialize(DataContainer data);
+}
+
 public interface ISerializableEventTarget {
     string[] GetEventArgsForDeserialization();
 }

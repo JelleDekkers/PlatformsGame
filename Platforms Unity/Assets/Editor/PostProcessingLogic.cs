@@ -14,7 +14,8 @@ public class PostProcessingLogic {
     [PostProcessScene]
     public static void OnPostprocessScene() {
         MobileTouchManager mobileManager = (MobileTouchManager)GameObject.FindObjectOfType(typeof(MobileTouchManager));
-        GameObject.DestroyImmediate(mobileManager.gameObject);
+        if(mobileManager != null)
+            GameObject.DestroyImmediate(mobileManager.gameObject);
     }
 #endif
 }

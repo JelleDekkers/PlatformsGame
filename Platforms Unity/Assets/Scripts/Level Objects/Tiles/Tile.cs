@@ -142,13 +142,17 @@ public class Tile : MonoBehaviour, ISerializableEventTarget {
     }
 
     #region Serialization
-    public virtual void Deserialize(TileData data) {
-        coordinates = new IntVector2(data.x, data.z);
-        moveUpAtStart = data.moveUpAtStart;
-    }
+    //public TileData2 Serialize() {
+    //    return new TileData2(this);
+    //}
 
-    public virtual TileData GetSerializedData() {
-        return new TileData(this);
+    //public bool Deserialize(TileData2 data) {
+    //    return true;
+    //}
+
+    public virtual void Deserialize(TileData data) {
+        //coordinates = new IntVector2(data.x, data.z);
+        //moveUpAtStart = data.moveUpAtStart;
     }
 
     public virtual void DeserializeEvents(TileData data) { }

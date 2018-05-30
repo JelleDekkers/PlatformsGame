@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<LevelTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Data>
+    <DataContainer xsi:type="TestData" objectTypeName="TestObjectChildNon" guid="-41014">
+      <x>187</x>
+      <z>-162</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TestDataChild" objectTypeName="TestObjectChild" guid="-37312">
+      <x>-61</x>
+      <z>20</z>
+      <moveUpAtStart>false</moveUpAtStart>
+      <extraVar>170</extraVar>
+    </DataContainer>
+    <DataContainer xsi:type="TestData" objectTypeName="TestObject" guid="-1142">
+      <x>200</x>
+      <z>20</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TestData" objectTypeName="TestObject" guid="-1136">
+      <x>30</x>
+      <z>3</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+  </Data>
+</LevelTestData>

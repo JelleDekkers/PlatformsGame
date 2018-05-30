@@ -1,7 +1,12 @@
-blocks worden soms niet direct op tile gezet met de editor tool
-wordt bij de rest gefixt door de onenable stuff, via andere manier doen?
+unityevents aanpassen aan de nieuwe serialization, gebruikt maken van GUID
+
+serialization code uit levelmanager naar static functions met path en name parameters
 
 logic objects kunnen saven/loaden
+
+
+blocks worden soms niet direct op tile gezet met de editor tool
+wordt bij de rest gefixt door de onenable stuff, via andere manier doen?
 
 paar levels hebben die goed werken voor stage gesprek
 
@@ -24,6 +29,7 @@ chapters verschillende kleuren achtergrond
 
 achievements
 
+stack project op git downloaden en bekijken voor audio, visuals/shaders
 
 camera roteren?
 uit/in-zoomen?
@@ -60,6 +66,7 @@ piston blocks die immoveable kunnen moven
 spike tiles die bijv via een timer kunnen activeren, om meer skill erin te brengen
 menu ook als tiles naast elkaar waar de speler overheen loopt als selection
 ball die altijd rolt
+
 pressure tile state moet visueel beter te zien zijn
 puzzle van pressure tile die elkaars neighbours togglen
 
