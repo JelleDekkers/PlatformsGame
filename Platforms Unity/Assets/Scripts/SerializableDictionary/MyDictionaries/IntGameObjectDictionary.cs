@@ -1,4 +1,4 @@
 ﻿using System;
 
 [Serializable]
-public class IntGameObjectDictionary : SerializableDictionary<int, UnityEngine.GameObject> { }
+public class IntGameObjectDictionary : SerializableDictionary<int, UnityEngine.Object> { }

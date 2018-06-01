@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Reflection;
 
-namespace Serializing {
+namespace Serialization {
 
     public class UnityEventData {
 

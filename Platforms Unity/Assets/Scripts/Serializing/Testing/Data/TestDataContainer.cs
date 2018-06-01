@@ -7,16 +7,16 @@ using System.Xml.Serialization;
 [Serializable]
 [XmlInclude(typeof(TestData))]
 [XmlInclude(typeof(TestDataChild))]
-public abstract class DataContainer {
+public abstract class TestDataContainer {
 
     [XmlAttribute] public string objectTypeName; 
     [XmlAttribute] public int guid;
 
-    protected DataContainer() { }
-    public DataContainer(UnityEngine.Object obj) {
+    protected TestDataContainer() { }
+    public TestDataContainer(UnityEngine.Object obj) {
         objectTypeName = obj.GetType().FullName;
 
-        ISerializable serializableObj = obj as ISerializable;
+        ITestSerializable serializableObj = obj as ITestSerializable;
         if (serializableObj.Guid != null)
             guid = serializableObj.Guid.ID;
         else
@@ -24,7 +24,7 @@ public abstract class DataContainer {
     }
 }
 
-public class TestData : DataContainer {
+public class TestData : TestDataContainer {
 
     [XmlElement] public int x;
     [XmlElement] public int z;

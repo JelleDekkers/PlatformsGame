@@ -27,9 +27,9 @@ public class SerializeManager : MonoBehaviour {
     }
 
     private LevelTestData GetAllSerializableObjects() {
-        List<DataContainer> serializables = new List<DataContainer>();
+        List<TestDataContainer> serializables = new List<TestDataContainer>();
         foreach (GameObject g in FindObjectsOfType<GameObject>()) {
-            ISerializable s = g.GetInterface<ISerializable>();
+            ITestSerializable s = g.GetInterface<ITestSerializable>();
             if (s != null)
                 serializables.Add(s.Serialize());
         }
@@ -68,12 +68,12 @@ public class SerializeManager : MonoBehaviour {
     }
 
     private void BuildLevel(LevelTestData data) {
-        foreach (DataContainer container in data.serializables) {
+        foreach (TestDataContainer container in data.serializables) {
             Type parsedType = Type.GetType(container.objectTypeName);
             GameObject match = GetGameObjectMatch(parsedType);
             if (match != null) {
                 GameObject gObject = Instantiate(GetGameObjectMatch(parsedType));
-                ISerializable serializableObject = gObject.GetInterface<ISerializable>();
+                ITestSerializable serializableObject = gObject.GetInterface<ITestSerializable>();
                 serializableObject.Deserialize(container);
                 guidGameObjectTable.Add(serializableObject.Guid.ID, gObject);
             } else {
@@ -95,10 +95,10 @@ public class SerializeManager : MonoBehaviour {
 public class LevelTestData {
 
     [XmlArray("Data")]
-    public DataContainer[] serializables;
+    public TestDataContainer[] serializables;
 
     public LevelTestData() { }
-    public LevelTestData(DataContainer[] serializables) {
+    public LevelTestData(TestDataContainer[] serializables) {
         this.serializables = serializables;
     }
 }

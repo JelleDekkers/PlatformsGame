@@ -1,5 +1,5 @@
 ﻿using System;
-using Serializing;
+using Serialization;
 using UnityEngine;
 
 public class LaserSource : Block, IActivatable {
@@ -17,12 +17,6 @@ public class LaserSource : Block, IActivatable {
     [SerializeField] private Laser laserPrefab;
 
     private Laser laser;
-
-    public override void Deserialize(BlockData data) {
-        base.Deserialize(data);
-        isActiveOnStart = (data as LaserSourceBlockData).isActiveOnStart;
-        isLethal = (data as LaserSourceBlockData).isLethal;
-    }
 
     protected override void Awake() {
         base.Awake();
@@ -50,7 +44,21 @@ public class LaserSource : Block, IActivatable {
         laser.SetActive(state);
         enabled = state;
     }
-    
+
+    #region Serialization
+    public override DataContainer Serialize() {
+        return new LaserSourceBlockData(this);
+    }
+
+    public override object Deserialize(DataContainer data) {
+        BlockData baseData = base.Deserialize(data) as BlockData;
+        LaserSourceBlockData parsedData = baseData as LaserSourceBlockData;
+        isActiveOnStart = parsedData.isActiveOnStart;
+        isLethal = parsedData.isLethal;
+        return parsedData;
+    }
+    #endregion
+
     #region Events
     protected override void OnIntroComplete() {
         base.OnIntroComplete();

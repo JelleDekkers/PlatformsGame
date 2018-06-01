@@ -1,9 +1,6 @@
-﻿using System;
-using System.IO;
-using UnityEngine;
-using System.Xml.Serialization;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using Serializing;
+using Serialization;
 
 public class LevelManager : MonoBehaviour {
 
@@ -23,67 +20,37 @@ public class LevelManager : MonoBehaviour {
         set { Instance.currentLevel = value; }
     }
 
-    public TextAsset levelAsset;
+    [SerializeField]
+    private TextAsset levelAsset;
+    public static TextAsset LevelAsset { get { return Instance.levelAsset; } }
+
+    [SerializeField]
+    private LevelBuilder builder;
+    public static LevelBuilder Builder { get { return Instance.builder; } }
 
     [SerializeField]
     private bool displayWorldCoordinatesForDebugging;
 
-    private const string FILE_EXTENSION = ".xml";
-    private const string FOLDER_PATH = "Assets/Resources/Levels/";
-
-    public void SaveLevelToFile(Level level) {
-        try {
-            string dataPath = FOLDER_PATH + levelAsset.name + FILE_EXTENSION;
-            LevelData data = new LevelData(level);
-            var serializer = new XmlSerializer(typeof(LevelData));
-            var stream = new FileStream(dataPath, FileMode.Create);
-            serializer.Serialize(stream, data);
-            stream.Close();
-            Debug.Log("<color=green>Succesfully Saved </color>" + levelAsset.name + " to " + dataPath);
-        } catch (Exception exception) {
-            Debug.LogError("<color=red>Saving Failed: </color>" + exception);
-        }
-    }
-
-    public bool LevelRequirementsHaveBeenMet() {
+    public static bool SaveToFileRequirementsHaveBeenMet() {
         return Player.Instance != null && Goal.Instance != null;
     }
 
-    public void LoadLevelFromFile(TextAsset asset) {
-        try {
-            string dataPath = FOLDER_PATH + asset.name + FILE_EXTENSION;
-            if (File.Exists(dataPath)) {
-                var serializer = new XmlSerializer(typeof(LevelData));
-                var stream = new FileStream(dataPath, FileMode.Open);
-                LevelData data = serializer.Deserialize(stream) as LevelData;
-                stream.Close();
-
-                if (currentLevel != null)
-                    ClearLevel();
-
-                currentLevel = new Level();
-                LevelBuilder.BuildLevelObjects(currentLevel, data, transform);
-                Debug.Log("<color=green>Succesfully loaded </color>" + dataPath);
-
-                if (GameEvents.OnLevelLoaded != null)
-                    GameEvents.OnLevelLoaded.Invoke();
-            } else {
-                throw new Exception("<color=red>No file found at </color>" + dataPath);
-            }
-        } catch(Exception exception) {
-            throw new Exception("<color=red>Failed loading level: </color>" + exception);
-        }
+    public void SetNewLevelAsset(TextAsset asset) {
+        levelAsset = asset;
+        builder.ClearLevel();
     }
 
-    public void ClearLevel() {
-        for (int i = transform.childCount - 1; i >= 0; i--) { 
-#if UNITY_EDITOR
-            DestroyImmediate(transform.GetChild(i).gameObject);
-#else
-            Destroy(transform.GetChild(i).gameObject);
-#endif
-        }
-        currentLevel = null;
+    public void ReloadCurrentLevel() {
+        Builder.ClearLevel();
+        LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
+        currentLevel = new Level();
+        Builder.BuildLevelObjects(data, ref currentLevel);
+    }
+
+    public void LoadLevelFromFile() {
+        Builder.ClearLevel();
+        LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
+        Builder.BuildLevelObjects(data, ref currentLevel);
     }
 
 #if UNITY_EDITOR

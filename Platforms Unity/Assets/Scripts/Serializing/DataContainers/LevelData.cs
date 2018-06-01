@@ -4,58 +4,47 @@ using System.Xml.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Serializing {
+namespace Serialization {
 
     [XmlRoot("level")]
     public class LevelData {
 
-        [XmlAttribute("name")] public string name;
         [XmlAttribute("date")] public string time;
-        [XmlArray("tiles")] public TileData[] tiles;
-        [XmlArray("blocks")] public BlockData[] blocks;
-        [XmlArray("portals")] public PortalData[] portals;
-
-        private List<Block> cachedBlocks = new List<Block>();
+        [XmlArray("tiles")] public DataContainer[] tiles;
+        [XmlArray("blocks")] public DataContainer[] blocks;
+        [XmlArray("portals")] public DataContainer[] portals;
 
         private LevelData() { }
-
         public LevelData(Level level) {
             time = DateTime.Today.ToString("dd/M/yy") + " " + DateTime.Now.ToString("HH:mm:ss");
-            tiles = ParseToTileData(level.Tiles);
-            blocks = ParseToBlockData(cachedBlocks);
-            portals = ParseToPortalData(level.Walls);
+            List<Block> cachedBlocks = new List<Block>();
+            tiles = GetAllTileData(level, ref cachedBlocks);
+            blocks = GetAllBlockData(cachedBlocks);
+            portals = GetAllPortalData(level);
         }
 
-        public TileData[] ParseToTileData(CoordinateTileDictionary dict) {
-            TileData[] t = new TileData[dict.Count];
-            int i = 0;
-            foreach (var pair in dict) {
-                Type linkedDataType = TileData.GetLinkedDataType(pair.Value.GetType());
-                t[i] = (TileData)Activator.CreateInstance(linkedDataType, new object[] { pair.Value });
+        private DataContainer[] GetAllTileData(Level level, ref List<Block> cachedBlocks) {
+            List<DataContainer> serializables = new List<DataContainer>();
+            foreach (var pair in level.Tiles) {
+                serializables.Add(pair.Value.Serialize());
                 if (pair.Value.occupant != null)
                     cachedBlocks.Add(pair.Value.occupant);
-                i++;
             }
-            return t;
+            return serializables.ToArray();
         }
 
-        public BlockData[] ParseToBlockData(List<Block> blocks) {
-            BlockData[] b = new BlockData[cachedBlocks.Count];
-            for(int i = 0; i < cachedBlocks.Count; i++) {
-                Type linkedDataType = BlockData.GetLinkedDataType(cachedBlocks[i].GetType());
-                b[i] = (BlockData)Activator.CreateInstance(linkedDataType, new object[] { cachedBlocks[i] });
-            }
-            return b;
+        private DataContainer[] GetAllPortalData(Level level) {
+            List<DataContainer> serializables = new List<DataContainer>();
+            foreach (var pair in level.Walls)
+                serializables.Add((pair.Value as Portal).Serialize()); 
+            return serializables.ToArray();
         }
 
-        public PortalData[] ParseToPortalData(TileEdgeWallDictionary dict) {
-            PortalData[] t = new PortalData[dict.Count];
-            int i = 0;
-            foreach (var pair in dict) {
-                t[i] = new PortalData(pair.Value as Portal);
-                i++;
-            }
-            return t;
+        private DataContainer[] GetAllBlockData(List<Block> blocks) {
+            List<DataContainer> serializables = new List<DataContainer>();
+            foreach (var block in blocks)
+                serializables.Add(block.Serialize());
+            return serializables.ToArray();
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Serializing;
+using Serialization;
 
 [SelectionBase]
-public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISerializableEventTarget {
+public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISerializableGameObject, ISerializableEventTarget {
 
+    public MyGUID Guid { get; private set; }
     public Laser Laser { get; private set; }
     public Transform Pivot { get { return transform.GetChild(0); } }
     public bool IsActive { get; private set; }
@@ -18,10 +19,11 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     private Portal connectedPortal;
     public Portal ConnectedPortal { get { return connectedPortal; } }
 
-    [SerializeField]
-    private GameObject depthMaskFront, depthMaskBack, frontVisual, backVisual;
+    [Header("Object References")]
     [SerializeField]
     private BoxCollider boxCollider;
+    [SerializeField]
+    private GameObject depthMaskFront, depthMaskBack, frontVisual, backVisual;
     [SerializeField]
     public BoxCollider rayBlockerFront, rayBlockerBack;
 
@@ -40,10 +42,6 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         Vector3 start = new Vector3(transform.position.x, transform.position.y + BlockConfig.IntroAnimationStartingHeight, transform.position.z);
         float duration = BlockConfig.IntroAnimationDuration.GetRandom();
         StartCoroutine(Tween.MoveBetween(transform, 0, duration, start, transform.position, null, null));
-    }
-
-    public virtual void Deserialize(PortalData data) {
-        isActiveOnStart = data.isActiveOnStart;
     }
 
     public bool CanTeleport() {
@@ -175,10 +173,6 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         boxCollider.enabled = enable;
     }
 
-    public string[] GetEventArgsForDeserialization() {
-        return new string[] { Edge.TileOne.x.ToString(), Edge.TileOne.z.ToString(), Edge.TileTwo.x.ToString(), Edge.TileTwo.z.ToString() };
-    }
-
     public void OnLaserHitStart(LaserSource source) {
         if (Laser == null) {
             Laser = transform.GetChild(0).GetComponent<Laser>();
@@ -199,4 +193,24 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     public void FireLaser() {
         Laser.Fire();
     }
+
+    #region Serialization
+    public virtual DataContainer Serialize() {
+        return new PortalData(this);
+    }
+
+    public virtual object Deserialize(DataContainer data) {
+        PortalData parsedData = data as PortalData;
+        Guid = new MyGUID(data.guid);
+        isActiveOnStart = parsedData.isActiveOnStart;
+        Edge = parsedData.edgeCoordinates.ToTileEdge();
+        // TODO: link connected portal
+        return parsedData;
+    }
+
+    public string[] GetEventArgsForDeserialization() {
+        return new string[] { Edge.TileOne.x.ToString(), Edge.TileOne.z.ToString(), Edge.TileTwo.x.ToString(), Edge.TileTwo.z.ToString() };
+    }
+    #endregion
+
 }

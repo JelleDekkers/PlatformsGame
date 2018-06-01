@@ -3,77 +3,31 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
-namespace Serializing {
+namespace Serialization {
 
-    [XmlInclude(typeof(PlayerBlockData))]
-    [XmlInclude(typeof(MoveableBlockData))]
     [XmlInclude(typeof(LaserSourceBlockData))]
-    [XmlInclude(typeof(LaserDiverterBlockData))]
-    [XmlInclude(typeof(LaserRecieverBlockData))]
-    [XmlInclude(typeof(LaserDiverterMoveableBlockData))]
-    public class BlockData {
+    public class BlockData : DataContainer {
 
-        private static readonly Dictionary<Type, Type> DataLinks = new Dictionary<Type, Type>() {
-            {typeof(Block), typeof(BlockData) },
-            {typeof(BlockMoveable), typeof(MoveableBlockData) },
-            {typeof(Player), typeof(PlayerBlockData) },
-            {typeof(LaserSource), typeof(LaserSourceBlockData) },
-            {typeof(LaserDiverter), typeof(LaserDiverterBlockData) },
-            {typeof(LaserReciever), typeof(LaserRecieverBlockData) },
-            {typeof(LaserDiverterMoveable), typeof(LaserDiverterMoveableBlockData) }
-        };
-
-        public static Type GetLinkedDataType(Type objectType) {
-            return DataLinks[objectType];
-        }
-
-        [XmlAttribute] public string objectType;
-        [XmlAttribute] public int x;
-        [XmlAttribute] public int z;
-        [XmlAttribute] public float Roty;
+        [XmlElement] public int x;
+        [XmlElement] public int z;
+        [XmlElement] public float yRot;
 
         protected BlockData() { }
-        public BlockData(Block t) {
-            objectType = t.GetType().FullName;
-            x = t.tileStandingOn.coordinates.x;
-            z = t.tileStandingOn.coordinates.z;
-            Roty = t.transform.eulerAngles.y;
+        public BlockData(Block obj) : base(obj) {
+            x = obj.Coordinates.x;
+            z = obj.Coordinates.z;
+            yRot = obj.transform.eulerAngles.y;
         }
-    }
-
-    public class PlayerBlockData : BlockData {
-        protected PlayerBlockData() : base() { }
-        public PlayerBlockData(Player b) : base(b) { }
-    }
-
-    public class MoveableBlockData : BlockData {
-        protected MoveableBlockData() : base() { }
-        public MoveableBlockData(BlockMoveable b) : base(b) { }
     }
 
     public class LaserSourceBlockData : BlockData {
-        [XmlAttribute] public bool isActiveOnStart;
-        [XmlAttribute] public bool isLethal;
+        [XmlElement] public bool isActiveOnStart;
+        [XmlElement] public bool isLethal;
 
         protected LaserSourceBlockData() : base() { }
         public LaserSourceBlockData(LaserSource b) : base(b) {
             isActiveOnStart = b.IsActiveOnStart;
             isLethal = b.IsLethal;
         }
-    }
-
-    public class LaserDiverterBlockData : BlockData {
-        protected LaserDiverterBlockData() : base() { }
-        public LaserDiverterBlockData(LaserDiverter b) : base(b) { }
-    }
-
-    public class LaserRecieverBlockData : BlockData {
-        protected LaserRecieverBlockData() : base() { }
-        public LaserRecieverBlockData(LaserReciever b) : base(b) { }
-    }
-
-    public class LaserDiverterMoveableBlockData : BlockData {
-        protected LaserDiverterMoveableBlockData() : base() { }
-        public LaserDiverterMoveableBlockData(LaserDiverterMoveable b) : base(b) { }
     }
 }

@@ -11,12 +11,6 @@ public interface IInputSystem {
     float GetAxisRawVertical();
 }
 
-public interface ISerializable {
-    MyGUID Guid { get; }
-    DataContainer Serialize();
-    object Deserialize(DataContainer data);
-}
-
 public interface ISerializableEventTarget {
     string[] GetEventArgsForDeserialization();
 }
@@ -31,4 +25,19 @@ public interface ILaserDiverter {
     void OnLaserHitStart(LaserSource source);
     void OnLaserHitEnd();
     void FireLaser();
+}
+
+namespace Serialization {
+    public interface ISerializableGameObject {
+        MyGUID Guid { get; }
+        DataContainer Serialize();
+        object Deserialize(DataContainer data);
+    }
+}
+
+// TODO: remove
+public interface ITestSerializable {
+    MyGUID Guid { get; }
+    TestDataContainer Serialize();
+    object Deserialize(TestDataContainer data);
 }

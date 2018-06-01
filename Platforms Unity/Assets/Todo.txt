@@ -1,14 +1,22 @@
-unityevents aanpassen aan de nieuwe serialization, gebruikt maken van GUID
+alles overzetten naar nieuwe serializatie:
+correcte referenties naar ekaar via de guid
 
-serialization code uit levelmanager naar static functions met path en name parameters
+deserializatie via levelBuilder of via object zelf?
+
+unityevents aanpassen aan de nieuwe serialization, gebruik maken van GUID
+
+iserializationEventTarget naar Serializable namespace
 
 logic objects kunnen saven/loaden
+logic object prefabs, ook in spawnableObjects
+
+xml element veranderen naar xml attribute, kijken of file dan kleiner is
+
+paar levels hebben die goed werken achter elkaar voor stage gesprek
 
 
 blocks worden soms niet direct op tile gezet met de editor tool
-wordt bij de rest gefixt door de onenable stuff, via andere manier doen?
-
-paar levels hebben die goed werken voor stage gesprek
+komt misschien omdat bij de rest gefixt door de onenable stuff, via andere manier doen?
 
 platforms die vallen nadat je er op hebt gestaan
 ook platforms waar je 2 keer op kan staan?

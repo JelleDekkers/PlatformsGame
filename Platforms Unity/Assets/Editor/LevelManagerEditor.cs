@@ -1,56 +1,67 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using Serialization;
 
 [CustomEditor(typeof(LevelManager), true)]
 public class LevelManagerEditor : Editor {
 
     private LevelManager levelManager;
-    private TextAsset levelPrevFrame;
+    private TextAsset levelAssetPrevFrame;
+    private string tooltip;
 
     private void OnEnable() {
         levelManager = (LevelManager)target;
-        levelPrevFrame = levelManager.levelAsset;
+        levelAssetPrevFrame = LevelManager.LevelAsset;
     }
 
     public override void OnInspectorGUI() {
         DrawDefaultInspector();
 
-        if (levelPrevFrame != levelManager.levelAsset)
+        if (levelAssetPrevFrame != LevelManager.LevelAsset)
             OnLevelAssetChanged();
 
-        GUI.enabled = levelManager.LevelRequirementsHaveBeenMet();
-        string tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile";
-        if (LevelManager.Instance.levelAsset != null) {
-            if (GUILayout.Button(new GUIContent("Save", tooltip))) {
-                levelManager.SaveLevelToFile(LevelManager.CurrentLevel);
-            }
-        }
-        if (GUILayout.Button(new GUIContent("Save As", tooltip))) 
-            LevelCreator.CreateWizard();
-        GUI.enabled = true;
+        GUI.enabled = LevelManager.SaveToFileRequirementsHaveBeenMet() && LevelManager.LevelAsset != null;
+        tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile and levelAsset musnt't be null";
+        if (GUILayout.Button(new GUIContent("Save", tooltip)))
+            SaveCurrentLevelToFile();
 
-        GUI.enabled = LevelManager.Instance.levelAsset != null;
-        if (GUILayout.Button(new GUIContent("Reload")))
-            Reload();
-        GUI.enabled = true;
+        GUI.enabled = LevelManager.SaveToFileRequirementsHaveBeenMet();
+        if (GUILayout.Button(new GUIContent("Save As", tooltip)))
+            LevelCreator.CreateWizard();
+
+        GUI.enabled = LevelManager.LevelAsset != null;
+        if (GUILayout.Button(new GUIContent("Reload Level")))
+            levelManager.ReloadCurrentLevel();
 
         GUI.enabled = LevelManager.CurrentLevel != null;
-        if (GUILayout.Button(new GUIContent("Remove Objects")))
-            LevelManager.Instance.ClearLevel();
+        if (GUILayout.Button(new GUIContent("Empty Level")))
+            LevelManager.Builder.ClearLevel();
+
         GUI.enabled = true;
 
-        levelPrevFrame = levelManager.levelAsset;
+        levelAssetPrevFrame = LevelManager.LevelAsset;
     }
+
+    public void SaveCurrentLevelToFile() {
+        if (LevelManager.LevelAsset == null) {
+            Debug.Log("Can't save, no file found");
+            return;
+        }
+
+        LevelData data = new LevelData(LevelManager.CurrentLevel);
+        LevelSerializer.SaveToFile(data, LevelManager.LevelAsset.name);
+    }
+
 
     private void OnLevelAssetChanged() {
-        LevelManager.Instance.ClearLevel();
-        if(levelManager.levelAsset != null) 
-            levelManager.LoadLevelFromFile(levelManager.levelAsset);
-    }
+        if (LevelManager.LevelAsset.GetType() != typeof(TextAsset)) {
+            Debug.LogWarning(LevelManager.LevelAsset.GetType() + " is not a TextAsset!");
+            levelManager.SetNewLevelAsset(null);
+            return;
+        }
 
-    private void Reload() {
-        LevelManager.Instance.ClearLevel();
-        levelManager.LoadLevelFromFile(levelManager.levelAsset);
+        if (LevelManager.LevelAsset != null) 
+            levelManager.LoadLevelFromFile();
     }
 }
 

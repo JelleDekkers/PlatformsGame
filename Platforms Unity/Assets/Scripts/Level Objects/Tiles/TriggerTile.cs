@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Serializing;
+using Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,4 +25,17 @@ public class TriggerTile : Tile {
         if (OnEnterEvent != null)
             OnEnterEvent.Invoke();
     }
+
+    #region Serialization
+    public override DataContainer Serialize() {
+        return new TriggerTileData(this);
+    }
+
+    public override object Deserialize(DataContainer data) {
+        TileData baseData = base.Deserialize(data) as TileData;
+        TriggerTileData parsedData = baseData as TriggerTileData;
+        // TODO: events
+        return parsedData;
+    }
+    #endregion
 }

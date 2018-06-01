@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
+using Serialization;
 
 public class LevelCreator : ScriptableWizard {
 
@@ -26,14 +26,15 @@ public class LevelCreator : ScriptableWizard {
     }
 
     private void Init() {
-        if (LevelManager.Instance.levelAsset != null)
-            fileName = LevelManager.Instance.levelAsset.name;
+        if (LevelManager.LevelAsset != null)
+            fileName = LevelManager.LevelAsset.name;
         else
             fileName = persistentFileName;
     }
 
     private void OnWizardCreate() {
-        LevelManager.Instance.levelAsset = LevelsHandler.AddNewLevel(LevelManager.CurrentLevel, fileName);
+        LevelData data = new LevelData(LevelManager.CurrentLevel);
+        LevelManager.Instance.SetNewLevelAsset(LevelSerializer.SaveToFile(data, fileName));
         persistentFileName = fileName;
     }
 

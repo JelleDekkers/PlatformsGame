@@ -1,58 +1,119 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Serializing;
+using Serialization;
 
-public static class LevelBuilder  {
+using Object = UnityEngine.Object;
 
-    public static void BuildLevelObjects(Level level, LevelData levelData, Transform transform) {
-        Dictionary<Tile, TileData> tilesWithEvents = new Dictionary<Tile, TileData>();
-        BuildTiles(level, levelData, ref tilesWithEvents, transform);
-        BuildBlocks(level, levelData, transform);
-        BuildPortals(level, levelData, transform);
-        AssignEvents(ref tilesWithEvents);
+public class LevelBuilder : MonoBehaviour {
+
+    public IntGameObjectDictionary guidGameObjectTable = new IntGameObjectDictionary();
+
+    public GameObject[] spawnableObjects;
+    private Dictionary<Type, GameObject> spawnableObjectsTable;
+    public Dictionary<Type, GameObject> SpawnableObjectsTable {
+        get {
+            if (spawnableObjectsTable == null)
+                spawnableObjectsTable = FillSpawnableObjectsTable();
+            return spawnableObjectsTable;
+        }
     }
 
-    private static void BuildTiles(Level level, LevelData levelData, ref Dictionary<Tile, TileData> tilesWithEvents, Transform transform) {
-        for (int i = 0; i < levelData.tiles.Length; i++) {
-            TileData data = levelData.tiles[i];
-            Type type = Type.GetType(data.type);
+    private Dictionary<Type, GameObject> FillSpawnableObjectsTable() {
+        var spawnableObjectsTable = new Dictionary<Type, GameObject>();
+        foreach (GameObject gObject in spawnableObjects) {
+            ISerializableGameObject serializable = gObject.GetInterface<ISerializableGameObject>();
+            spawnableObjectsTable.Add(serializable.GetType(), gObject);
+        }
+        return spawnableObjectsTable;
+    }
+
+    private GameObject GetMatchedGameObject(Type type) {
+        return SpawnableObjectsTable[type];
+    }
+
+    public void BuildLevelObjects(LevelData data, ref Level level) {
+        guidGameObjectTable.Clear();
+        BuildTiles(data.tiles, ref level);
+        BuildBlocks(data.blocks, ref level);
+        BuildPortals(data.portals, ref level);
+        //AssignEvents(ref tilesWithEvents);
+
+        if (GameEvents.OnLevelLoaded != null)
+            GameEvents.OnLevelLoaded.Invoke();
+    }
+
+    public void ClearLevel() {
+        Transform transform = LevelManager.Instance.transform;
+        for (int i = transform.childCount - 1; i >= 0; i--) {
+#if UNITY_EDITOR
+            GameObject.DestroyImmediate(transform.GetChild(i).gameObject);
+#else
+            GameObject.Destroy(transform.GetChild(i).gameObject);
+#endif
+        }
+        guidGameObjectTable.Clear();
+        LevelManager.CurrentLevel = null;
+    }
+
+    private void BuildTiles(DataContainer[] tilesData, ref Level level) {
+        for (int i = 0; i < tilesData.Length; i++) {
+            TileData data = tilesData[i] as TileData;
+            Type parsedType = Type.GetType(data.objectTypeName);
+            GameObject match = GetMatchedGameObject(parsedType);
+
+            if (match == null) {
+                Debug.Log("no corresponding type found for " + parsedType);
+                return;
+            }
 
             IntVector2 coordinates = new IntVector2(data.x, data.z);
             Vector3 position = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
 
+            Tile tile = null;
+            GameObject gObject = null;
 #if UNITY_EDITOR
-            Tile tile = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.TilesDataLink.GetPrefabByType(type)) as Tile;
+            gObject = UnityEditor.PrefabUtility.InstantiatePrefab(match) as GameObject;
+            tile = gObject.GetComponent<Tile>();
             tile.name = tile.GetType().FullName + " " + coordinates;
 #else
-            Tile tile = Instantiate(PrefabManager.TilesDataLink.GetPrefabByType(type));
+            g = Instantiate(match) as GameObject;
+            tile = g.GetComponent<Tile>();
 #endif
             tile.transform.position = position;
             tile.transform.SetParent(transform);
             level.Tiles.Add(new IntVector2(data.x, data.z), tile);
             tile.Deserialize(data);
-
-            if (tile.GetType() == typeof(PressureTile))
-                tilesWithEvents.Add(tile, data);
+            guidGameObjectTable.Add(tile.Guid.ID, tile);
         }
     }
 
-    private static void BuildBlocks(Level level, LevelData levelData, Transform transform) {
-        for (int i = 0; i < levelData.blocks.Length; i++) {
-            BlockData data = levelData.blocks[i];
-            Type type = Type.GetType(data.objectType);
+    private void BuildBlocks(DataContainer[] blocks, ref Level level) {
+        for (int i = 0; i < blocks.Length; i++) {
+            BlockData data = blocks[i] as BlockData;
+            Type parsedType = Type.GetType(data.objectTypeName);
+            GameObject match = GetMatchedGameObject(parsedType);
+
+            if (match == null) {
+                Debug.Log("no corresponding type found for " + parsedType);
+                return;
+            }
+
             IntVector2 coordinates = new IntVector2(data.x, data.z);
             Tile tile = level.Tiles[coordinates];
             Vector3 position = new Vector3(tile.transform.position.x, Block.POSITION_OFFSET.y, tile.transform.position.z);
-            Quaternion rotation = Quaternion.Euler(0, data.Roty, 0);
+
+            Block block = null;
+            GameObject gObject = null;
 #if UNITY_EDITOR
-            Block block = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.BlocksDataLink.GetPrefabByType(type)) as Block;
-            block.name = type.FullName + " " + coordinates;
+            gObject = UnityEditor.PrefabUtility.InstantiatePrefab(match) as GameObject;
+            block = gObject.GetComponent<Block>();
+            block.name = parsedType.FullName + " " + coordinates;
 #else
-            Block b = GameObject.Instantiate(PrefabManager.BlocksDataLink.GetPrefabByType(type));
+            gObject = Instantiate(match) as GameObject;
+            block = gameObject.GetComponent<Block>();
 #endif
             block.transform.position = position;
-            block.transform.rotation = rotation;
             block.transform.SetParent(transform);
             tile.SetOccupant(block);
             block.SetTileStandingOn(tile);
@@ -60,19 +121,25 @@ public static class LevelBuilder  {
         }
     }
 
-    private static void BuildPortals(Level level, LevelData levelData, Transform transform) {
-        for (int i = 0; i < levelData.portals.Length; i++) {
-            PortalData data = levelData.portals[i];
-            TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.edgeOneX, data.edgeCoordinates.edgeOneZ),
-                                         new IntVector2(data.edgeCoordinates.edgeTwoX, data.edgeCoordinates.edgeTwoZ));
-            Vector3 position = edge.TileOne.ToVector3() + Tile.POSITION_OFFSET;
-#if UNITY_EDITOR
-            Portal portal = UnityEditor.PrefabUtility.InstantiatePrefab(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal))) as Portal;
+    private void BuildPortals(DataContainer[] portals, ref Level level) {
+        for (int i = 0; i < portals.Length; i++) {
+            PortalData data = portals[i] as PortalData;
+            Type parsedType = Type.GetType(data.objectTypeName);
+            GameObject match = GetMatchedGameObject(parsedType);
 
+            TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.oneX, data.edgeCoordinates.oneZ),
+                                         new IntVector2(data.edgeCoordinates.twoX, data.edgeCoordinates.twoZ));
+            Vector3 position = edge.TileOne.ToVector3() + Tile.POSITION_OFFSET;
+
+            Portal portal = null;
+            GameObject gObject = null;
+#if UNITY_EDITOR
+            gObject = UnityEditor.PrefabUtility.InstantiatePrefab(match) as GameObject;
+            portal = gObject.GetComponent<Portal>();
             portal.name = portal.GetType().FullName + " " + edge.ToString();
 #else
-            Portal portal = GameObject.Instantiate(PrefabManager.WallsDataLink.GetPrefabByType(typeof(Portal)) as Portal;
-
+            gObject = Instantiate(match) as GameObject;
+            portal = gObject.GetComponent<Portal>();
 #endif
             portal.transform.position = position;
             portal.transform.SetParent(transform);
@@ -83,13 +150,13 @@ public static class LevelBuilder  {
         }
 
         // portal connections:
-        for (int i = 0; i < levelData.portals.Length; i++) {
-            PortalData data = levelData.portals[i];
+        for (int i = 0; i < portals.Length; i++) {
+            PortalData data = portals[i] as PortalData;
             if (data.connectedPortalCoordinates != null) {
-                TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.edgeOneX, data.edgeCoordinates.edgeOneZ),
-                                             new IntVector2(data.edgeCoordinates.edgeTwoX, data.edgeCoordinates.edgeTwoZ));
-                TileEdge connectionEdge = new TileEdge(new IntVector2(data.connectedPortalCoordinates.edgeOneX, data.connectedPortalCoordinates.edgeOneZ),
-                                                   new IntVector2(data.connectedPortalCoordinates.edgeTwoX, data.connectedPortalCoordinates.edgeTwoZ));
+                TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.oneX, data.edgeCoordinates.oneZ),
+                                                new IntVector2(data.edgeCoordinates.twoX, data.edgeCoordinates.twoZ));
+                TileEdge connectionEdge = new TileEdge(new IntVector2(data.connectedPortalCoordinates.oneX, data.connectedPortalCoordinates.oneZ),
+                                                    new IntVector2(data.connectedPortalCoordinates.twoX, data.connectedPortalCoordinates.twoZ));
                 Portal p = level.Walls.GetWall(edge.TileOne, edge.TileTwo) as Portal;
                 Portal connectedPortal = level.Walls.GetWall(connectionEdge.TileOne, connectionEdge.TileTwo) as Portal;
                 p.SetConnectedPortal(connectedPortal);
@@ -97,29 +164,8 @@ public static class LevelBuilder  {
         }
     }
 
-    public static void AssignEvents(ref Dictionary<Tile, TileData> tilesWithEvents) {
+    public void AssignEvents(ref Dictionary<Tile, TileData> tilesWithEvents) {
         foreach (KeyValuePair<Tile, TileData> pair in tilesWithEvents)
             pair.Key.DeserializeEvents(pair.Value);
     }
-
-    //public static void RemoveLevelObjectsFromScene() {
-    //    LevelManager.Instance.ClearLevel();
-
-    //    // clears level per object type:
-    //    //foreach (var i in level.Tiles) {
-    //    //    if (i.Value != null) {
-    //    //        if (i.Value.occupant != null)
-    //    //            GameObject.DestroyImmediate(i.Value.occupant.gameObject);
-    //    //        GameObject.DestroyImmediate(i.Value.gameObject);
-    //    //    }
-    //    //}
-    //    //level.Tiles.Clear();
-
-    //    //foreach (var i in level.Walls) {
-    //    //    if (i.Value != null)
-    //    //        GameObject.DestroyImmediate(i.Value.gameObject);
-    //    //}
-    //    //level.Walls.Clear();
-    //    //level = null;
-    //}
 }

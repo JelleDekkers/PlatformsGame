@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void StartNewLevel() {
-        if(LevelManager.CurrentLevel == null)
-            LevelManager.Instance.LoadLevelFromFile(LevelManager.Instance.levelAsset);
+        // TODO: fix
+        //if(LevelManager.CurrentLevel == null)
+        //    LevelManager.Instance.LoadLevelFromFile(LevelManager.Instance.levelAsset);
 
         if (GameEvents.OnLevelStart != null)
             GameEvents.OnLevelStart.Invoke();
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void RestartLevel() {
-        LevelManager.Instance.ClearLevel();
+        LevelManager.Builder.ClearLevel();
         LevelManager.CurrentLevel = null;
         StartNewLevel();
     }

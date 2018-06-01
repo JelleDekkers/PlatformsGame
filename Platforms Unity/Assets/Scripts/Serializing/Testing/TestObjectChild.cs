@@ -6,11 +6,11 @@ public class TestObjectChild : TestObject {
 
     public int extraVar;
 
-    public override DataContainer Serialize() {
+    public override TestDataContainer Serialize() {
         return new TestDataChild(this);
     }
 
-    public override object Deserialize(DataContainer data) {
+    public override object Deserialize(TestDataContainer data) {
         TestData baseData = base.Deserialize(data) as TestData;
         TestDataChild parsedData = baseData as TestDataChild;
         extraVar = parsedData.extraVar;

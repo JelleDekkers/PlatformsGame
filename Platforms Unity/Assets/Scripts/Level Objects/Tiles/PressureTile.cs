@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Serializing;
+using Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PressureTile : Tile {
+public class PressureTile : Tile, ISerializableGameObject {
 
     [SerializeField]
     private bool isRepeatable;
@@ -30,4 +30,17 @@ public class PressureTile : Tile {
         if (OnExitEvent != null)
             OnExitEvent.Invoke();
     }
+
+    #region Serialization
+    public override DataContainer Serialize() {
+        return new PressureTileData(this);
+    }
+
+    public override object Deserialize(DataContainer data) {
+        TileData baseData = base.Deserialize(data) as TileData;
+        PressureTileData parsedData = baseData as PressureTileData;
+        // TODO: events
+        return parsedData;
+    }
+    #endregion
 }
