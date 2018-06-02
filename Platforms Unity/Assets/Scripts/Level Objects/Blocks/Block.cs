@@ -9,7 +9,17 @@ public class Block : MonoBehaviour, ISerializableGameObject {
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0.5f, 0.5f);
     public static readonly Vector3 SIZE = new Vector3(1f, 1f, 1f);
 
-    public GUID Guid { get; set; }
+    private GUID guid;
+    public GUID Guid {
+        get {
+            if (guid == null || guid.ID == 0)
+                guid = new GUID(GetInstanceID(), this);
+            return guid;
+        }
+        set {
+            guid = value;
+        }
+    }
     public IntVector2 Coordinates { get { return tileStandingOn.coordinates; } }
 
     public Tile tileStandingOn;

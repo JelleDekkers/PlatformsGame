@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace Serialization {
 
     [XmlInclude(typeof(LaserSourceBlockData))]
+    [XmlInclude(typeof(LaserRecieverData))]
     public class BlockData : DataContainer {
 
         [XmlElement] public int x;
@@ -28,6 +29,17 @@ namespace Serialization {
         public LaserSourceBlockData(LaserSource b) : base(b) {
             isActiveOnStart = b.IsActiveOnStart;
             isLethal = b.IsLethal;
+        }
+    }
+
+    public class LaserRecieverData : BlockData {
+        [XmlElement] public UnityEventDataCollection onActivated;
+        [XmlElement] public UnityEventDataCollection onDisabled;
+
+        protected LaserRecieverData() : base() { }
+        public LaserRecieverData(LaserReciever b) : base(b) {
+            onActivated = new UnityEventDataCollection(b.onActivated);
+            onDisabled = new UnityEventDataCollection(b.onDisabled);
         }
     }
 }

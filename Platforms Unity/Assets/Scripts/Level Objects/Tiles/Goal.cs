@@ -16,8 +16,6 @@ public class Goal : Tile {
     public override void Enter(Block block) {
         if (block != Player.Instance)
             return;
-
-        Debug.Log("goal reached");
         
         if(GameEvents.OnGameOver != null)
             GameEvents.OnGameOver();

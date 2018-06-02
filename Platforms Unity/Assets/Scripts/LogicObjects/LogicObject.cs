@@ -9,7 +9,17 @@ public abstract class LogicObject : MonoBehaviour, ISerializableGameObject {
 
     protected const string MENU_PATH = "Level Tools/Logic Objects/";
 
-    public GUID Guid { get; set; }
+    private GUID guid;
+    public GUID Guid {
+        get {
+            if (guid == null || guid.ID == 0)
+                guid = new GUID(GetInstanceID(), this);
+            return guid;
+        }
+        set {
+            guid = value;
+        }
+    }
 
     #region Serialization
     public virtual DataContainer Serialize() {

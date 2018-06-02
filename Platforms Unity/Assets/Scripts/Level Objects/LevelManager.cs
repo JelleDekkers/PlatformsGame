@@ -60,6 +60,7 @@ public class LevelManager : MonoBehaviour {
     public void LoadLevelFromFile() {
         Builder.ClearLevel();
         LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
+        currentLevel = new Level();
         Builder.BuildLevelObjects(data, ref currentLevel);
     }
 

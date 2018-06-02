@@ -4,11 +4,7 @@ using Serialization;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PressureTile : Tile, ISerializableGameObject {
-
-    [SerializeField]
-    private bool isRepeatable;
-    public bool IsRepeatable { get { return isRepeatable; } }
+public class PressureTile : Tile {
 
     public UnityEvent OnEnterEvent;
     public UnityEvent OnExitEvent;

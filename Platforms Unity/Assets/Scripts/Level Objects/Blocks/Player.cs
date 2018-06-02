@@ -82,7 +82,6 @@ public class Player : BlockMoveable {
 
     public override MovementInfo GetMovementInfo(IntVector2 direction, out bool canMove) {
         IntVector2 neighbourCoordinates = tileStandingOn.coordinates + direction;
-        Debug.Log("moving from " + Coordinates + " to " + neighbourCoordinates);
         Tile neighbourTile = LevelManager.CurrentLevel.Tiles.GetTile(neighbourCoordinates);
         MovementInfo movementInfo = new MovementInfo(this, direction, direction, null, neighbourTile, null);
 
@@ -96,9 +95,7 @@ public class Player : BlockMoveable {
         }
 
         if (neighbourTile != null && neighbourTile.IsInUpState) {
-            Debug.Log("check 1");
            if (neighbourTile.occupant != null) {
-                Debug.Log("occupant " + neighbourTile.occupant);
                 movementInfo.neighbourBlock = neighbourTile.occupant;
                 if (neighbourTile.occupant.GetType() == typeof(BlockMoveable) || neighbourTile.occupant.GetType().BaseType == typeof(BlockMoveable)) {
                     canMove = true;

@@ -12,6 +12,7 @@ namespace Serialization {
         private const string FOLDER_PATH = "Assets/Resources/Levels/";
 
         public static TextAsset SaveToFile(LevelData data, string fileName) {
+            GUID.ClearTable();
             try {
                 string dataPath = FOLDER_PATH + fileName + FILE_EXTENSION;
                 var serializer = new XmlSerializer(typeof(LevelData));

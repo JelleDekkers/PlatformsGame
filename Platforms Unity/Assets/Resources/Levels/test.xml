@@ -1,47 +1,37 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="31/5/18 21:57:10">
-  <Data>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="11508">
-      <x>1</x>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="02/6/18 18:46:25">
+  <data>
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3738088">
+      <x>4</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="11448">
+    <DataContainer xsi:type="TileData" objectTypeName="Goal" guid="-3738168">
+      <x>2</x>
+      <z>-4</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3738310">
+      <x>-1</x>
+      <z>-3</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="BlockData" objectTypeName="Player" guid="-3738548">
+      <x>-1</x>
+      <z>-3</z>
+      <yRot>180</yRot>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3743130">
       <x>1</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="11454">
-      <x>2</x>
-      <z>-1</z>
-      <moveUpAtStart>true</moveUpAtStart>
-    </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="11488">
-      <x>2</x>
-      <z>-2</z>
-      <moveUpAtStart>true</moveUpAtStart>
-    </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="11552">
-      <x>1</x>
-      <z>-4</z>
-      <moveUpAtStart>true</moveUpAtStart>
-    </DataContainer>
-    <DataContainer xsi:type="PressureTileData" objectTypeName="PressureTile" guid="11460">
-      <x>2</x>
-      <z>-4</z>
-      <moveUpAtStart>true</moveUpAtStart>
-      <onEnterEventData />
-      <onExitEventData />
-    </DataContainer>
-    <DataContainer xsi:type="BlockData" objectTypeName="Player" guid="-1176">
+    <DataContainer xsi:type="LaserSourceBlockData" objectTypeName="LaserSource" guid="-3743318">
       <x>1</x>
       <z>-1</z>
-      <yRot>0</yRot>
+      <yRot>90</yRot>
+      <isActiveOnStart>true</isActiveOnStart>
+      <isLethal>true</isLethal>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Goal" guid="-91026">
-      <x>0</x>
-      <z>-4</z>
-      <moveUpAtStart>true</moveUpAtStart>
-    </DataContainer>
-  </Data>
+  </data>
 </level>

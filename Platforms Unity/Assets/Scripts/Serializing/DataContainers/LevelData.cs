@@ -9,12 +9,12 @@ namespace Serialization {
     [XmlRoot("level")]
     public class LevelData {
 
-        [XmlAttribute("date")] public string time;
+        [XmlAttribute] public string date;
         [XmlArray] public DataContainer[] data;
 
         private LevelData() { }
         public LevelData(Level level, Transform transform) {
-            time = DateTime.Today.ToString("dd/M/yy") + " " + DateTime.Now.ToString("HH:mm:ss");
+            date = DateTime.Today.ToString("dd/M/yy") + " " + DateTime.Now.ToString("HH:mm:ss");
             data = GetAllSerializableLevelObjects(transform).ToArray();
         }
 

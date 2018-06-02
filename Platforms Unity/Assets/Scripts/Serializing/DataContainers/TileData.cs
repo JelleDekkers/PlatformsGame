@@ -22,8 +22,8 @@ namespace Serialization {
     }
 
     public class PressureTileData : TileData {
-        public UnityEventDataCollection onEnterEventData;
-        public UnityEventDataCollection onExitEventData;
+        [XmlElement] public UnityEventDataCollection onEnterEventData;
+        [XmlElement] public UnityEventDataCollection onExitEventData;
 
         protected PressureTileData() { }
         public PressureTileData(PressureTile t) : base(t) {
@@ -33,7 +33,7 @@ namespace Serialization {
     }
 
     public class TriggerTileData : TileData {
-        public UnityEventDataCollection onEnterEventData;
+        [XmlElement] public UnityEventDataCollection onEnterEventData;
 
         protected TriggerTileData() { }
         public TriggerTileData(TriggerTile t) : base(t) {

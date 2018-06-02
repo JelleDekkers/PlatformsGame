@@ -19,7 +19,7 @@ namespace Serialization {
                 if ((uEvent.GetPersistentTarget(i) == null) || String.IsNullOrEmpty(uEvent.GetPersistentMethodName(i)))
                     continue;
                 ISerializableGameObject serializableObject = uEvent.GetPersistentTarget(i) as ISerializableGameObject;
-                if (serializableObject != null)
+                if (serializableObject != null) 
                     dataList.Add(new UnityEventData(serializableObject.Guid.ID, uEvent.GetPersistentTarget(i), uEvent.GetPersistentMethodName(i)));
                 else
                     UnityEngine.Debug.LogWarning(uEvent.GetPersistentTarget(i) + " does not have the required ISerializableGameObject interface and will not saved");

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="02/6/18 19:33:24">
+  <data>
+    <DataContainer xsi:type="BlockData" objectTypeName="Player" guid="-3839462">
+      <x>1</x>
+      <z>-7</z>
+      <yRot>90</yRot>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3839894">
+      <x>-1</x>
+      <z>-1</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="LaserSourceBlockData" objectTypeName="LaserSource" guid="-3840104">
+      <x>-1</x>
+      <z>-1</z>
+      <yRot>90</yRot>
+      <isActiveOnStart>true</isActiveOnStart>
+      <isLethal>false</isLethal>
+    </DataContainer>
+    <DataContainer xsi:type="PortalData" objectTypeName="Portal" guid="-3861952">
+      <edgeCoordinates>
+        <oneX>3</oneX>
+        <oneZ>-5</oneZ>
+        <twoX>2</twoX>
+        <twoZ>-5</twoZ>
+      </edgeCoordinates>
+      <isActiveOnStart>true</isActiveOnStart>
+      <connectedPortalGuid>-3862376</connectedPortalGuid>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3840146">
+      <x>-1</x>
+      <z>-5</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="LaserRecieverData" objectTypeName="LaserReciever" guid="-3840130">
+      <x>-1</x>
+      <z>-5</z>
+      <yRot>270</yRot>
+      <onActivated>
+        <data />
+      </onActivated>
+      <onDisabled>
+        <data />
+      </onDisabled>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Goal" guid="-3866556">
+      <x>1</x>
+      <z>1</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3876806">
+      <x>1</x>
+      <z>-6</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="PortalData" objectTypeName="Portal" guid="-3862376">
+      <edgeCoordinates>
+        <oneX>3</oneX>
+        <oneZ>-1</oneZ>
+        <twoX>2</twoX>
+        <twoZ>-1</twoZ>
+      </edgeCoordinates>
+      <isActiveOnStart>true</isActiveOnStart>
+      <connectedPortalGuid>-3861952</connectedPortalGuid>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3876846">
+      <x>1</x>
+      <z>-5</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3876908">
+      <x>1</x>
+      <z>-4</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3876928">
+      <x>1</x>
+      <z>-3</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3876948">
+      <x>1</x>
+      <z>-2</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3880092">
+      <x>1</x>
+      <z>0</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3879272">
+      <x>1</x>
+      <z>-7</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3877080">
+      <x>1</x>
+      <z>-1</z>
+      <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="BlockData" objectTypeName="BlockMoveable" guid="-3882036">
+      <x>1</x>
+      <z>-3</z>
+      <yRot>180</yRot>
+    </DataContainer>
+    <DataContainer xsi:type="BlockData" objectTypeName="BlockMoveable" guid="-3882132">
+      <x>1</x>
+      <z>-5</z>
+      <yRot>180</yRot>
+    </DataContainer>
+  </data>
+</level>

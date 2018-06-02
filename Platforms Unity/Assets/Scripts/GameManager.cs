@@ -36,13 +36,14 @@ public class GameManager : MonoBehaviour {
     }
 
     private IEnumerator GameOverCounter() {
-        Debug.Log("Game Over");
         float time = 0;
         float duration = GeneralConfig.GameOverCounterDuration;
         while (time < duration) {
             time += Time.deltaTime;
             yield return null;
         }
+
+        NextLevel();
 
         RestartLevel();
     }
@@ -51,6 +52,10 @@ public class GameManager : MonoBehaviour {
         LevelManager.Builder.ClearLevel();
         LevelManager.CurrentLevel = null;
         StartNewLevel();
+    }
+
+    private void NextLevel() {
+
     }
 
     private void OnDestroy() {
