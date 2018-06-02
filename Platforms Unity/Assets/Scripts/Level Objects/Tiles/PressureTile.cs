@@ -13,12 +13,6 @@ public class PressureTile : Tile, ISerializableGameObject {
     public UnityEvent OnEnterEvent;
     public UnityEvent OnExitEvent;
 
-    public override void DeserializeEvents(TileData tileData) {
-        PressureTileData data = tileData as PressureTileData;
-        UnityEventData.DeserializeEvents(OnEnterEvent, data.onEnterEventData);
-        UnityEventData.DeserializeEvents(OnExitEvent, data.onExitEventData);
-    }
-
     public override void Enter(Block block) {
         base.Enter(block);
         if (OnEnterEvent != null)
@@ -39,7 +33,8 @@ public class PressureTile : Tile, ISerializableGameObject {
     public override object Deserialize(DataContainer data) {
         TileData baseData = base.Deserialize(data) as TileData;
         PressureTileData parsedData = baseData as PressureTileData;
-        // TODO: events
+        parsedData.onEnterEventData.Deserialize(ref OnEnterEvent);
+        parsedData.onExitEventData.Deserialize(ref OnExitEvent);
         return parsedData;
     }
     #endregion

@@ -7,9 +7,6 @@ using Object = UnityEngine.Object;
 
 public class LevelBuilder : MonoBehaviour {
 
-    public IntGameObjectDictionary guidGameObjectTable = new IntGameObjectDictionary();
-
-    public GameObject[] spawnableObjects;
     private Dictionary<Type, GameObject> spawnableObjectsTable;
     public Dictionary<Type, GameObject> SpawnableObjectsTable {
         get {
@@ -18,6 +15,10 @@ public class LevelBuilder : MonoBehaviour {
             return spawnableObjectsTable;
         }
     }
+
+    public GameObject[] spawnableObjects;
+
+    private Action OnObjectsInstantiatedDone;
 
     private Dictionary<Type, GameObject> FillSpawnableObjectsTable() {
         var spawnableObjectsTable = new Dictionary<Type, GameObject>();
@@ -28,20 +29,58 @@ public class LevelBuilder : MonoBehaviour {
         return spawnableObjectsTable;
     }
 
-    private GameObject GetMatchedGameObject(Type type) {
+    private UnityEngine.Object GetMatchedGameObject(Type type) {
         return SpawnableObjectsTable[type];
     }
 
+    public void BuildLevelObjectsOOP(LevelData data, ref Level level) {
+        List<DataContainer> dataContainers = new List<DataContainer>();
+        //uiteindelijk via 1 DataContainer array?
+        dataContainers.AddRange(data.tiles);
+        dataContainers.AddRange(data.blocks);
+        dataContainers.AddRange(data.portals);
+
+        Dictionary<ISerializableGameObject, DataContainer> instantiatedObjectsCache = new Dictionary<ISerializableGameObject, DataContainer>();
+
+        for(int i = 0; i < dataContainers.Count; i++) {
+            Type parsedType = Type.GetType(dataContainers[i].objectTypeName);
+            Object match = GetMatchedGameObject(parsedType);
+            if (match != null) {
+                GameObject gObject = null;
+#if UNITY_EDITOR
+                gObject = UnityEditor.PrefabUtility.InstantiatePrefab(match) as GameObject;
+#else
+                gObject = Instantiate(match) as GameObject;
+#endif
+                Object obj = null;
+                ISerializableGameObject serializableObject = gObject.GetComponentWithInterface<ISerializableGameObject>(out obj);
+                serializableObject.Guid = new GUID(dataContainers[i].guid, obj);
+                gObject.transform.SetParent(transform);
+                instantiatedObjectsCache.Add(serializableObject, dataContainers[i]);
+            } else {
+                Debug.Log("no corresponding type found for " + parsedType);
+            }
+        }
+
+        // Second loop in case during deserialization references to other instances are needed
+        foreach(var obj in instantiatedObjectsCache)
+            obj.Key.Deserialize(obj.Value);
+    }
+
     public void BuildLevelObjects(LevelData data, ref Level level) {
-        guidGameObjectTable.Clear();
+        GUID.ClearTable();
         BuildTiles(data.tiles, ref level);
         BuildBlocks(data.blocks, ref level);
         BuildPortals(data.portals, ref level);
         //AssignEvents(ref tilesWithEvents);
 
+        if (OnObjectsInstantiatedDone != null)
+            OnObjectsInstantiatedDone.Invoke();
+        
         if (GameEvents.OnLevelLoaded != null)
             GameEvents.OnLevelLoaded.Invoke();
     }
+
 
     public void ClearLevel() {
         Transform transform = LevelManager.Instance.transform;
@@ -52,7 +91,7 @@ public class LevelBuilder : MonoBehaviour {
             GameObject.Destroy(transform.GetChild(i).gameObject);
 #endif
         }
-        guidGameObjectTable.Clear();
+        GUID.ClearTable();
         LevelManager.CurrentLevel = null;
     }
 
@@ -60,7 +99,7 @@ public class LevelBuilder : MonoBehaviour {
         for (int i = 0; i < tilesData.Length; i++) {
             TileData data = tilesData[i] as TileData;
             Type parsedType = Type.GetType(data.objectTypeName);
-            GameObject match = GetMatchedGameObject(parsedType);
+            Object match = GetMatchedGameObject(parsedType);
 
             if (match == null) {
                 Debug.Log("no corresponding type found for " + parsedType);
@@ -83,8 +122,7 @@ public class LevelBuilder : MonoBehaviour {
             tile.transform.position = position;
             tile.transform.SetParent(transform);
             level.Tiles.Add(new IntVector2(data.x, data.z), tile);
-            tile.Deserialize(data);
-            guidGameObjectTable.Add(tile.Guid.ID, tile);
+            OnObjectsInstantiatedDone += () => tile.Deserialize(data);
         }
     }
 
@@ -92,7 +130,7 @@ public class LevelBuilder : MonoBehaviour {
         for (int i = 0; i < blocks.Length; i++) {
             BlockData data = blocks[i] as BlockData;
             Type parsedType = Type.GetType(data.objectTypeName);
-            GameObject match = GetMatchedGameObject(parsedType);
+            Object match = GetMatchedGameObject(parsedType);
 
             if (match == null) {
                 Debug.Log("no corresponding type found for " + parsedType);
@@ -117,7 +155,7 @@ public class LevelBuilder : MonoBehaviour {
             block.transform.SetParent(transform);
             tile.SetOccupant(block);
             block.SetTileStandingOn(tile);
-            block.Deserialize(data);
+            OnObjectsInstantiatedDone += () => block.Deserialize(data);
         }
     }
 
@@ -125,7 +163,7 @@ public class LevelBuilder : MonoBehaviour {
         for (int i = 0; i < portals.Length; i++) {
             PortalData data = portals[i] as PortalData;
             Type parsedType = Type.GetType(data.objectTypeName);
-            GameObject match = GetMatchedGameObject(parsedType);
+            Object match = GetMatchedGameObject(parsedType);
 
             TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.oneX, data.edgeCoordinates.oneZ),
                                          new IntVector2(data.edgeCoordinates.twoX, data.edgeCoordinates.twoZ));
@@ -146,26 +184,26 @@ public class LevelBuilder : MonoBehaviour {
             portal.transform.eulerAngles = Wall.GetCorrespondingRotation(edge);
             portal.SetEdge(edge);
             level.Walls.Add(edge, portal);
-            portal.Deserialize(data);
+            OnObjectsInstantiatedDone += () => portal.Deserialize(data);
         }
 
         // portal connections:
-        for (int i = 0; i < portals.Length; i++) {
-            PortalData data = portals[i] as PortalData;
-            if (data.connectedPortalCoordinates != null) {
-                TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.oneX, data.edgeCoordinates.oneZ),
-                                                new IntVector2(data.edgeCoordinates.twoX, data.edgeCoordinates.twoZ));
-                TileEdge connectionEdge = new TileEdge(new IntVector2(data.connectedPortalCoordinates.oneX, data.connectedPortalCoordinates.oneZ),
-                                                    new IntVector2(data.connectedPortalCoordinates.twoX, data.connectedPortalCoordinates.twoZ));
-                Portal p = level.Walls.GetWall(edge.TileOne, edge.TileTwo) as Portal;
-                Portal connectedPortal = level.Walls.GetWall(connectionEdge.TileOne, connectionEdge.TileTwo) as Portal;
-                p.SetConnectedPortal(connectedPortal);
-            }
-        }
+        //for (int i = 0; i < portals.Length; i++) {
+        //    PortalData data = portals[i] as PortalData;
+        //    if (data.connectedPortalGuid != null) {
+        //        TileEdge edge = new TileEdge(new IntVector2(data.edgeCoordinates.oneX, data.edgeCoordinates.oneZ),
+        //                                        new IntVector2(data.edgeCoordinates.twoX, data.edgeCoordinates.twoZ));
+        //        TileEdge connectionEdge = new TileEdge(new IntVector2(data.connectedPortalGuid.oneX, data.connectedPortalGuid.oneZ),
+        //                                            new IntVector2(data.connectedPortalGuid.twoX, data.connectedPortalGuid.twoZ));
+        //        Portal p = level.Walls.GetWall(edge.TileOne, edge.TileTwo) as Portal;
+        //        Portal connectedPortal = level.Walls.GetWall(connectionEdge.TileOne, connectionEdge.TileTwo) as Portal;
+        //        p.SetConnectedPortal(connectedPortal);
+        //    }
+        //}
     }
 
-    public void AssignEvents(ref Dictionary<Tile, TileData> tilesWithEvents) {
-        foreach (KeyValuePair<Tile, TileData> pair in tilesWithEvents)
-            pair.Key.DeserializeEvents(pair.Value);
-    }
+    //public void AssignEvents(ref Dictionary<Tile, TileData> tilesWithEvents) {
+    //    foreach (KeyValuePair<Tile, TileData> pair in tilesWithEvents)
+    //        pair.Key.DeserializeEvents(pair.Value);
+    //}
 }

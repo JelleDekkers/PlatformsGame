@@ -12,9 +12,8 @@ public class GameManager : MonoBehaviour {
     }
 
     private void StartNewLevel() {
-        // TODO: fix
-        //if(LevelManager.CurrentLevel == null)
-        //    LevelManager.Instance.LoadLevelFromFile(LevelManager.Instance.levelAsset);
+        if (LevelManager.CurrentLevel == null)
+            LevelManager.Instance.LoadLevelFromFile();
 
         if (GameEvents.OnLevelStart != null)
             GameEvents.OnLevelStart.Invoke();

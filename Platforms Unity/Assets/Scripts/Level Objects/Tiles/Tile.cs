@@ -5,12 +5,12 @@ using Random = UnityEngine.Random;
 using Serialization;
 
 [Serializable, SelectionBase]
-public class Tile : MonoBehaviour, ISerializableGameObject, ISerializableEventTarget {
+public class Tile : MonoBehaviour, ISerializableGameObject {
 
     public static readonly Vector3 SIZE = new Vector3(1, 0.2f, 1);
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0f, 0.5f);
 
-    public MyGUID Guid { get; private set; }
+    public GUID Guid { get; set; }
     public IntVector2 coordinates;// { get; private set; }
     public Block occupant;
     public bool IsInUpState { get; private set; }
@@ -146,16 +146,13 @@ public class Tile : MonoBehaviour, ISerializableGameObject, ISerializableEventTa
 
     public virtual object Deserialize(DataContainer data) {
         TileData parsedData = data as TileData;
-        Guid = new MyGUID(data.guid);
         coordinates = new IntVector2(parsedData.x, parsedData.z);
         moveUpAtStart = parsedData.moveUpAtStart;
+        Vector3 position = new Vector3(coordinates.x + Tile.SIZE.x * 0.5f, 0, coordinates.z + Tile.SIZE.z * 0.5f);
+        name = GetType().FullName + " " + coordinates;
+        transform.position = position;
+        LevelManager.CurrentLevel.Tiles.Add(coordinates, this);
         return parsedData;
-    }
-
-    public virtual void DeserializeEvents(TileData data) { }
-
-    public string[] GetEventArgsForDeserialization() {
-        return new string[] { coordinates.x.ToString(), coordinates.z.ToString() };
     }
     #endregion
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="06/5/18 16:38:24">
+  <tiles>
+    <TileData type="Tile" x="0" z="0" moveUpAtStart="true" />
+    <TileData xsi:type="GoalTileData" type="Goal" x="2" z="1" moveUpAtStart="true" />
+    <TileData type="Tile" x="1" z="0" moveUpAtStart="true" />
+    <TileData type="Tile" x="2" z="0" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="-1" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="-2" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="-3" moveUpAtStart="true" />
+    <TileData type="Tile" x="0" z="-4" moveUpAtStart="true" />
+  </tiles>
+  <blocks>
+    <BlockData xsi:type="PlayerBlockData" objectType="Player" x="1" z="0" Roty="0" />
+    <BlockData xsi:type="MoveableBlockData" objectType="BlockMoveable" x="0" z="-3" Roty="0" />
+  </blocks>
+  <portals>
+    <PortalData isActiveOnStart="true">
+      <edgeCoordinates edgeOneX="-1" edgeOneZ="-4" edgeTwoX="0" edgeTwoZ="-4" />
+    </PortalData>
+    <PortalData isActiveOnStart="true">
+      <edgeCoordinates edgeOneX="-1" edgeOneZ="-5" edgeTwoX="0" edgeTwoZ="-5" />
+    </PortalData>
+  </portals>
+</level>

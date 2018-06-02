@@ -8,7 +8,7 @@ public class TestObject : MonoBehaviour, ITestSerializable {
     public IntVector2 coordinates;
     public bool moveUpAtStart = true;
 
-    public MyGUID Guid {
+    public GUID Guid {
         get; private set;
     }
 
@@ -18,7 +18,7 @@ public class TestObject : MonoBehaviour, ITestSerializable {
 
     public virtual object Deserialize(TestDataContainer data) {
         TestData parsedData = data as TestData;
-        Guid = new MyGUID(data.guid);
+        Guid = new GUID(data.guid, this);
         coordinates = new IntVector2(parsedData.x, parsedData.z);
         moveUpAtStart = parsedData.moveUpAtStart;
         return parsedData;

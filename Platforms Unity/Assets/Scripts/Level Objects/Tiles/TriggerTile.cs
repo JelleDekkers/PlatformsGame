@@ -15,11 +15,6 @@ public class TriggerTile : Tile {
     public UnityEvent[] testEvents;
     public float delayBetween = 1;
 
-    public override void DeserializeEvents(TileData tileData) {
-        PressureTileData data = tileData as PressureTileData;
-        UnityEventData.DeserializeEvents(OnEnterEvent, data.onEnterEventData);
-    }
-
     public override void Enter(Block block) {
         base.Enter(block);
         if (OnEnterEvent != null)
@@ -34,7 +29,7 @@ public class TriggerTile : Tile {
     public override object Deserialize(DataContainer data) {
         TileData baseData = base.Deserialize(data) as TileData;
         TriggerTileData parsedData = baseData as TriggerTileData;
-        // TODO: events
+        parsedData.onEnterEventData.Deserialize(ref OnEnterEvent);
         return parsedData;
     }
     #endregion

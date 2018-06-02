@@ -44,13 +44,15 @@ public class LevelManager : MonoBehaviour {
         Builder.ClearLevel();
         LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
         currentLevel = new Level();
-        Builder.BuildLevelObjects(data, ref currentLevel);
+        //Builder.BuildLevelObjects(data, ref currentLevel);
+        Builder.BuildLevelObjectsOOP(data, ref currentLevel);
     }
 
     public void LoadLevelFromFile() {
         Builder.ClearLevel();
         LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
-        Builder.BuildLevelObjects(data, ref currentLevel);
+        Builder.BuildLevelObjectsOOP(data, ref currentLevel);
+        Builder.BuildLevelObjectsOOP(data, ref currentLevel);
     }
 
 #if UNITY_EDITOR

@@ -4,12 +4,12 @@ using Serialization;
 using Random = UnityEngine.Random;
 
 [Serializable, SelectionBase]
-public class Block : MonoBehaviour, ISerializableGameObject, ISerializableEventTarget {
+public class Block : MonoBehaviour, ISerializableGameObject {
 
     public static readonly Vector3 POSITION_OFFSET = new Vector3(0.5f, 0.5f, 0.5f);
     public static readonly Vector3 SIZE = new Vector3(1f, 1f, 1f);
 
-    public MyGUID Guid { get; private set; }
+    public GUID Guid { get; set; }
     public IntVector2 Coordinates { get { return tileStandingOn.coordinates; } }
 
     public Tile tileStandingOn;
@@ -70,17 +70,16 @@ public class Block : MonoBehaviour, ISerializableGameObject, ISerializableEventT
 
     public virtual object Deserialize(DataContainer data) {
         BlockData parsedData = data as BlockData;
-        Guid = new MyGUID(data.guid);
+        IntVector2 coordinates = new IntVector2(parsedData.x, parsedData.z);
+        Tile tile = LevelManager.CurrentLevel.Tiles[coordinates];
+        transform.position = new Vector3(tile.transform.position.x, Block.POSITION_OFFSET.y, tile.transform.position.z);
         Vector3 rotation = transform.eulerAngles;
         rotation.y = parsedData.yRot;
         transform.eulerAngles = rotation;
-        //Coordinates = new IntVector2(parsedData.x, parsedData.z);
-        // TODO: link to tile, misschien via tile guid?
+        name = GetType().FullName + " " + coordinates;
+        tile.SetOccupant(this);
+        SetTileStandingOn(tile);
         return parsedData;
-    }
-
-    public string[] GetEventArgsForDeserialization() {
-        return new string[] { Coordinates.x.ToString(), Coordinates.z.ToString() };
     }
     #endregion
 

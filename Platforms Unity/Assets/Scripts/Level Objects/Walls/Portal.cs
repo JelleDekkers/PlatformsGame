@@ -4,9 +4,18 @@ using UnityEngine;
 using Serialization;
 
 [SelectionBase]
-public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISerializableGameObject, ISerializableEventTarget {
+public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISerializableGameObject {
 
-    public MyGUID Guid { get; private set; }
+    private GUID guid;
+    public GUID Guid {
+        get {
+            if (guid == null || guid.ID == 0)
+                guid = new GUID(GetInstanceID(), this);
+            return guid;
+        } set {
+            guid = value;
+        }
+    }
     public Laser Laser { get; private set; }
     public Transform Pivot { get { return transform.GetChild(0); } }
     public bool IsActive { get; private set; }
@@ -29,12 +38,12 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
 
     private const int DEPTH_MASK_VALUE = 3000;
     private const int NORMAL_MASK_VALUE = 2000;
-    
+
     private void Awake() {
         if (GeneralConfig.UseTransitionAnimations)
             GameEvents.OnLevelStart += IntroTransition;
         GameEvents.OnIntroComplete += OnIntroComplete;
-    
+
         IsActive = isActiveOnStart;
     }
 
@@ -139,7 +148,7 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
     }
 
     private void OnDrawGizmosSelected() {
-        if(connectedPortal != null)
+        if (connectedPortal != null)
             GizmosExtension.DrawArrow(transform.GetChild(0).position, connectedPortal.transform.GetChild(0).position - transform.GetChild(0).position, Color.black);
     }
 
@@ -201,16 +210,19 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
 
     public virtual object Deserialize(DataContainer data) {
         PortalData parsedData = data as PortalData;
-        Guid = new MyGUID(data.guid);
         isActiveOnStart = parsedData.isActiveOnStart;
         Edge = parsedData.edgeCoordinates.ToTileEdge();
-        // TODO: link connected portal
+        name = GetType().FullName + " " + Edge.ToString();
+        transform.position = Edge.TileOne.ToVector3() + Tile.POSITION_OFFSET;
+        transform.eulerAngles = GetCorrespondingRotation(Edge);
+        LevelManager.CurrentLevel.Walls.Add(Edge, this);
+
+        if (parsedData.connectedPortalGuid != 0) {
+            Portal connection = GUID.GetObjectByGUID(parsedData.connectedPortalGuid) as Portal;
+            SetConnectedPortal(connection);
+        }
+
         return parsedData;
     }
-
-    public string[] GetEventArgsForDeserialization() {
-        return new string[] { Edge.TileOne.x.ToString(), Edge.TileOne.z.ToString(), Edge.TileTwo.x.ToString(), Edge.TileTwo.z.ToString() };
-    }
     #endregion
-
 }

@@ -9,14 +9,14 @@ namespace Serialization {
 
         [XmlElement] public EdgeData edgeCoordinates;
         [XmlElement] public bool isActiveOnStart;
-        [XmlElement] public EdgeData connectedPortalCoordinates;
+        [XmlElement] public int connectedPortalGuid;
 
         private PortalData() { }
         public PortalData(Portal portal) : base(portal) {
             edgeCoordinates = new EdgeData(portal.Edge);
             isActiveOnStart = portal.IsActiveOnStart;
             if (portal.ConnectedPortal != null)
-                connectedPortalCoordinates = new EdgeData(portal.ConnectedPortal.Edge);
+                connectedPortalGuid = portal.ConnectedPortal.Guid.ID;
         }
     }
 

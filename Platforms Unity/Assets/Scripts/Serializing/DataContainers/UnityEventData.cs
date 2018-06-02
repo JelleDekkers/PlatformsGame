@@ -5,97 +5,73 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using System.Reflection;
 
+using System.Linq;
+
 namespace Serialization {
 
-    public class UnityEventData {
+    public class UnityEventDataCollection {
+        [XmlArray] public UnityEventData[] data;
 
-        [XmlAttribute] public string typeName;
-        [XmlAttribute] public string[] typeArgs;
-        [XmlAttribute] public string methodName;
-
-        public static readonly Dictionary<string, Type> DataLinks = new Dictionary<string, Type>() {
-            {typeof(Tile).FullName, typeof(Tile) },
-            {typeof(Block).FullName, typeof(Block) },
-            {typeof(Wall).FullName, typeof(Wall) }
-        };
-
-        public UnityEventData() { } // default ctor necessary for xml
-        public UnityEventData(Object target, string methodName) {
-            if (target is ISerializableEventTarget) {
-                ISerializableEventTarget targetEvent = target as ISerializableEventTarget;
-                Init(target, methodName, targetEvent.GetEventArgsForDeserialization());
-            } else {
-                UnityEngine.Debug.LogWarning(target + " is not a serializable event type");
-            }
-        }
-
-        private void Init(Object obj, string methodName, params string[] typeArgs) {
-            typeName = GetLowestSubType(obj).FullName;
-            this.methodName = methodName;
-            this.typeArgs = typeArgs;
-        }
-
-        private Type GetLowestSubType(Object obj) {
-            Type result = obj.GetType();
-            for (int i = 0; i < 100; i++) {
-                if (result.BaseType == typeof(UnityEngine.MonoBehaviour))
-                    return result;
-                result = result.BaseType;
-            }
-            UnityEngine.Debug.LogWarning("No suitable type found");
-            return result;
-        }
-
-        public static UnityEventData[] GetEventData(UnityEvent e) {
-            List<UnityEventData> data = new List<UnityEventData>();
-            for (int i = 0; i < e.GetPersistentEventCount(); i++) {
-                if ((e.GetPersistentTarget(i) == null) || String.IsNullOrEmpty(e.GetPersistentMethodName(i)))
+        public UnityEventDataCollection() { }
+        public UnityEventDataCollection(UnityEvent uEvent) {
+            List<UnityEventData> dataList = new List<UnityEventData>();
+            for (int i = 0; i < uEvent.GetPersistentEventCount(); i++) {
+                if ((uEvent.GetPersistentTarget(i) == null) || String.IsNullOrEmpty(uEvent.GetPersistentMethodName(i)))
                     continue;
-                data.Add(new UnityEventData(e.GetPersistentTarget(i), e.GetPersistentMethodName(i)));
+                ISerializableGameObject serializableObject = uEvent.GetPersistentTarget(i) as ISerializableGameObject;
+                if (serializableObject != null)
+                    dataList.Add(new UnityEventData(serializableObject.Guid.ID, uEvent.GetPersistentTarget(i), uEvent.GetPersistentMethodName(i)));
+                else
+                    UnityEngine.Debug.LogWarning(uEvent.GetPersistentTarget(i) + " does not have the required ISerializableGameObject interface and will not saved");
             }
-            return data.ToArray();
+            data = dataList.ToArray();
         }
 
-        public static UnityEngine.Object GetTarget(UnityEventData data) {
-            Type t = DataLinks[data.typeName];
-            if (t == typeof(Tile)) {
-                return LevelManager.CurrentLevel.Tiles.GetTile(new IntVector2(int.Parse(data.typeArgs[0]), int.Parse(data.typeArgs[1])));
-            } else if (t == typeof(Block)) {
-                return LevelManager.CurrentLevel.Tiles.GetTile(new IntVector2(int.Parse(data.typeArgs[0]), int.Parse(data.typeArgs[1]))).occupant;
-            } else if (t == typeof(Wall)) {
-                return LevelManager.CurrentLevel.Walls.GetWall(new IntVector2(int.Parse(data.typeArgs[0]), int.Parse(data.typeArgs[1])),
-                                                               new IntVector2(int.Parse(data.typeArgs[2]), int.Parse(data.typeArgs[3])));
-            } else {
-                UnityEngine.Debug.LogWarning("No corresponding type found for " + data.typeName);
-                return null;
-            }
-        }
-
-        public static void DeserializeEvents(UnityEvent e, UnityEventData[] data) {
+        public void Deserialize(ref UnityEvent uEvent) {
             for (int i = 0; i < data.Length; i++) {
                 MethodInfo method = null;
                 UnityAction action = null;
 
-                if (!DataLinks.ContainsKey(data[i].typeName)) {
-                    UnityEngine.Debug.LogWarning(data[i].typeName + " is not found in UnityEventData.DataLinks");
-                    return;
-                }
-
-                UnityEngine.Object target = GetTarget(data[i]);
+                UnityEngine.Object target = GUID.GetObjectByGUID(data[i].targetGuid);
                 method = target.GetType().GetMethod(data[i].methodName);
 
-                if(method == null) {
-                    UnityEngine.Debug.LogWarning("No method " + data[i].methodName + " found in " + target);
+                if (method == null) {
+                    UnityEngine.Debug.LogWarning("No method " + data[i].methodName + " found in " + target + " with type " + target.GetType());
                     return;
                 }
 
                 action = (UnityAction)Delegate.CreateDelegate(typeof(UnityAction), target, method);
 #if UNITY_EDITOR
-                UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(e, action);
+                UnityEditor.Events.UnityEventTools.AddVoidPersistentListener(uEvent, action);
 #else
-                e.AddListener(action);
+                uEvent.AddListener(action);
 #endif
             }
+        }
+
+        public class UnityEventData {
+
+            [XmlElement] public int targetGuid;
+            [XmlElement] public string methodName;
+            //[XmlElement] public Object[] args;
+
+            public UnityEventData() { }
+            public UnityEventData(int targetGuid, Object target, string methodName) {
+                this.targetGuid = targetGuid;
+                this.methodName = methodName;
+            }
+
+            //private Type GetLowestSubType(Object obj) {
+            //    Type result = obj.GetType();
+            //    for (int i = 0; i < 100; i++) {
+            //        if (result.BaseType == typeof(UnityEngine.MonoBehaviour))
+            //            return result;
+            //        result = result.BaseType;
+            //    }
+            //    UnityEngine.Debug.LogWarning("No suitable type found");
+            //    return result;
+            //}
+
         }
     }
 }

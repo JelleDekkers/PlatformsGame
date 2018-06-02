@@ -1,19 +1,18 @@
-alles overzetten naar nieuwe serializatie:
 correcte referenties naar ekaar via de guid
-
-deserializatie via levelBuilder of via object zelf?
-
-unityevents aanpassen aan de nieuwe serialization, gebruik maken van GUID
-
-iserializationEventTarget naar Serializable namespace
 
 logic objects kunnen saven/loaden
 logic object prefabs, ook in spawnableObjects
 
-xml element veranderen naar xml attribute, kijken of file dan kleiner is
-
 paar levels hebben die goed werken achter elkaar voor stage gesprek
 
+
+leveldata alles in 1 array? bij instantiaten event types opvangen voor level dictionaries?
+
+plaatsen van objecten via levelBuilder en deserializen, via zelfde global functie?
+
+xml element veranderen naar xml attribute, kijken of file dan kleiner is
+
+unityEvents met parameters?
 
 blocks worden soms niet direct op tile gezet met de editor tool
 komt misschien omdat bij de rest gefixt door de onenable stuff, via andere manier doen?

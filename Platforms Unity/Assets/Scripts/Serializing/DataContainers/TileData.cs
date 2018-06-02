@@ -22,22 +22,22 @@ namespace Serialization {
     }
 
     public class PressureTileData : TileData {
-        [XmlArray] public UnityEventData[] onEnterEventData;
-        [XmlArray] public UnityEventData[] onExitEventData;
+        public UnityEventDataCollection onEnterEventData;
+        public UnityEventDataCollection onExitEventData;
 
         protected PressureTileData() { }
         public PressureTileData(PressureTile t) : base(t) {
-            onEnterEventData = UnityEventData.GetEventData(t.OnEnterEvent);
-            onExitEventData = UnityEventData.GetEventData(t.OnExitEvent);
+            onEnterEventData = new UnityEventDataCollection(t.OnEnterEvent);
+            onExitEventData = new UnityEventDataCollection(t.OnExitEvent);
         }
     }
 
     public class TriggerTileData : TileData {
-        [XmlArray] public UnityEventData[] onEnterEventData;
+        public UnityEventDataCollection onEnterEventData;
 
         protected TriggerTileData() { }
         public TriggerTileData(TriggerTile t) : base(t) {
-            onEnterEventData = UnityEventData.GetEventData(t.OnEnterEvent);
+            onEnterEventData = new UnityEventDataCollection(t.OnEnterEvent);
         }
     }
 }
