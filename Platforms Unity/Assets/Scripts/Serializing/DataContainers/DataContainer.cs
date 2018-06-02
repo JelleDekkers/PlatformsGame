@@ -10,6 +10,7 @@ namespace Serialization {
     [XmlInclude(typeof(TileData))]
     [XmlInclude(typeof(BlockData))]
     [XmlInclude(typeof(PortalData))]
+    [XmlInclude(typeof(LogicObjectData))]
     public abstract class DataContainer {
 
         [XmlAttribute] public string objectTypeName;

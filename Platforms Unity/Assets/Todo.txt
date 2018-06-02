@@ -1,10 +1,9 @@
-correcte referenties naar ekaar via de guid
-
-logic objects kunnen saven/loaden
-logic object prefabs, ook in spawnableObjects
-
 paar levels hebben die goed werken achter elkaar voor stage gesprek
+met screen fade
 
+
+waarom nog grids gebruiken voor tile en walls? behalve voor collisie/kan ook op andere manieren?
+wallNameDict/BlockNameDict van prefabManager etc kunnen weg/beter?
 
 leveldata alles in 1 array? bij instantiaten event types opvangen voor level dictionaries?
 

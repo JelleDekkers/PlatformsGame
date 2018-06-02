@@ -40,19 +40,27 @@ public class LevelManager : MonoBehaviour {
         builder.ClearLevel();
     }
 
+    public void SaveCurrentLevelToFile() {
+        if (LevelAsset == null) {
+            Debug.Log("Can't save, no file found");
+            return;
+        }
+
+        LevelData data = new LevelData(CurrentLevel, transform);
+        LevelSerializer.SaveToFile(data, LevelAsset.name);
+    }
+
     public void ReloadCurrentLevel() {
         Builder.ClearLevel();
         LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
         currentLevel = new Level();
-        //Builder.BuildLevelObjects(data, ref currentLevel);
-        Builder.BuildLevelObjectsOOP(data, ref currentLevel);
+        Builder.BuildLevelObjects(data, ref currentLevel);
     }
 
     public void LoadLevelFromFile() {
         Builder.ClearLevel();
         LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
-        Builder.BuildLevelObjectsOOP(data, ref currentLevel);
-        Builder.BuildLevelObjectsOOP(data, ref currentLevel);
+        Builder.BuildLevelObjects(data, ref currentLevel);
     }
 
 #if UNITY_EDITOR

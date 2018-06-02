@@ -23,7 +23,7 @@ public class LevelManagerEditor : Editor {
         GUI.enabled = LevelManager.SaveToFileRequirementsHaveBeenMet() && LevelManager.LevelAsset != null;
         tooltip = (GUI.enabled) ? "" : "A level requires one Player Block and at least one Goal Tile and levelAsset musnt't be null";
         if (GUILayout.Button(new GUIContent("Save", tooltip)))
-            SaveCurrentLevelToFile();
+            levelManager.SaveCurrentLevelToFile();
 
         GUI.enabled = LevelManager.SaveToFileRequirementsHaveBeenMet();
         if (GUILayout.Button(new GUIContent("Save As", tooltip)))
@@ -41,17 +41,6 @@ public class LevelManagerEditor : Editor {
 
         levelAssetPrevFrame = LevelManager.LevelAsset;
     }
-
-    public void SaveCurrentLevelToFile() {
-        if (LevelManager.LevelAsset == null) {
-            Debug.Log("Can't save, no file found");
-            return;
-        }
-
-        LevelData data = new LevelData(LevelManager.CurrentLevel);
-        LevelSerializer.SaveToFile(data, LevelManager.LevelAsset.name);
-    }
-
 
     private void OnLevelAssetChanged() {
         if (LevelManager.LevelAsset.GetType() != typeof(TextAsset)) {

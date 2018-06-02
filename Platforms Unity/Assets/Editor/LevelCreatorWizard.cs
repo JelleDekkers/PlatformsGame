@@ -33,7 +33,7 @@ public class LevelCreator : ScriptableWizard {
     }
 
     private void OnWizardCreate() {
-        LevelData data = new LevelData(LevelManager.CurrentLevel);
+        LevelData data = new LevelData(LevelManager.CurrentLevel, LevelManager.Instance.transform);
         LevelManager.Instance.SetNewLevelAsset(LevelSerializer.SaveToFile(data, fileName));
         persistentFileName = fileName;
     }

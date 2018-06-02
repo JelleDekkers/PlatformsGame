@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="02/6/18 15:55:48">
-  <tiles>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="02/6/18 16:59:55">
+  <data>
     <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="17110">
       <x>1</x>
       <z>1</z>
@@ -9,7 +9,7 @@
     <DataContainer xsi:type="TileData" objectTypeName="Goal" guid="17086">
       <x>0</x>
       <z>1</z>
-      <moveUpAtStart>true</moveUpAtStart>
+      <moveUpAtStart>false</moveUpAtStart>
     </DataContainer>
     <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="17130">
       <x>0</x>
@@ -37,15 +37,11 @@
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-  </tiles>
-  <blocks>
     <DataContainer xsi:type="BlockData" objectTypeName="Player" guid="-951350">
       <x>1</x>
       <z>1</z>
       <yRot>90</yRot>
     </DataContainer>
-  </blocks>
-  <portals>
     <DataContainer xsi:type="PortalData" objectTypeName="Portal" guid="-2137038">
       <edgeCoordinates>
         <oneX>3</oneX>
@@ -66,5 +62,24 @@
       <isActiveOnStart>true</isActiveOnStart>
       <connectedPortalGuid>-2137038</connectedPortalGuid>
     </DataContainer>
-  </portals>
+    <DataContainer xsi:type="CounterData" objectTypeName="Counter" guid="-2513220">
+      <targetValue>1</targetValue>
+      <OnTargetReachedEvent>
+        <data>
+          <UnityEventData>
+            <targetGuid>17086</targetGuid>
+            <methodName>MoveUp</methodName>
+          </UnityEventData>
+        </data>
+      </OnTargetReachedEvent>
+      <OnValueChangedAfterTargetReachedEvent>
+        <data>
+          <UnityEventData>
+            <targetGuid>17086</targetGuid>
+            <methodName>MoveDown</methodName>
+          </UnityEventData>
+        </data>
+      </OnValueChangedAfterTargetReachedEvent>
+    </DataContainer>
+  </data>
 </level>

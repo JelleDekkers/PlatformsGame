@@ -10,3 +10,6 @@ public class BlockNameDictionary : SerializableDictionary<Block, string> { }
 
 [Serializable]
 public class WallNameDictionary : SerializableDictionary<Wall, string> { }
+
+[Serializable]
+public class LogicObjectNameDictionary : SerializableDictionary<LogicObject, string> { }

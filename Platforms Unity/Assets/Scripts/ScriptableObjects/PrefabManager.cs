@@ -40,6 +40,9 @@ public class PrefabManager : ScriptableObjectSingleton<PrefabManager> {
             return Instance.wallsDataLink;
         }
     }
+
+    [SerializeField] Counter counter;
+    public static Counter Counter { get { return Instance.counter; } }
 }
 
 public class DataLink<T> where T : MonoBehaviour {
