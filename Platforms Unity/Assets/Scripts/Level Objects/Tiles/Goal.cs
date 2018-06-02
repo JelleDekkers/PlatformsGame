@@ -17,7 +17,7 @@ public class Goal : Tile {
         if (block != Player.Instance)
             return;
         
-        if(GameEvents.OnGameOver != null)
-            GameEvents.OnGameOver();
+        if(GameEvents.OnLevelFinished != null)
+            GameEvents.OnLevelFinished();
     }
 }

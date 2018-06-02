@@ -5,7 +5,6 @@ using Malee;
 [CreateAssetMenu(fileName = "LevelsHandler", menuName = "Tools/Levels Handler", order = 1)]
 public class LevelsHandler : ScriptableObjectSingleton<LevelsHandler> {
 
-    #region chapters
     [Reorderable]
     public Chapters chapters;
 
@@ -29,5 +28,4 @@ public class LevelsHandler : ScriptableObjectSingleton<LevelsHandler> {
 
     [Serializable]
     public class Chapters : ReorderableArray<Chapter> { }
-    #endregion
 }

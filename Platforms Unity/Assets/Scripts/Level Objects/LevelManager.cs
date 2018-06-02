@@ -51,15 +51,12 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void ReloadCurrentLevel() {
-        Builder.ClearLevel();
-        LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
-        currentLevel = new Level();
-        Builder.BuildLevelObjects(data, ref currentLevel);
+        LoadLevelFromFile(levelAsset);
     }
 
-    public void LoadLevelFromFile() {
+    public void LoadLevelFromFile(TextAsset asset) {
         Builder.ClearLevel();
-        LevelData data = LevelSerializer.LoadLevelFromFile(LevelAsset);
+        LevelData data = LevelSerializer.LoadLevelFromFile(asset);
         currentLevel = new Level();
         Builder.BuildLevelObjects(data, ref currentLevel);
     }

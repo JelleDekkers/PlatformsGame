@@ -50,7 +50,7 @@ public class LevelManagerEditor : Editor {
         }
 
         if (LevelManager.LevelAsset != null) 
-            levelManager.LoadLevelFromFile();
+            levelManager.ReloadCurrentLevel();
     }
 }
 

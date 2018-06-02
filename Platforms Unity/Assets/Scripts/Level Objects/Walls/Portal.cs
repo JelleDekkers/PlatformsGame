@@ -45,6 +45,7 @@ public class Portal : Wall, ILaserDiverter, ILaserHittable, IActivatable, ISeria
         GameEvents.OnIntroComplete += OnIntroComplete;
 
         IsActive = isActiveOnStart;
+        EnableVisuals(IsActive);
     }
 
     private void IntroTransition() {

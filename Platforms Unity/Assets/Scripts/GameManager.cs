@@ -3,18 +3,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+    public int chapterNr, levelNr;
+    public LevelsHandler levels;
+
     public void Start() {
 #if !UNITY_EDITOR
         Achievements.AchievementManager.Setup();
 #endif
         GameEvents.OnGameOver += () => StartCoroutine(GameOverCounter());
+        GameEvents.OnLevelFinished += () => StartCoroutine(NextLevelCounter());
+
+        if (LevelManager.CurrentLevel == null)
+            LevelManager.Instance.LoadLevelFromFile(levels.chapters[chapterNr].levels[0].level);
         StartNewLevel();
     }
 
     private void StartNewLevel() {
-        if (LevelManager.CurrentLevel == null)
-            LevelManager.Instance.LoadLevelFromFile();
-
         if (GameEvents.OnLevelStart != null)
             GameEvents.OnLevelStart.Invoke();
 
@@ -42,20 +46,19 @@ public class GameManager : MonoBehaviour {
             time += Time.deltaTime;
             yield return null;
         }
-
-        NextLevel();
-
-        RestartLevel();
+        LevelManager.Instance.ReloadCurrentLevel();
     }
 
-    private void RestartLevel() {
-        LevelManager.Builder.ClearLevel();
-        LevelManager.CurrentLevel = null;
-        StartNewLevel();
-    }
-
-    private void NextLevel() {
-
+    private IEnumerator NextLevelCounter() {
+        float time = 0;
+        float duration = GeneralConfig.GameOverCounterDuration;
+        while (time < duration) {
+            time += Time.deltaTime;
+            yield return null;
+        }
+        levelNr++;
+        Debug.Log("load next level " + levels.chapters[chapterNr].levels[levelNr].level.name);
+        LevelManager.Instance.LoadLevelFromFile(levels.chapters[chapterNr].levels[levelNr].level);
     }
 
     private void OnDestroy() {

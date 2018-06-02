@@ -40,7 +40,8 @@ public class Tile : MonoBehaviour, ISerializableGameObject {
     private Coroutine currentCoroutine;
 
     private void Awake() {
-        GameEvents.OnGameOver += OnGameOver;
+        GameEvents.OnGameOver += OnLevelOver;
+        GameEvents.OnLevelFinished += OnLevelOver;
 
         if (moveUpAtStart) {
             if (GeneralConfig.UseTransitionAnimations) {
@@ -132,12 +133,13 @@ public class Tile : MonoBehaviour, ISerializableGameObject {
         this.occupant = occupant;
     }
 
-    private void OnGameOver() {
+    private void OnLevelOver() {
         if (!IsInUpState)
             return;
 
         MoveDownRandomized();
-        GameEvents.OnGameOver -= OnGameOver;
+        GameEvents.OnGameOver -= OnLevelOver;
+        GameEvents.OnLevelFinished -= OnLevelOver;
     }
 
     private void OnDrawGizmos() {
