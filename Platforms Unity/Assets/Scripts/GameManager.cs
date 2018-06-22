@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     public int chapterNr, levelNr;
-    public LevelsHandler levels;
+    public TextAsset[] levels;
 
     public void Start() {
 #if !UNITY_EDITOR
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
         GameEvents.OnLevelFinished += () => StartCoroutine(NextLevelCounter());
 
         if (LevelManager.CurrentLevel == null)
-            LevelManager.Instance.LoadLevelFromFile(levels.chapters[chapterNr].levels[0].level);
+            LevelManager.Instance.LoadLevelFromFile(levels[levelNr]);
         StartNewLevel();
     }
 
@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
         levelNr++;
-        Debug.Log("load next level " + levels.chapters[chapterNr].levels[levelNr].level.name);
-        LevelManager.Instance.LoadLevelFromFile(levels.chapters[chapterNr].levels[levelNr].level);
+        Debug.Log("load next level " + levels[levelNr].name);
+        LevelManager.Instance.LoadLevelFromFile(levels[levelNr]);
     }
 
     private void OnDestroy() {

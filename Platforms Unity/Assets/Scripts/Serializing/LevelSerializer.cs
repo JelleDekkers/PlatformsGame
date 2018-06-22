@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
+using System.Text;
 
 namespace Serialization {
 
@@ -16,11 +17,14 @@ namespace Serialization {
             try {
                 string dataPath = FOLDER_PATH + fileName + FILE_EXTENSION;
                 var serializer = new XmlSerializer(typeof(LevelData));
-                var stream = new FileStream(dataPath, FileMode.Create);
+                var encoding = Encoding.GetEncoding("UTF-8");
+                var stream = new StreamWriter(dataPath, false, encoding);
                 serializer.Serialize(stream, data);
                 stream.Close();
                 Debug.Log("<color=green>Succesfully Saved </color>" + fileName + " to " + dataPath);
+#if UNITY_EDITOR
                 UnityEditor.AssetDatabase.Refresh();
+#endif
                 string resourcesPath = "Levels/" + fileName;
                 TextAsset asset = Resources.Load(resourcesPath) as TextAsset;
                 return asset;

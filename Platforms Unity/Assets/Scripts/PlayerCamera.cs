@@ -19,8 +19,8 @@ public class PlayerCamera : MonoBehaviour {
         cam.transform.position = Vector3.Lerp(cam.transform.position, GetCameraTargetPosition(), 1);
         cam.transform.rotation = Quaternion.Euler(30, -45, 0);
 
-        GameEvents.OnGameOver += OnGameOver;
-        GameEvents.OnLevelLoaded += OnLevelLoaded;
+        //GameEvents.OnGameOver += OnGameOver;
+        //GameEvents.OnLevelLoaded += OnLevelLoaded;
     }
 
     private void OnGameOver() {
@@ -49,7 +49,7 @@ public class PlayerCamera : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        GameEvents.OnGameOver -= OnGameOver;
-        GameEvents.OnLevelLoaded -= OnLevelLoaded;
+        //GameEvents.OnGameOver -= OnGameOver;
+        //GameEvents.OnLevelLoaded -= OnLevelLoaded;
     }
 }

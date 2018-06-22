@@ -74,6 +74,15 @@ public static class Extensions {
         return obj.GetComponent<T>() as T;
     }
 
+    public static T[] GetInterfaces<T>(this GameObject obj) where T : class {
+        if (!typeof(T).IsInterface) {
+            Debug.LogError(typeof(T).ToString() + ": is not an actual interface!");
+            return null; ;
+        }
+
+        return obj.GetComponents<T>() as T[];
+    }
+
     public static T GetComponentWithInterface<T>(this GameObject gObject, out Object objectWithInterface) where T : class {
         Component[] components = gObject.GetComponents(typeof(Component));
         foreach(Component c in components) {
@@ -84,14 +93,5 @@ public static class Extensions {
         }
         objectWithInterface = null;
         return null;
-    }
-
-    public static T[] GetInterfaces<T>(this GameObject obj) where T : class {
-        if (!typeof(T).IsInterface) {
-            Debug.LogError(typeof(T).ToString() + ": is not an actual interface!");
-            return null; ;
-        }
-
-        return obj.GetComponents<T>() as T[];
     }
 }

@@ -1,21 +1,19 @@
 screen fade
-cheat screen voor level select???
-
 
 bug bij moveUpAtStart na deserialization
 bug bij moven van blocks op goal tile, vallen ze niet vanaf?
 bug bij moveUp van tile, eerste keer is instant ipv transitie
 beter onderscheid levelHandler/levels/chapters, betere manier om levels te loaden via een index?
-waarom nog grids gebruiken voor tile en walls? behalve voor collisie/kan ook op andere manieren?
 wallNameDict/BlockNameDict van prefabManager etc kunnen weg/beter?
 apart script voor de begin/eind transities? of via interface(ook handig voor de level number)? in ieder geval moet dit beter
-editor scriptje voor goal, voor direct levelFinished
 
 plaatsen van objecten via levelBuilder en deserializen, via zelfde global functie?
 
 kleinere level files
 xml element veranderen naar xml attribute?
 arrays gebruiken voor tiles?
+
+objecten deserializeren daarna custom start() bij gameManager onLevelStart() ipv unity start()? 
 
 unityEvents met parameters?
 
@@ -33,7 +31,7 @@ level fade
 
 levelNr ui in world
 
-iets verzinnen voor een center punt waar de camera start
+iets verzinnen voor een center punt waar de camera start? of de locatie waar de player gaat landen
 
 nieuw level laden na game over, met chapters
 

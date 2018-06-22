@@ -31,9 +31,7 @@ namespace Serialization {
     }
 }
 
-// TODO: remove
-public interface ITestSerializable {
-    GUID Guid { get; }
-    TestDataContainer Serialize();
-    object Deserialize(TestDataContainer data);
+public interface ITest<T> where T : TestDataClassBase {
+    T GetTest();
 }
+

@@ -1,49 +1,49 @@
-<?xml version="1.0" encoding="Windows-1252"?>
-<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="02/6/18 18:34:47">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<level xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" date="03/6/18 14:01:50">
   <data>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-2968422">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-42862">
       <x>2</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-2968442">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-42882">
       <x>2</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-2968498">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-42902">
       <x>4</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="BlockData" objectTypeName="Player" guid="-2968466">
+    <DataContainer xsi:type="BlockData" objectTypeName="Player" guid="-42926">
       <x>0</x>
       <z>-3</z>
       <yRot>270</yRot>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3003402">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-42938">
       <x>3</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3003442">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-42958">
       <x>3</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3003500">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-42978">
       <x>3</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="PressureTileData" objectTypeName="PressureTile" guid="-3004276">
+    <DataContainer xsi:type="PressureTileData" objectTypeName="PressureTile" guid="-42998">
       <x>2</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
       <onEnterEventData>
         <data>
           <UnityEventData>
-            <targetGuid>-3037242</targetGuid>
+            <targetGuid>-43382</targetGuid>
             <methodName>MoveUp</methodName>
           </UnityEventData>
         </data>
@@ -51,346 +51,376 @@
       <onExitEventData>
         <data>
           <UnityEventData>
-            <targetGuid>-3037242</targetGuid>
+            <targetGuid>-43382</targetGuid>
             <methodName>MoveDown</methodName>
           </UnityEventData>
         </data>
       </onExitEventData>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3003624">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43026">
       <x>4</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="BlockData" objectTypeName="BlockMoveable" guid="-3005588">
+    <DataContainer xsi:type="BlockData" objectTypeName="BlockMoveable" guid="-43058">
       <x>2</x>
       <z>-1</z>
       <yRot>180</yRot>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3003790">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43062">
       <x>4</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3006618">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43082">
       <x>1</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3006714">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43102">
       <x>0</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3006792">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43122">
       <x>0</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3006892">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43142">
       <x>0</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3020522">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43162">
       <x>0</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3006994">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43182">
       <x>1</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3020562">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43202">
       <x>1</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3007100">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43222">
       <x>1</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3020582">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43242">
       <x>2</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3020672">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43262">
       <x>2</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3021172">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43282">
       <x>3</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3020850">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43302">
       <x>1</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3021280">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43322">
       <x>3</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3021372">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43342">
       <x>4</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3021484">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43362">
       <x>4</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3037242">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43382">
       <x>5</x>
       <z>-2</z>
       <moveUpAtStart>false</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Goal" guid="-3037364">
+    <DataContainer xsi:type="TileData" objectTypeName="Goal" guid="-43402">
       <x>6</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3037992">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43422">
       <x>-1</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3038032">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43442">
       <x>-1</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3038132">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43462">
       <x>-1</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3038152">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43482">
       <x>-1</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3038254">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43502">
       <x>-1</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3038374">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43522">
       <x>0</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3168248">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43542">
       <x>-1</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3168368">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43562">
       <x>0</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3168388">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43582">
       <x>1</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3168408">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43602">
       <x>2</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3168508">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43622">
       <x>3</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3169182">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43642">
       <x>-1</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3169222">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43662">
       <x>0</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3168770">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43682">
       <x>4</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3169322">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43702">
       <x>1</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3169422">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43722">
       <x>4</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3169624">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43742">
       <x>3</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-3169744">
+    <DataContainer xsi:type="TileData" objectTypeName="Tile" guid="-43762">
       <x>2</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216066">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43788">
       <x>-2</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216186">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43808">
       <x>-2</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216206">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43828">
       <x>-2</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216326">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43848">
       <x>-2</x>
       <z>-2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216346">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43868">
       <x>-2</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216446">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43888">
       <x>-2</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216546">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43908">
       <x>-2</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216666">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43928">
       <x>-2</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216788">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43948">
       <x>-1</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3216908">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43968">
       <x>0</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217008">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-43988">
       <x>1</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217128">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44008">
       <x>2</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217168">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44028">
       <x>3</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217268">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44048">
       <x>4</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217368">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44068">
       <x>5</x>
       <z>-6</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217490">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44088">
       <x>5</x>
       <z>-5</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217610">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44108">
       <x>5</x>
       <z>-4</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217730">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44128">
       <x>5</x>
       <z>-3</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217856">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44148">
       <x>5</x>
       <z>-1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217896">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44168">
       <x>5</x>
       <z>0</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3217996">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44188">
       <x>5</x>
       <z>1</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218100">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44208">
       <x>5</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218220">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44228">
       <x>4</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218240">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44248">
       <x>3</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218260">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44268">
       <x>2</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218280">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44288">
       <x>1</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218380">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44308">
       <x>0</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218500">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44328">
       <x>-1</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
     </DataContainer>
-    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-3218622">
+    <DataContainer xsi:type="TileData" objectTypeName="PlayerOnlyTile" guid="-44348">
       <x>-2</x>
       <z>2</z>
       <moveUpAtStart>true</moveUpAtStart>
+    </DataContainer>
+    <DataContainer xsi:type="BlockData" objectTypeName="BlockMoveable" guid="-45788">
+      <x>4</x>
+      <z>-1</z>
+      <yRot>180</yRot>
+    </DataContainer>
+    <DataContainer xsi:type="BlockData" objectTypeName="BlockMoveable" guid="-46962">
+      <x>2</x>
+      <z>1</z>
+      <yRot>180</yRot>
+    </DataContainer>
+    <DataContainer xsi:type="PortalData" objectTypeName="Portal" guid="-47290">
+      <edgeCoordinates>
+        <oneX>3</oneX>
+        <oneZ>-1</oneZ>
+        <twoX>2</twoX>
+        <twoZ>-1</twoZ>
+      </edgeCoordinates>
+      <isActiveOnStart>true</isActiveOnStart>
+      <connectedPortalGuid>-47422</connectedPortalGuid>
+    </DataContainer>
+    <DataContainer xsi:type="PortalData" objectTypeName="Portal" guid="-47422">
+      <edgeCoordinates>
+        <oneX>0</oneX>
+        <oneZ>-2</oneZ>
+        <twoX>0</twoX>
+        <twoZ>-1</twoZ>
+      </edgeCoordinates>
+      <isActiveOnStart>true</isActiveOnStart>
+      <connectedPortalGuid>-47290</connectedPortalGuid>
     </DataContainer>
   </data>
 </level>

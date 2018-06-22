@@ -16,8 +16,12 @@ public class Goal : Tile {
     public override void Enter(Block block) {
         if (block != Player.Instance)
             return;
-        
-        if(GameEvents.OnLevelFinished != null)
+
+        GoalReached();
+    }
+
+    public void GoalReached() {
+        if (GameEvents.OnLevelFinished != null)
             GameEvents.OnLevelFinished();
     }
 }
