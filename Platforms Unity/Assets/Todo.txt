@@ -1,11 +1,16 @@
-screen fade
+mobiel werkend krijgen
 
-bug bij moveUpAtStart na deserialization
+levelNr bij GameManager automatisch met levelManager set level gaan
+
+bug bij moveUpAtStart bij blocks na deserialization, komt door GameEvents.OnIntroComplete += OnIntroComplete;?
 bug bij moven van blocks op goal tile, vallen ze niet vanaf?
 bug bij moveUp van tile, eerste keer is instant ipv transitie
+
 beter onderscheid levelHandler/levels/chapters, betere manier om levels te loaden via een index?
 wallNameDict/BlockNameDict van prefabManager etc kunnen weg/beter?
 apart script voor de begin/eind transities? of via interface(ook handig voor de level number)? in ieder geval moet dit beter
+
+screen fade bij next/reload  level
 
 plaatsen van objecten via levelBuilder en deserializen, via zelfde global functie?
 

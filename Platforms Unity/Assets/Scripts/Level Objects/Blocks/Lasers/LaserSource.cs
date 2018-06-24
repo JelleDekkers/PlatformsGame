@@ -40,6 +40,7 @@ public class LaserSource : Block, IActivatable {
     }
 
     private void SetActiveState(bool state) {
+        print("set active state");
         IsActive = state;
         laser.SetActive(state);
         enabled = state;

@@ -14,5 +14,4 @@ public class Tester : MonoBehaviour {
 
         Debug.Log(testList.Count);
     }
-
 }

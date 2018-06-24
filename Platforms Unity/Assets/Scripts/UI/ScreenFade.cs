@@ -6,19 +6,11 @@ namespace UI {
 
     public class ScreenFade : MonoBehaviour {
 
-        [SerializeField] bool useFade = true;
-        [SerializeField] float fadeInTime = 1;
-        [SerializeField] float fadeOuTime = 1;
-
-        private CanvasGroup canvasGroup;
+        [SerializeField] public CanvasGroup canvasGroup;
 
         private void Awake() {
-            canvasGroup = GetComponent<CanvasGroup>();
-
-            if(useFade)
-                GameEvents.OnGameOver += FadeOutFunction;
-
-            if(useFade) {
+            if(GeneralConfig.UseScreenFade) { 
+                //GameEvents.OnGameOver += FadeOutFunction;
                 canvasGroup.alpha = 1;
                 StartCoroutine(FadeIn());
             }
@@ -31,8 +23,8 @@ namespace UI {
         private IEnumerator FadeIn() {
             float timer = 0;
 
-            while(timer < fadeInTime) {
-                canvasGroup.alpha = 1 - timer / fadeInTime;
+            while(timer < GeneralConfig.ScreenFadeInTime) {
+                canvasGroup.alpha = 1 - timer / GeneralConfig.ScreenFadeInTime;
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -47,8 +39,8 @@ namespace UI {
         private IEnumerator FadeOut() {
             float timer = 0;
 
-            while (timer < fadeOuTime) {
-                canvasGroup.alpha = timer / fadeOuTime;
+            while (timer < GeneralConfig.ScreenFadeOutTime) {
+                canvasGroup.alpha = timer / GeneralConfig.ScreenFadeOutTime;
                 timer += Time.deltaTime;
                 yield return null;
             }

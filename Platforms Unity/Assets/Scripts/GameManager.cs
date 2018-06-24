@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
         GameEvents.OnLevelFinished += () => StartCoroutine(NextLevelCounter());
 
         if (LevelManager.CurrentLevel == null)
-            LevelManager.Instance.LoadLevelFromFile(levels[levelNr]);
+            LevelManager.Instance.LoadLevelFromFile(levels[levelNr - 1]);
         StartNewLevel();
     }
 
@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
         levelNr++;
-        Debug.Log("load next level " + levels[levelNr].name);
-        LevelManager.Instance.LoadLevelFromFile(levels[levelNr]);
+        Debug.Log("load next level " + levels[levelNr - 1].name);
+        LevelManager.Instance.LoadLevelFromFile(levels[levelNr - 1]);
     }
 
     private void OnDestroy() {
